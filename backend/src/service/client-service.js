@@ -1,6 +1,7 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
 import SubscriptionService from "./subscription-service.js";
+import { createActivityLog } from "../util/activity-log.js";
 
 const subscriptionService = new SubscriptionService();
 
@@ -70,7 +71,18 @@ export default class ClientService {
             );
 
             await client.query("COMMIT");
-            return result.rows[0];
+            
+            // Aktivite logu oluştur
+            const newClient = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                newClient.id,
+                'client',
+                'create',
+                `${newClient.first_name} ${newClient.last_name} adlı danışan eklendi`
+            );
+            
+            return newClient;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -196,8 +208,18 @@ export default class ClientService {
 
             const result = await client.query(query, updateValues);
             await client.query("COMMIT");
-
-            return result.rows[0];
+            
+            // Aktivite logu oluştur
+            const updatedClient = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'client',
+                'update',
+                `${updatedClient.first_name} ${updatedClient.last_name} adlı danışan bilgileri güncellendi`
+            );
+            
+            return updatedClient;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -222,12 +244,29 @@ export default class ClientService {
                 throw new HttpException(404, "Danışan bulunamadı");
             }
 
+            // Silinmeden önce danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT first_name, last_name FROM clients WHERE id = $1 AND dietitian_id = $2`,
+                [clientId, dietitianId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+
             await client.query(
                 `DELETE FROM clients WHERE id = $1 AND dietitian_id = $2`,
                 [clientId, dietitianId]
             );
 
             await client.query("COMMIT");
+            
+            // Aktivite logu oluştur
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'client',
+                'delete',
+                `${clientName} adlı danışan silindi`
+            );
+            
             return { message: "Danışan başarıyla silindi" };
         } catch (error) {
             await client.query("ROLLBACK");

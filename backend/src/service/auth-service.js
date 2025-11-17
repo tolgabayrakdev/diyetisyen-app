@@ -43,7 +43,7 @@ export default class AuthService {
             // Send email OTP
             await sendEmail(
                 user.email,
-                "Edivora E-posta Doğrulama Kodu",
+                "Diyetka E-posta Doğrulama Kodu",
                 `<p>Merhaba ${user.first_name},</p>
                 <p>E-posta doğrulama kodunuz: <strong style="font-size: 16px; letter-spacing: 4px;">${code}</strong></p>
                 <p>Bu kod 3 dakika geçerlidir.</p>`
@@ -67,7 +67,7 @@ export default class AuthService {
             if (!phoneNumber) {
                 throw new HttpException(400, "SMS doğrulaması için kayıtlı bir telefon numarası bulunamadı.");
             }
-            await sendSms({ msg: `Edivora doğrulama kodunuz: ${code}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
+            await sendSms({ msg: `Diyetka doğrulama kodunuz: ${code}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
 
             const maskedPhone = phoneNumber.replace(/(\+?\d{0,3})?(\d{2})(\d+)(\d{2})$/, (_m, cc = "", p2, mid, p4) => {
                 return `${cc || ""}${p2}${"*".repeat(mid.length)}${p4}`;
@@ -213,7 +213,7 @@ export default class AuthService {
 
         await sendEmail(
             user.email,
-            "Edivora E-posta Doğrulama Kodu",
+            "Diyetka E-posta Doğrulama Kodu",
             `<p>Merhaba ${user.first_name},</p>
             <p>E-posta doğrulama kodunuz: <strong style="font-size: 24px; letter-spacing: 4px;">${newCode}</strong></p>
             <p>Bu kod 3 dakika geçerlidir.</p>`
@@ -276,7 +276,7 @@ export default class AuthService {
 
             await sendEmail(
                 email,
-                "Edivora Parola Sıfırlama",
+                "Diyetka Parola Sıfırlama",
                 `<p>Merhaba,</p>
                 <p>Parolanızı sıfırlamak için <a href="${resetLink}">buraya tıklayın</a>.</p>`
             );
@@ -567,7 +567,7 @@ export default class AuthService {
         if (!phoneNumber) {
             throw new HttpException(400, "SMS doğrulaması için kayıtlı bir telefon numarası bulunamadı.");
         }
-        await sendSms({ msg: `Edivora doğrulama kodunuz: ${newCode}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
+        await sendSms({ msg: `Diyetka doğrulama kodunuz: ${newCode}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
 
         return { message: "Yeni bir SMS doğrulama kodu gönderildi." };
     }

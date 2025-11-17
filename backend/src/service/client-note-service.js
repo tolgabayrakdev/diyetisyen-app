@@ -1,5 +1,6 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
+import { createActivityLog } from "../util/activity-log.js";
 
 export default class ClientNoteService {
     
@@ -30,8 +31,26 @@ export default class ClientNoteService {
                 ]
             );
 
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT first_name, last_name FROM clients WHERE id = $1`,
+                [clientId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const newNote = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'note',
+                'create',
+                `${clientName} için not eklendi`
+            );
+            
+            return newNote;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -139,9 +158,29 @@ export default class ClientNoteService {
             `;
 
             const result = await client.query(query, updateValues);
+            
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT c.first_name, c.last_name FROM clients c
+                 INNER JOIN client_notes cn ON c.id = cn.client_id
+                 WHERE cn.id = $1`,
+                [noteId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const updatedNote = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                updatedNote.client_id,
+                'note',
+                'update',
+                `${clientName} için not güncellendi`
+            );
+            
+            return updatedNote;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -168,12 +207,33 @@ export default class ClientNoteService {
                 throw new HttpException(404, "Not bulunamadı");
             }
 
+            // Silinmeden önce not ve danışan bilgilerini al
+            const noteInfo = await client.query(
+                `SELECT cn.client_id, c.first_name, c.last_name 
+                 FROM client_notes cn
+                 INNER JOIN clients c ON cn.client_id = c.id
+                 WHERE cn.id = $1`,
+                [noteId]
+            );
+            const clientName = noteInfo.rows[0] ? `${noteInfo.rows[0].first_name} ${noteInfo.rows[0].last_name}` : 'Danışan';
+            const clientId = noteInfo.rows[0]?.client_id;
+
             await client.query(
                 `DELETE FROM client_notes WHERE id = $1`,
                 [noteId]
             );
 
             await client.query("COMMIT");
+            
+            // Aktivite logu oluştur
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'note',
+                'delete',
+                `${clientName} için not silindi`
+            );
+            
             return { message: "Not başarıyla silindi" };
         } catch (error) {
             await client.query("ROLLBACK");

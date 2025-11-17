@@ -1,5 +1,6 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
+import { createActivityLog } from "../util/activity-log.js";
 
 export default class DietPlanService {
     
@@ -32,8 +33,26 @@ export default class DietPlanService {
                 ]
             );
 
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT first_name, last_name FROM clients WHERE id = $1`,
+                [clientId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const newPlan = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'diet_plan',
+                'create',
+                `${clientName} için "${newPlan.title}" adlı diyet planı oluşturuldu`
+            );
+            
+            return newPlan;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -125,9 +144,29 @@ export default class DietPlanService {
             `;
 
             const result = await client.query(query, updateValues);
+            
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT c.first_name, c.last_name FROM clients c
+                 INNER JOIN diet_plans dp ON c.id = dp.client_id
+                 WHERE dp.id = $1`,
+                [planId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const updatedPlan = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                updatedPlan.client_id,
+                'diet_plan',
+                'update',
+                `${clientName} için "${updatedPlan.title}" adlı diyet planı güncellendi`
+            );
+            
+            return updatedPlan;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -154,12 +193,34 @@ export default class DietPlanService {
                 throw new HttpException(404, "Diyet planı bulunamadı");
             }
 
+            // Silinmeden önce plan ve danışan bilgilerini al
+            const planInfo = await client.query(
+                `SELECT dp.client_id, dp.title, c.first_name, c.last_name 
+                 FROM diet_plans dp
+                 INNER JOIN clients c ON dp.client_id = c.id
+                 WHERE dp.id = $1`,
+                [planId]
+            );
+            const clientName = planInfo.rows[0] ? `${planInfo.rows[0].first_name} ${planInfo.rows[0].last_name}` : 'Danışan';
+            const planTitle = planInfo.rows[0]?.title || 'Diyet Planı';
+            const clientId = planInfo.rows[0]?.client_id;
+
             await client.query(
                 `DELETE FROM diet_plans WHERE id = $1`,
                 [planId]
             );
 
             await client.query("COMMIT");
+            
+            // Aktivite logu oluştur
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'diet_plan',
+                'delete',
+                `${clientName} için "${planTitle}" adlı diyet planı silindi`
+            );
+            
             return { message: "Diyet planı başarıyla silindi" };
         } catch (error) {
             await client.query("ROLLBACK");

@@ -1,5 +1,6 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
+import { createActivityLog } from "../util/activity-log.js";
 
 export default class FinancialRecordService {
     
@@ -34,8 +35,26 @@ export default class FinancialRecordService {
                 ]
             );
 
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT first_name, last_name FROM clients WHERE id = $1`,
+                [clientId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const newRecord = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'financial_record',
+                'create',
+                `${clientName} için ${newRecord.amount} ${newRecord.currency} tutarında finansal kayıt eklendi`
+            );
+            
+            return newRecord;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -153,9 +172,29 @@ export default class FinancialRecordService {
             `;
 
             const result = await client.query(query, updateValues);
+            
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT c.first_name, c.last_name FROM clients c
+                 INNER JOIN financial_records fr ON c.id = fr.client_id
+                 WHERE fr.id = $1`,
+                [recordId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const updatedRecord = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                updatedRecord.client_id,
+                'financial_record',
+                'update',
+                `${clientName} için finansal kayıt güncellendi`
+            );
+            
+            return updatedRecord;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -182,12 +221,33 @@ export default class FinancialRecordService {
                 throw new HttpException(404, "Finansal kayıt bulunamadı");
             }
 
+            // Silinmeden önce kayıt ve danışan bilgilerini al
+            const recordInfo = await client.query(
+                `SELECT fr.client_id, fr.amount, fr.currency, c.first_name, c.last_name 
+                 FROM financial_records fr
+                 INNER JOIN clients c ON fr.client_id = c.id
+                 WHERE fr.id = $1`,
+                [recordId]
+            );
+            const clientName = recordInfo.rows[0] ? `${recordInfo.rows[0].first_name} ${recordInfo.rows[0].last_name}` : 'Danışan';
+            const clientId = recordInfo.rows[0]?.client_id;
+
             await client.query(
                 `DELETE FROM financial_records WHERE id = $1`,
                 [recordId]
             );
 
             await client.query("COMMIT");
+            
+            // Aktivite logu oluştur
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'financial_record',
+                'delete',
+                `${clientName} için finansal kayıt silindi`
+            );
+            
             return { message: "Finansal kayıt başarıyla silindi" };
         } catch (error) {
             await client.query("ROLLBACK");

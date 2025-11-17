@@ -14,6 +14,7 @@ import clientNoteRoutes from "./routes/client-note-routes.js";
 import financialRecordRoutes from "./routes/financial-record-routes.js";
 import progressLogRoutes from "./routes/progress-log-routes.js";
 import activityLogRoutes from "./routes/activity-log-routes.js";
+import statisticsRoutes from "./routes/statistics-routes.js";
 
 import errorHandler from "./middleware/error-handler.js";
 import { apiLimiter } from "./middleware/rate-limiter.js";
@@ -52,6 +53,7 @@ app.use("/api", clientNoteRoutes);
 app.use("/api", financialRecordRoutes);
 app.use("/api", progressLogRoutes);
 app.use("/api", activityLogRoutes);
+app.use("/api", statisticsRoutes);
 
 
 

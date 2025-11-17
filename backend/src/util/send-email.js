@@ -18,14 +18,14 @@ export async function sendEmail(to, subject, html) {
         <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;">
         <div style="font-size: 12px; color: #666; text-align: center; padding: 20px;">
             <p style="margin: 5px 0;">
-                <strong>🔒 Güvenlik Notu:</strong> Bu e-posta <strong>www.edivora.com</strong> tarafından gönderilmiştir.
+                <strong>🔒 Güvenlik Notu:</strong> Bu e-posta <strong>www.diyetka.com</strong> tarafından gönderilmiştir.
             </p>
         </div>
     `;
 
     const mailOptions = {
         from: {
-            name: "Edivora",
+            name: "Diyetka",
             address: process.env.EMAIL_USER,
         },
         replyTo: process.env.EMAIL_USER,
@@ -33,7 +33,7 @@ export async function sendEmail(to, subject, html) {
         subject,
         html: enhancedHtml,
         headers: {
-            'X-Entity-Ref-ID': 'edivora',
+            'X-Entity-Ref-ID': 'diyetka',
             'List-Unsubscribe': '<mailto:' + process.env.EMAIL_USER + '>',
         },
     };

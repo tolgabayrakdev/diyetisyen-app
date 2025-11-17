@@ -319,3 +319,24 @@ warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T09:37:50.603Z"}
 warn: POST /api/clients - 403 - Danışan limitine ulaştınız. Maksimum 15 danışan ekleyebilirsiniz. {"timestamp":"2025-11-17T09:42:52.848Z"}
 warn: POST /api/clients - 403 - Danışan limitine ulaştınız. Maksimum 15 danışan ekleyebilirsiniz. {"timestamp":"2025-11-17T09:42:54.283Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:08:44.810Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:08:44.818Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:12:07.050Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:12:07.054Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:12:09.905Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:12:09.909Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:24:38.049Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:24:38.061Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:24:46.587Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T10:24:46.596Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=z - 500 - invalid input syntax for type uuid: "z" {"timestamp":"2025-11-17T10:48:59.168Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=ze - 500 - invalid input syntax for type uuid: "ze" {"timestamp":"2025-11-17T10:48:59.903Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=z - 500 - invalid input syntax for type uuid: "z" {"timestamp":"2025-11-17T10:49:00.114Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=d - 500 - invalid input syntax for type uuid: "d" {"timestamp":"2025-11-17T10:49:00.877Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=ds - 500 - invalid input syntax for type uuid: "ds" {"timestamp":"2025-11-17T10:49:01.017Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=dsd - 500 - invalid input syntax for type uuid: "dsd" {"timestamp":"2025-11-17T10:49:01.147Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=dsds - 500 - invalid input syntax for type uuid: "dsds" {"timestamp":"2025-11-17T10:49:01.245Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=3 - 500 - invalid input syntax for type uuid: "3" {"timestamp":"2025-11-17T10:49:03.244Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=33 - 500 - invalid input syntax for type uuid: "33" {"timestamp":"2025-11-17T10:49:03.513Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=332 - 500 - invalid input syntax for type uuid: "332" {"timestamp":"2025-11-17T10:49:03.722Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=3322 - 500 - invalid input syntax for type uuid: "3322" {"timestamp":"2025-11-17T10:49:03.852Z"}

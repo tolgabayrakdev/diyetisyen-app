@@ -1,5 +1,6 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
+import { createActivityLog } from "../util/activity-log.js";
 
 export default class ProgressLogService {
     
@@ -33,8 +34,26 @@ export default class ProgressLogService {
                 ]
             );
 
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT first_name, last_name FROM clients WHERE id = $1`,
+                [clientId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const newLog = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'progress_log',
+                'create',
+                `${clientName} için ilerleme kaydı eklendi`
+            );
+            
+            return newLog;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -140,9 +159,29 @@ export default class ProgressLogService {
             `;
 
             const result = await client.query(query, updateValues);
+            
+            // Danışan bilgilerini al
+            const clientInfo = await client.query(
+                `SELECT c.first_name, c.last_name FROM clients c
+                 INNER JOIN progress_logs pl ON c.id = pl.client_id
+                 WHERE pl.id = $1`,
+                [logId]
+            );
+            const clientName = clientInfo.rows[0] ? `${clientInfo.rows[0].first_name} ${clientInfo.rows[0].last_name}` : 'Danışan';
+            
             await client.query("COMMIT");
-
-            return result.rows[0];
+            
+            // Aktivite logu oluştur (transaction dışında)
+            const updatedLog = result.rows[0];
+            await createActivityLog(
+                dietitianId,
+                updatedLog.client_id,
+                'progress_log',
+                'update',
+                `${clientName} için ilerleme kaydı güncellendi`
+            );
+            
+            return updatedLog;
         } catch (error) {
             await client.query("ROLLBACK");
             if (error instanceof HttpException) throw error;
@@ -169,12 +208,33 @@ export default class ProgressLogService {
                 throw new HttpException(404, "İlerleme kaydı bulunamadı");
             }
 
+            // Silinmeden önce kayıt ve danışan bilgilerini al
+            const logInfo = await client.query(
+                `SELECT pl.client_id, c.first_name, c.last_name 
+                 FROM progress_logs pl
+                 INNER JOIN clients c ON pl.client_id = c.id
+                 WHERE pl.id = $1`,
+                [logId]
+            );
+            const clientName = logInfo.rows[0] ? `${logInfo.rows[0].first_name} ${logInfo.rows[0].last_name}` : 'Danışan';
+            const clientId = logInfo.rows[0]?.client_id;
+
             await client.query(
                 `DELETE FROM progress_logs WHERE id = $1`,
                 [logId]
             );
 
             await client.query("COMMIT");
+            
+            // Aktivite logu oluştur
+            await createActivityLog(
+                dietitianId,
+                clientId,
+                'progress_log',
+                'delete',
+                `${clientName} için ilerleme kaydı silindi`
+            );
+            
             return { message: "İlerleme kaydı başarıyla silindi" };
         } catch (error) {
             await client.query("ROLLBACK");
