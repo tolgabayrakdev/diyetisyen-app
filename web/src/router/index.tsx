@@ -3,7 +3,13 @@ import DashboardLayout from "@/layouts/dashboard-layout"
 import DashboardIndex from "@/pages/dashboard/index"
 import AccountSettings from "@/pages/dashboard/settings/account-settings"
 import NotificationSettings from "@/pages/dashboard/settings/notification-settings"
-
+import ClientsPage from "@/pages/dashboard/clients/index"
+import ClientDetailPage from "@/pages/dashboard/clients/detail"
+import ClientDietPlansPage from "@/pages/dashboard/clients/diet-plans"
+import ClientNotesPage from "@/pages/dashboard/clients/notes"
+import ClientFinancialPage from "@/pages/dashboard/clients/financial"
+import ClientProgressPage from "@/pages/dashboard/clients/progress"
+import ActivityLogsPage from "@/pages/dashboard/activity-logs"
 
 import SignIn from "@/pages/auth/sign-in"
 import SignUp from "@/pages/auth/sign-up"
@@ -27,6 +33,34 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/settings/notifications',
                 element: <NotificationSettings />
+            },
+            {
+                path: '/clients',
+                element: <ClientsPage />
+            },
+            {
+                path: '/clients/:id',
+                element: <ClientDetailPage />
+            },
+            {
+                path: '/clients/:id/diet-plans',
+                element: <ClientDietPlansPage />
+            },
+            {
+                path: '/clients/:id/notes',
+                element: <ClientNotesPage />
+            },
+            {
+                path: '/clients/:id/financial',
+                element: <ClientFinancialPage />
+            },
+            {
+                path: '/clients/:id/progress',
+                element: <ClientProgressPage />
+            },
+            {
+                path: '/dashboard/activity-logs',
+                element: <ActivityLogsPage />
             }
         ]
 

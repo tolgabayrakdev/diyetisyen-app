@@ -289,3 +289,11 @@ warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-15T
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-15T17:00:36.273Z"}
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-15T17:01:02.517Z"}
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-15T17:01:02.523Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-15T20:27:23.595Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-15T20:27:23.601Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T07:30:47.078Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T07:30:47.084Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T07:30:47.159Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T07:30:47.161Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=t - 500 - invalid input syntax for type uuid: "t" {"timestamp":"2025-11-17T08:21:20.714Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=tf - 500 - invalid input syntax for type uuid: "tf" {"timestamp":"2025-11-17T08:21:22.007Z"}

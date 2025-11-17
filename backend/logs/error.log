@@ -69,3 +69,5 @@ error: GET /api/coaching/statistics? - 500 - invalid input syntax for type uuid:
 error: GET /api/coaching/progress? - 500 - invalid input syntax for type uuid: "progress" {"timestamp":"2025-11-15T11:44:27.676Z"}
 error: GET /api/coaching/progress? - 500 - invalid input syntax for type uuid: "progress" {"timestamp":"2025-11-15T11:44:27.692Z"}
 error: GET /api/coaching/statistics? - 500 - invalid input syntax for type uuid: "statistics" {"timestamp":"2025-11-15T11:44:27.693Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=t - 500 - invalid input syntax for type uuid: "t" {"timestamp":"2025-11-17T08:21:20.714Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=tf - 500 - invalid input syntax for type uuid: "tf" {"timestamp":"2025-11-17T08:21:22.007Z"}

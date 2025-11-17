@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router"
-import { Home, Settings, User2, LogOut, Bell, Activity } from "lucide-react"
+import { Home, Settings, User2, LogOut, Bell, Activity, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 import {
@@ -159,6 +159,25 @@ export function AppSidebar() {
                 )
               })}
    
+              <SidebarSeparator />
+              <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
+                Danışanlar
+              </SidebarGroupLabel>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  asChild 
+                  isActive={location.pathname === '/clients' || location.pathname.startsWith('/clients')}
+                  className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
+                >
+                  <Link to="/clients" className="flex items-center gap-3">
+                    {(location.pathname === '/clients' || location.pathname.startsWith('/clients')) && (
+                      <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary rounded-r" />
+                    )}
+                    <Users className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/clients' || location.pathname.startsWith('/clients')) ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <span className="truncate">Danışanlar</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarSeparator />
               <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
                 Genel
