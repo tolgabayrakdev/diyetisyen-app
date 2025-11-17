@@ -3,46 +3,91 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export async function sendEmail(to, subject, html) {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
+/**
+ * Profesyonel Email Gönderme Servisi
+ * Tüm email'ler bu servis üzerinden gönderilir
+ */
+class EmailService {
+    constructor() {
+        this.transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+    }
 
-    // Mail içeriğine güvenlik notu ekle
-    const enhancedHtml = `
-        ${html}
-        <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;">
-        <div style="font-size: 12px; color: #666; text-align: center; padding: 20px;">
-            <p style="margin: 5px 0;">
-                <strong>🔒 Güvenlik Notu:</strong> Bu e-posta <strong>www.diyetka.com</strong> tarafından gönderilmiştir.
-            </p>
-        </div>
-    `;
+    /**
+     * Genel email gönderme metodu
+     * @param {string} to - Alıcı e-posta adresi
+     * @param {string} subject - E-posta konusu
+     * @param {string} html - HTML içerik (template'den gelir)
+     * @param {object} options - Ek seçenekler (cc, bcc, attachments, vb.)
+     */
+    async sendEmail(to, subject, html, options = {}) {
+        const mailOptions = {
+            from: {
+                name: "Diyetka",
+                address: process.env.EMAIL_USER,
+            },
+            replyTo: process.env.EMAIL_USER || process.env.EMAIL_REPLY_TO,
+            to: Array.isArray(to) ? to.join(", ") : to,
+            subject,
+            html,
+            headers: {
+                'X-Entity-Ref-ID': 'diyetka',
+                'X-Mailer': 'Diyetka Email Service',
+                'List-Unsubscribe': `<mailto:${process.env.EMAIL_USER}?subject=Unsubscribe>`,
+                'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+            },
+            ...options,
+        };
 
-    const mailOptions = {
-        from: {
-            name: "Diyetka",
-            address: process.env.EMAIL_USER,
-        },
-        replyTo: process.env.EMAIL_USER,
-        to,
-        subject,
-        html: enhancedHtml,
-        headers: {
-            'X-Entity-Ref-ID': 'diyetka',
-            'List-Unsubscribe': '<mailto:' + process.env.EMAIL_USER + '>',
-        },
-    };
+        try {
+            const info = await this.transporter.sendMail(mailOptions);
+            console.log("📩 Email sent successfully:", {
+                to: Array.isArray(to) ? to.join(", ") : to,
+                subject,
+                messageId: info.messageId,
+            });
+            return info;
+        } catch (error) {
+            console.error("❌ Failed to send email:", {
+                to: Array.isArray(to) ? to.join(", ") : to,
+                subject,
+                error: error.message,
+            });
+            throw error;
+        }
+    }
 
-    try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log("📩 Email sent:", info.response);
-    } catch (error) {
-        console.error("❌ Failed to send email:", error);
-        throw error;
+    /**
+     * Email göndermeyi doğrula (test için)
+     */
+    async verifyConnection() {
+        try {
+            await this.transporter.verify();
+            console.log("✅ Email server connection verified");
+            return true;
+        } catch (error) {
+            console.error("❌ Email server connection failed:", error);
+            return false;
+        }
     }
 }
+
+// Singleton instance
+const emailService = new EmailService();
+
+/**
+ * Backward compatibility için eski fonksiyon
+ * Yeni kodlar doğrudan emailService kullanmalı
+ */
+export async function sendEmail(to, subject, html, options) {
+    return emailService.sendEmail(to, subject, html, options);
+}
+
+// EmailService'i de export et
+export { emailService };
+export default emailService;

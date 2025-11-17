@@ -5,6 +5,11 @@ import { generateAccessToken, generateRefreshToken, verifyToken } from "../util/
 import { comparePassword, hashPassword } from "../util/password.js";
 import { sendEmail } from "../util/send-email.js";
 import { sendSms } from "../util/send-sms.js";
+import { 
+    getEmailVerificationTemplate, 
+    getPasswordResetTemplate,
+    getWelcomeTemplate 
+} from "../util/email-templates.js";
 
 
 export default class AuthService {
@@ -40,13 +45,12 @@ export default class AuthService {
                 [code, createdAt, user.id]
             );
 
-            // Send email OTP
+            // Send email OTP with professional template
+            const emailHtml = getEmailVerificationTemplate(user.first_name, code);
             await sendEmail(
                 user.email,
                 "Diyetka E-posta Doğrulama Kodu",
-                `<p>Merhaba ${user.first_name},</p>
-                <p>E-posta doğrulama kodunuz: <strong style="font-size: 16px; letter-spacing: 4px;">${code}</strong></p>
-                <p>Bu kod 3 dakika geçerlidir.</p>`
+                emailHtml
             );
 
             return { emailRequired: true, email: user.email };
@@ -124,6 +128,19 @@ export default class AuthService {
                 ]
             );
             await client.query("COMMIT");
+
+            // Send welcome email (non-blocking, best effort)
+            try {
+                const welcomeEmailHtml = getWelcomeTemplate(user.first_name, user.last_name);
+                await sendEmail(
+                    user.email,
+                    "Diyetka'ya Hoş Geldiniz! 🎉",
+                    welcomeEmailHtml
+                );
+            } catch (emailError) {
+                // Log error but don't fail registration
+                console.error("Failed to send welcome email:", emailError);
+            }
 
             return newUser.rows[0].id;
         } catch (error) {
@@ -211,12 +228,12 @@ export default class AuthService {
             [newCode, newCreatedAt, email]
         );
 
+        // Send email OTP with professional template
+        const emailHtml = getEmailVerificationTemplate(user.first_name, newCode);
         await sendEmail(
             user.email,
             "Diyetka E-posta Doğrulama Kodu",
-            `<p>Merhaba ${user.first_name},</p>
-            <p>E-posta doğrulama kodunuz: <strong style="font-size: 24px; letter-spacing: 4px;">${newCode}</strong></p>
-            <p>Bu kod 3 dakika geçerlidir.</p>`
+            emailHtml
         );
 
         return { message: "Yeni bir doğrulama kodu gönderildi." };
@@ -274,11 +291,12 @@ export default class AuthService {
             );
             const resetLink = `https://${process.env.HOST}/reset-password?token=${token}`;
 
+            // Send password reset email with professional template
+            const emailHtml = getPasswordResetTemplate(resetLink, 15);
             await sendEmail(
                 email,
                 "Diyetka Parola Sıfırlama",
-                `<p>Merhaba,</p>
-                <p>Parolanızı sıfırlamak için <a href="${resetLink}">buraya tıklayın</a>.</p>`
+                emailHtml
             );
 
             return { message: "Parola sıfırlama e-postası gönderildi." };

@@ -340,3 +340,65 @@ error: GET /api/activity-logs?page=1&limit=50&clientId=3 - 500 - invalid input s
 error: GET /api/activity-logs?page=1&limit=50&clientId=33 - 500 - invalid input syntax for type uuid: "33" {"timestamp":"2025-11-17T10:49:03.513Z"}
 error: GET /api/activity-logs?page=1&limit=50&clientId=332 - 500 - invalid input syntax for type uuid: "332" {"timestamp":"2025-11-17T10:49:03.722Z"}
 error: GET /api/activity-logs?page=1&limit=50&clientId=3322 - 500 - invalid input syntax for type uuid: "3322" {"timestamp":"2025-11-17T10:49:03.852Z"}
+warn: POST /api/clients/06632ba2-f87f-4208-b196-6e80092275ad/diet-plans - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T10:57:57.997Z"}
+warn: POST /api/clients/06632ba2-f87f-4208-b196-6e80092275ad/diet-plans - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T10:58:08.771Z"}
+warn: POST /api/clients/06632ba2-f87f-4208-b196-6e80092275ad/diet-plans - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T10:59:40.790Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:06.955Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:06.975Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:08.611Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:08.618Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:11.643Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:11.657Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:14.855Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:14.869Z"}
+warn: POST /api/diet-plan-templates - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T11:02:31.731Z"}
+warn: POST /api/diet-plan-templates - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T11:02:50.136Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:51.701Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:51.719Z"}
+warn: POST /api/diet-plan-templates - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T11:03:16.969Z"}
+warn: POST /api/diet-plan-templates - 500 - column "dietitian_id" of relation "diet_plans" does not exist {"timestamp":"2025-11-17T11:03:32.569Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:13.596Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:13.602Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:15.985Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:15.995Z"}
+warn: POST /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:24.730Z"}
+warn: POST /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:33.211Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:34.704Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:05:34.712Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:06:00.855Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:06:00.880Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:06:12.511Z"}
+warn: GET /api/diet-plans/6558b021-0061-4f53-bec8-f6a9559681e1/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T11:06:12.523Z"}
+warn: POST /api/diet-plan-templates/6558b021-0061-4f53-bec8-f6a9559681e1/assign/0ccef373-c251-4796-b0a7-36fe899a8446 - 500 - invalid input syntax for type json {"timestamp":"2025-11-17T11:09:35.268Z"}
+warn: POST /api/diet-plan-templates/6558b021-0061-4f53-bec8-f6a9559681e1/assign/0ccef373-c251-4796-b0a7-36fe899a8446 - 500 - invalid input syntax for type json {"timestamp":"2025-11-17T11:09:42.215Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T16:54:14.383Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T16:54:14.390Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T16:54:14.460Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T16:54:14.461Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T17:04:56.176Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-17T17:04:56.181Z"}
+warn: POST /api/diet-plans/templates - 500 - new row for relation "diet_plans" violates check constraint "diet_plans_client_id_template_check" {"timestamp":"2025-11-17T17:06:52.773Z"}
+warn: POST /api/diet-plans/templates - 500 - new row for relation "diet_plans" violates check constraint "diet_plans_client_id_template_check" {"timestamp":"2025-11-17T17:06:53.745Z"}
+warn: POST /api/diet-plans/templates - 500 - new row for relation "diet_plans" violates check constraint "diet_plans_client_id_template_check" {"timestamp":"2025-11-17T17:06:53.907Z"}
+warn: POST /api/diet-plans/templates - 500 - new row for relation "diet_plans" violates check constraint "diet_plans_client_id_template_check" {"timestamp":"2025-11-17T17:06:54.059Z"}
+warn: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T17:11:20.876Z"}
+warn: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T17:11:20.880Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T17:11:58.018Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T17:11:59.391Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/meals - 404 - Diyet planı bulunamadı {"timestamp":"2025-11-17T17:11:59.706Z"}
+error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.868Z"}
+error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.876Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:31.171Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:37.888Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:38.470Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:38.602Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:38.872Z"}
+warn: POST /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assign - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:39.033Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:15:18.291Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:15:18.298Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:15:18.377Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:15:18.380Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:03.668Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:03.687Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:18.901Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:18.907Z"}

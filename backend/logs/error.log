@@ -82,3 +82,15 @@ error: GET /api/activity-logs?page=1&limit=50&clientId=3 - 500 - invalid input s
 error: GET /api/activity-logs?page=1&limit=50&clientId=33 - 500 - invalid input syntax for type uuid: "33" {"timestamp":"2025-11-17T10:49:03.513Z"}
 error: GET /api/activity-logs?page=1&limit=50&clientId=332 - 500 - invalid input syntax for type uuid: "332" {"timestamp":"2025-11-17T10:49:03.722Z"}
 error: GET /api/activity-logs?page=1&limit=50&clientId=3322 - 500 - invalid input syntax for type uuid: "3322" {"timestamp":"2025-11-17T10:49:03.852Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:06.955Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:06.975Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:08.611Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:08.618Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:11.643Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:11.657Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:14.855Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:14.869Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:51.701Z"}
+error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:51.719Z"}
+error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.868Z"}
+error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.876Z"}
