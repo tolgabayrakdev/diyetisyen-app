@@ -427,7 +427,7 @@ export default function ClientsPage() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mb-4">
                             <div className="text-sm text-muted-foreground">
                                 Toplam {total} danışan - Sayfa {page} / {totalPages}
                             </div>

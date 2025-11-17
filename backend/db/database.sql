@@ -61,10 +61,13 @@ CREATE TABLE subscriptions (
 
 -- Plan verilerini ekle
 INSERT INTO plans (name, duration, price, original_price, client_limit) VALUES
-    ('standard', 'monthly', 199.00, NULL, 100), -- Standard: 100 danışan limiti
-    ('standard', 'yearly', 1910.40, 2388.00, 100), -- 199 * 12 * 0.8 = 1910.40 (20% indirim)
-    ('pro', 'monthly', 299.00, NULL, NULL), -- Pro: Sınırsız danışan (NULL = sınırsız)
-    ('pro', 'yearly', 2870.40, 3588.00, NULL); -- 299 * 12 * 0.8 = 2870.40 (20% indirim)
+    ('standard', 'monthly', 299.00, NULL, 100), -- Standard: 100 danışan limiti
+    ('standard', 'yearly', 2870.40, 3588.00, 100), -- 299 * 12 * 0.8 = 2870.40 (20% indirim)
+    ('pro', 'monthly', 399.00, NULL, NULL), -- Pro: Sınırsız danışan (NULL = sınırsız)
+    ('pro', 'yearly', 3830.40, 4788.00, NULL); -- 399 * 12 * 0.8 = 3830.40 (20% indirim)
+
+
+
 
 -- 1️⃣ Danışanlar
 CREATE TABLE clients (
