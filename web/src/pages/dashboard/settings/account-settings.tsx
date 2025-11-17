@@ -288,7 +288,7 @@ export default function AccountSettings() {
             {/* Header */}
             <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tight">Hesap Ayarları</h1>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground">w
                     Hesap bilgilerinizi ve güvenlik ayarlarınızı buradan yönetebilirsiniz.
                 </p>
             </div>
@@ -494,7 +494,9 @@ export default function AccountSettings() {
                                             ? 'Ücretsiz Deneme' 
                                             : subscription.plan_name === 'pro' 
                                                 ? 'Pro' 
-                                                : 'Premium'
+                                                : subscription.plan_name === 'standard'
+                                                    ? 'Standard'
+                                                    : subscription.plan_name
                                         }
                                     </p>
                                     {subscription.plan_duration && subscription.plan_duration !== 'trial' && (

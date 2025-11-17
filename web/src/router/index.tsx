@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
                 element: <ClientProgressPage />
             },
             {
-                path: '/dashboard/activity-logs',
+                path: '/activity-logs',
                 element: <ActivityLogsPage />
             }
         ]

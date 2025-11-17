@@ -1,5 +1,8 @@
 import pool from "../config/database.js";
 import HttpException from "../exceptions/http-exception.js";
+import SubscriptionService from "./subscription-service.js";
+
+const subscriptionService = new SubscriptionService();
 
 export default class ClientService {
     
@@ -16,6 +19,31 @@ export default class ClientService {
 
             if (dietitianResult.rows.length === 0) {
                 throw new HttpException(404, "Diyetisyen bulunamadı");
+            }
+
+            // Subscription ve client limit kontrolü
+            const subscription = await subscriptionService.getUserSubscription(dietitianId);
+            let clientLimit = null;
+
+            if (subscription) {
+                if (subscription.plan_name === 'trial') {
+                    clientLimit = subscription.client_limit ?? 15;
+                } else if (subscription.client_limit !== null && subscription.client_limit !== undefined) {
+                    clientLimit = subscription.client_limit;
+                }
+            }
+
+            if (clientLimit !== null) {
+                // Mevcut danışan sayısını kontrol et
+                const clientCountResult = await client.query(
+                    "SELECT COUNT(*) FROM clients WHERE dietitian_id = $1",
+                    [dietitianId]
+                );
+                const currentClientCount = parseInt(clientCountResult.rows[0].count);
+
+                if (currentClientCount >= clientLimit) {
+                    throw new HttpException(403, `Danışan limitine ulaştınız. Maksimum ${clientLimit} danışan ekleyebilirsiniz.`);
+                }
             }
 
             const result = await client.query(

@@ -52,13 +52,49 @@ export default function SubscriptionPage() {
                 const fetchedPlans: Plan[] = data.plans;
                 setHasUsedTrial(data.hasUsedTrial || false);
 
-                // Planları organize et (pro ve premium için monthly ve yearly)
+                // Planları organize et (standard ve pro için monthly ve yearly)
                 const organizedPlans: SubscriptionPlan[] = [];
                 
+                const standardMonthly = fetchedPlans.find(p => p.name === 'standard' && p.duration === 'monthly');
+                const standardYearly = fetchedPlans.find(p => p.name === 'standard' && p.duration === 'yearly');
                 const proMonthly = fetchedPlans.find(p => p.name === 'pro' && p.duration === 'monthly');
                 const proYearly = fetchedPlans.find(p => p.name === 'pro' && p.duration === 'yearly');
-                const premiumMonthly = fetchedPlans.find(p => p.name === 'premium' && p.duration === 'monthly');
-                const premiumYearly = fetchedPlans.find(p => p.name === 'premium' && p.duration === 'yearly');
+
+                if (standardMonthly) {
+                    organizedPlans.push({
+                        id: standardMonthly.id,
+                        name: 'Standard',
+                        duration: 'monthly',
+                        price: Number(standardMonthly.price),
+                        features: [
+                            '100 danışan limiti',
+                            'Sınırsız diyet planı oluşturma',
+                            'Sınırsız not ve kayıt',
+                            'Temel analitikler',
+                            'E-posta desteği'
+                        ],
+                        icon: <Zap className="h-5 w-5" />
+                    });
+                }
+
+                if (standardYearly) {
+                    organizedPlans.push({
+                        id: standardYearly.id,
+                        name: 'Standard',
+                        duration: 'yearly',
+                        price: Number(standardYearly.price),
+                        originalPrice: standardYearly.original_price ? Number(standardYearly.original_price) : undefined,
+                        features: [
+                            '100 danışan limiti',
+                            'Sınırsız diyet planı oluşturma',
+                            'Sınırsız not ve kayıt',
+                            'Temel analitikler',
+                            'E-posta desteği',
+                            'Yıllık plan %20 indirim'
+                        ],
+                        icon: <Zap className="h-5 w-5" />
+                    });
+                }
 
                 if (proMonthly) {
                     organizedPlans.push({
@@ -67,13 +103,15 @@ export default function SubscriptionPage() {
                         duration: 'monthly',
                         price: Number(proMonthly.price),
                         features: [
-                            'Sınırsız program oluşturma',
-                            'Sınırsız katılımcı davet etme',
+                            'Sınırsız danışan',
+                            'Sınırsız diyet planı oluşturma',
+                            'Sınırsız not ve kayıt',
                             'Gelişmiş analitikler',
                             'E-posta desteği',
                             'Öncelikli destek'
                         ],
-                        icon: <Zap className="h-5 w-5" />
+                        icon: <Crown className="h-5 w-5" />,
+                        popular: true
                     });
                 }
 
@@ -85,53 +123,16 @@ export default function SubscriptionPage() {
                         price: Number(proYearly.price),
                         originalPrice: proYearly.original_price ? Number(proYearly.original_price) : undefined,
                         features: [
-                            'Sınırsız program oluşturma',
-                            'Sınırsız katılımcı davet etme',
+                            'Sınırsız danışan',
+                            'Sınırsız diyet planı oluşturma',
+                            'Sınırsız not ve kayıt',
                             'Gelişmiş analitikler',
                             'E-posta desteği',
                             'Öncelikli destek',
                             'Yıllık plan %20 indirim'
                         ],
-                        icon: <Zap className="h-5 w-5" />,
+                        icon: <Crown className="h-5 w-5" />,
                         popular: true
-                    });
-                }
-
-                if (premiumMonthly) {
-                    organizedPlans.push({
-                        id: premiumMonthly.id,
-                        name: 'Premium',
-                        duration: 'monthly',
-                        price: Number(premiumMonthly.price),
-                        features: [
-                            'Pro planın tüm özellikleri',
-                            'Özel API erişimi',
-                            'Özel entegrasyonlar',
-                            '7/24 telefon desteği',
-                            'Özel hesap yöneticisi',
-                            'Özel eğitimler'
-                        ],
-                        icon: <Crown className="h-5 w-5" />
-                    });
-                }
-
-                if (premiumYearly) {
-                    organizedPlans.push({
-                        id: premiumYearly.id,
-                        name: 'Premium',
-                        duration: 'yearly',
-                        price: Number(premiumYearly.price),
-                        originalPrice: premiumYearly.original_price ? Number(premiumYearly.original_price) : undefined,
-                        features: [
-                            'Pro planın tüm özellikleri',
-                            'Özel API erişimi',
-                            'Özel entegrasyonlar',
-                            '7/24 telefon desteği',
-                            'Özel hesap yöneticisi',
-                            'Özel eğitimler',
-                            'Yıllık plan %20 indirim'
-                        ],
-                        icon: <Crown className="h-5 w-5" />
                     });
                 }
 
@@ -164,10 +165,18 @@ export default function SubscriptionPage() {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success("7 günlük ücretsiz deneme başlatıldı!");
+                toast.success("Deneme başlatıldı!", {
+                    description: "7 günlük ücretsiz deneme süreniz başladı. Ana sayfaya yönlendiriliyorsunuz...",
+                    duration: 3000,
+                });
+                setTimeout(() => {
+                    toast.info("Yönlendiriliyorsunuz...", {
+                        duration: 1000,
+                    });
+                }, 1000);
                 setTimeout(() => {
                     navigate('/');
-                }, 1500);
+                }, 2000);
             } else {
                 toast.error(data.message || "Deneme başlatılamadı");
             }

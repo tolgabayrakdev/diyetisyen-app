@@ -185,14 +185,14 @@ export function AppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   asChild 
-                  isActive={location.pathname === '/dashboard/activity-logs' || location.pathname.startsWith('/dashboard/activity-logs')}
+                  isActive={location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')}
                   className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
                 >
-                  <Link to="/dashboard/activity-logs" className="flex items-center gap-3">
-                    {(location.pathname === '/dashboard/activity-logs' || location.pathname.startsWith('/dashboard/activity-logs')) && (
+                  <Link to="/activity-logs" className="flex items-center gap-3">
+                    {(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) && (
                       <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary rounded-r" />
                     )}
-                    <Activity className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/dashboard/activity-logs' || location.pathname.startsWith('/dashboard/activity-logs')) ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <Activity className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) ? 'text-primary' : 'text-muted-foreground'}`} />
                     <span className="truncate">Aktivite Logları</span>
                   </Link>
                 </SidebarMenuButton>
@@ -230,15 +230,15 @@ export function AppSidebar() {
                         </span>
                         {subscription && (
                           <Badge 
-                            variant={subscription.is_trial ? "secondary" : subscription.plan_name === 'premium' ? "default" : "outline"}
+                            variant={subscription.is_trial ? "secondary" : subscription.plan_name === 'pro' ? "default" : "outline"}
                             className="text-[9px] px-1.5 py-0 h-4 shrink-0"
                           >
                             {subscription.is_trial 
                               ? 'Deneme' 
                               : subscription.plan_name === 'pro' 
                                 ? 'Pro' 
-                                : subscription.plan_name === 'premium'
-                                  ? 'Premium'
+                                : subscription.plan_name === 'standard'
+                                  ? 'Standard'
                                   : subscription.plan_name
                             }
                           </Badge>

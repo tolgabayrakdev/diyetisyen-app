@@ -26,6 +26,7 @@ export default function ActivityLogsPage() {
 
     useEffect(() => {
         fetchLogs();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, clientId]);
 
     const fetchLogs = async () => {
@@ -53,7 +54,7 @@ export default function ActivityLogsPage() {
                 setLogs(data.logs);
                 setTotalPages(data.pagination?.totalPages || 1);
             }
-        } catch (error) {
+        } catch {
             toast.error("Aktivite logları yüklenirken bir hata oluştu");
         } finally {
             setLoading(false);
@@ -68,7 +69,7 @@ export default function ActivityLogsPage() {
             delete: { label: "Silindi", variant: "destructive" },
         };
         const action = variants[actionType] || { label: actionType, variant: "outline" as const };
-        return <Badge variant={action.variant}>{action.label}</Badge>;
+        return <Badge variant={action.variant} className="text-xs">{action.label}</Badge>;
     };
 
     const getEntityTypeLabel = (entityType: string | null) => {
@@ -99,14 +100,14 @@ export default function ActivityLogsPage() {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold tracking-tight">Aktivite Logları</h1>
-                <p className="text-muted-foreground mt-1">
+                <h1 className="text-2xl font-bold tracking-tight">Aktivite Logları</h1>
+                <p className="text-sm text-muted-foreground mt-1">
                     Sistemdeki tüm aktiviteleri görüntüleyin
                 </p>
             </div>
 
             {/* Filters */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
                 <div className="relative flex-1 max-w-sm">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
@@ -122,6 +123,7 @@ export default function ActivityLogsPage() {
                 {clientId && (
                     <Button
                         variant="outline"
+                        size="sm"
                         onClick={() => {
                             setClientId(null);
                             setPage(1);
@@ -134,43 +136,47 @@ export default function ActivityLogsPage() {
 
             {/* Logs List */}
             {logs.length === 0 ? (
-                <div className="text-center py-12 border rounded-lg">
-                    <Activity className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">Henüz aktivite logu yok</p>
+                <div className="text-center py-8 border rounded-lg">
+                    <Activity className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
+                    <p className="text-sm text-muted-foreground">Henüz aktivite logu yok</p>
                 </div>
             ) : (
                 <>
                     <div className="space-y-3">
                         {logs.map((log) => (
-                            <div key={log.id} className="border rounded-lg p-4 hover:bg-muted/50 transition-colors">
+                            <div key={log.id} className="border rounded-lg p-3 hover:bg-muted/50 transition-colors">
                                 <div className="flex items-start justify-between">
-                                    <div className="flex-1 space-y-2">
+                                    <div className="flex-1 space-y-2 min-w-0">
                                         <div className="flex items-center gap-2 flex-wrap">
                                             {getActionTypeBadge(log.action_type)}
                                             {log.entity_type && (
-                                                <Badge variant="outline">
+                                                <Badge variant="outline" className="text-xs">
                                                     {getEntityTypeLabel(log.entity_type)}
                                                 </Badge>
                                             )}
                                             {log.client_first_name && log.client_last_name && (
-                                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                    <User className="h-3 w-3" />
-                                                    {log.client_first_name} {log.client_last_name}
+                                                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                                    <User className="h-3 w-3 shrink-0" />
+                                                    <span className="truncate">
+                                                        {log.client_first_name} {log.client_last_name}
+                                                    </span>
                                                 </div>
                                             )}
                                         </div>
                                         {log.description && (
-                                            <p className="text-sm">{log.description}</p>
+                                            <p className="text-xs leading-relaxed">{log.description}</p>
                                         )}
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                            <Calendar className="h-3 w-3" />
-                                            {new Date(log.created_at).toLocaleString("tr-TR", {
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                            })}
+                                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                            <Calendar className="h-3 w-3 shrink-0" />
+                                            <span>
+                                                {new Date(log.created_at).toLocaleString("tr-TR", {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

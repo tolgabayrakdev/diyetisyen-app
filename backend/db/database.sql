@@ -34,10 +34,11 @@ CREATE TABLE password_reset_tokens (
 -- Planlar
 CREATE TABLE plans (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name VARCHAR(50) NOT NULL CHECK (name IN ('pro', 'premium')),
+    name VARCHAR(50) NOT NULL CHECK (name IN ('standard', 'pro')),
     duration VARCHAR(20) NOT NULL CHECK (duration IN ('monthly', 'yearly')),
     price DECIMAL(10, 2) NOT NULL,
     original_price DECIMAL(10, 2), -- Yıllık planlar için orijinal fiyat (indirim öncesi)
+    client_limit INTEGER, -- NULL = sınırsız, sayı = limit
     created_at TIMESTAMP DEFAULT now(),
     updated_at TIMESTAMP DEFAULT now(),
     UNIQUE(name, duration)
@@ -59,11 +60,11 @@ CREATE TABLE subscriptions (
 );
 
 -- Plan verilerini ekle
-INSERT INTO plans (name, duration, price, original_price) VALUES
-    ('pro', 'monthly', 199.00, NULL),
-    ('pro', 'yearly', 1910.40, 2388.00), -- 199 * 12 * 0.8 = 1910.40 (20% indirim)
-    ('premium', 'monthly', 289.00, NULL),
-    ('premium', 'yearly', 2774.40, 3468.00); -- 289 * 12 * 0.8 = 2774.40 (20% indirim)
+INSERT INTO plans (name, duration, price, original_price, client_limit) VALUES
+    ('standard', 'monthly', 199.00, NULL, 100), -- Standard: 100 danışan limiti
+    ('standard', 'yearly', 1910.40, 2388.00, 100), -- 199 * 12 * 0.8 = 1910.40 (20% indirim)
+    ('pro', 'monthly', 299.00, NULL, NULL), -- Pro: Sınırsız danışan (NULL = sınırsız)
+    ('pro', 'yearly', 2870.40, 3588.00, NULL); -- 299 * 12 * 0.8 = 2870.40 (20% indirim)
 
 -- 1️⃣ Danışanlar
 CREATE TABLE clients (
@@ -161,3 +162,7 @@ CREATE TABLE activity_logs (
     description TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Seed Data: 100 Örnek Danışan
+-- NOT: Bu script'i çalıştırmadan önce bir diyetisyen kullanıcısı oluşturmanız gerekiyor
+-- Ayrı seed dosyası için: backend/db/seed-clients.sql dosyasına bakın

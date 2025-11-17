@@ -15,6 +15,8 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 
 interface Client {
     id: string;
@@ -29,6 +31,14 @@ interface Client {
     created_at: string;
 }
 
+interface Subscription {
+    id: string;
+    plan_name: string;
+    is_trial: boolean;
+    client_limit: number | null;
+    status: string;
+}
+
 export default function ClientsPage() {
     const navigate = useNavigate();
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +50,8 @@ export default function ClientsPage() {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [total, setTotal] = useState(0);
+    const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [isDeleting, setIsDeleting] = useState<string | null>(null);
     
@@ -70,6 +82,7 @@ export default function ClientsPage() {
     // Fetch clients when page or debounced search term changes
     useEffect(() => {
         fetchClients();
+        fetchSubscription();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, debouncedSearchTerm]);
 
@@ -112,11 +125,31 @@ export default function ClientsPage() {
             if (data.success) {
                 setClients(data.clients);
                 setTotalPages(data.pagination?.totalPages || 1);
+                setTotal(data.pagination?.total || 0);
             }
         } catch {
             toast.error("Danışanlar yüklenirken bir hata oluştu");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchSubscription = async () => {
+        try {
+            const response = await fetch(apiUrl("api/subscription/"), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.subscription) {
+                    setSubscription(data.subscription);
+                }
+            }
+        } catch (error) {
+            // Subscription yoksa sessizce devam et
+            console.error("Subscription fetch error:", error);
         }
     };
 
@@ -254,6 +287,55 @@ export default function ClientsPage() {
                 />
             </div>
 
+            {/* Progress Bar - Danışan Limiti */}
+            {subscription && (
+                <div className="rounded-lg border bg-muted/40 p-3 space-y-1.5">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-medium text-muted-foreground">Danışan Limiti</span>
+                            <Badge
+                                variant={subscription.is_trial ? "secondary" : subscription.plan_name === 'pro' ? "default" : "outline"}
+                                className="text-[10px] px-2 py-0 h-4"
+                            >
+                                {subscription.is_trial 
+                                    ? 'Deneme' 
+                                    : subscription.plan_name === 'pro' 
+                                        ? 'Pro' 
+                                        : subscription.plan_name === 'standard'
+                                            ? 'Standard'
+                                            : subscription.plan_name}
+                            </Badge>
+                        </div>
+                        {subscription.client_limit !== null ? (
+                            <span className="text-xs text-muted-foreground font-medium">
+                                {total} / {subscription.client_limit}
+                            </span>
+                        ) : (
+                            <span className="text-xs text-muted-foreground font-medium">
+                                {total} / Sınırsız
+                            </span>
+                        )}
+                    </div>
+                    {subscription.client_limit !== null ? (
+                        <>
+                            <Progress 
+                                value={Math.min((total / subscription.client_limit) * 100, 100)}
+                                className="h-1.5"
+                            />
+                            {total >= subscription.client_limit && (
+                                <p className="text-[11px] text-destructive">
+                                    Danışan limitine ulaştınız. Daha fazla danışan eklemek için planınızı yükseltin.
+                                </p>
+                            )}
+                        </>
+                    ) : (
+                        <p className="text-[11px] text-muted-foreground">
+                            Pro planınız ile sınırsız danışan ekleyebilirsiniz.
+                        </p>
+                    )}
+                </div>
+            )}
+
             {/* Table */}
             {clients.length === 0 ? (
                 <div className="text-center py-12 border rounded-lg">
@@ -347,7 +429,7 @@ export default function ClientsPage() {
                     {totalPages > 1 && (
                         <div className="flex items-center justify-between">
                             <div className="text-sm text-muted-foreground">
-                                Sayfa {page} / {totalPages}
+                                Toplam {total} danışan - Sayfa {page} / {totalPages}
                             </div>
                             <div className="flex gap-2">
                                 <Button

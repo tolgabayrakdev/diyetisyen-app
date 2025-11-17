@@ -6,7 +6,7 @@ export default class SubscriptionService {
     async getUserSubscription(userId) {
         // Önce trial kontrolü yap
         const trialResult = await pool.query(
-            `SELECT s.*, NULL as plan_name, NULL as plan_duration, NULL as plan_price
+            `SELECT s.*, NULL as plan_name, NULL as plan_duration, NULL as plan_price, NULL as client_limit
              FROM subscriptions s
              WHERE s.user_id = $1 AND s.status = 'active' AND s.is_trial = true
              ORDER BY s.created_at DESC
@@ -24,14 +24,15 @@ export default class SubscriptionService {
                 return {
                     ...trial,
                     plan_name: 'trial',
-                    plan_duration: 'trial'
+                    plan_duration: 'trial',
+                    client_limit: 15
                 };
             }
         }
 
         // Trial yoksa veya bitmişse normal subscription kontrolü yap
         const result = await pool.query(
-            `SELECT s.*, p.name as plan_name, p.duration as plan_duration, p.price as plan_price
+            `SELECT s.*, p.name as plan_name, p.duration as plan_duration, p.price as plan_price, p.client_limit
              FROM subscriptions s
              LEFT JOIN plans p ON s.plan_id = p.id
              WHERE s.user_id = $1 AND s.status = 'active' AND (s.is_trial = false OR s.is_trial IS NULL)
