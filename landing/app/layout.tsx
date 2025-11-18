@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   verification: {
     // Google Search Console verification code buraya eklenecek
-    // google: "your-google-verification-code",
+    google: "A6b2GxiL5iBDO3N7LY7eGK2b6zxQ3OhjlvE_tF3Erxc",
   },
   alternates: {
     canonical: "https://diyetka.com",
