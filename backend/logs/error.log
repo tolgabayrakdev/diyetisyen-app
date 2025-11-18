@@ -94,3 +94,10 @@ error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist
 error: GET /api/diet-plan-templates - 500 - column "dietitian_id" does not exist {"timestamp":"2025-11-17T11:02:51.719Z"}
 error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.868Z"}
 error: GET /api/diet-plans/57101d94-bbee-4949-85c0-482d206e37e4/assigned-clients - 500 - column reference "id" is ambiguous {"timestamp":"2025-11-17T17:13:24.876Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T18:15:39.719Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T18:15:41.775Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:16.522Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:17.854Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.287Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.973Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:24.144Z"}

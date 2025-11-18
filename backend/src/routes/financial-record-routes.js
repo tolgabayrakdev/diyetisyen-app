@@ -7,6 +7,7 @@ const financialRecordController = new FinancialRecordController();
 
 router.post("/clients/:clientId/financial-records", verifyToken, financialRecordController.createRecord.bind(financialRecordController));
 router.get("/clients/:clientId/financial-records", verifyToken, financialRecordController.getRecords.bind(financialRecordController));
+router.get("/financial-records", verifyToken, financialRecordController.getAllRecords.bind(financialRecordController));
 router.get("/financial-records/:id", verifyToken, financialRecordController.getRecordById.bind(financialRecordController));
 router.put("/financial-records/:id", verifyToken, financialRecordController.updateRecord.bind(financialRecordController));
 router.delete("/financial-records/:id", verifyToken, financialRecordController.deleteRecord.bind(financialRecordController));

@@ -10,6 +10,9 @@ import ClientNotesPage from "@/pages/dashboard/clients/notes"
 import ClientFinancialPage from "@/pages/dashboard/clients/financial"
 import ClientProgressPage from "@/pages/dashboard/clients/progress"
 import ActivityLogsPage from "@/pages/dashboard/activity-logs"
+import DietTemplatesPage from "@/pages/dashboard/diet-templates/index"
+import DietTemplateDetailPage from "@/pages/dashboard/diet-templates/detail"
+import FinancialRecordsPage from "@/pages/dashboard/financial/index"
 
 import SignIn from "@/pages/auth/sign-in"
 import SignUp from "@/pages/auth/sign-up"
@@ -61,6 +64,18 @@ export const router = createBrowserRouter([
             {
                 path: '/activity-logs',
                 element: <ActivityLogsPage />
+            },
+            {
+                path: '/diet-templates',
+                element: <DietTemplatesPage />
+            },
+            {
+                path: '/diet-templates/:id',
+                element: <DietTemplateDetailPage />
+            },
+            {
+                path: '/financial',
+                element: <FinancialRecordsPage />
             }
         ]
 

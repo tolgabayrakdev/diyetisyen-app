@@ -1,0 +1,361 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router";
+import { apiUrl } from "@/lib/api";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { DollarSign, Search, Filter, User } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+
+interface FinancialRecord {
+    id: string;
+    client_id: string;
+    first_name: string;
+    last_name: string;
+    amount: number;
+    currency: string;
+    payment_date: string | null;
+    status: string;
+    payment_method: string | null;
+    description: string | null;
+    created_at: string;
+}
+
+interface Client {
+    id: string;
+    first_name: string;
+    last_name: string;
+}
+
+export default function FinancialRecordsPage() {
+    const [loading, setLoading] = useState(true);
+    const [financialRecords, setFinancialRecords] = useState<FinancialRecord[]>([]);
+    const [clients, setClients] = useState<Client[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [statusFilter, setStatusFilter] = useState<string>("all");
+    const [clientFilter, setClientFilter] = useState<string>("all");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        fetchClients();
+    }, []);
+
+    useEffect(() => {
+        fetchFinancialRecords();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page, statusFilter, clientFilter]);
+
+    const fetchClients = async () => {
+        try {
+            const response = await fetch(apiUrl("api/clients?limit=1000"), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setClients(data.clients || []);
+                }
+            }
+        } catch (error) {
+            console.error("Clients fetch error:", error);
+        }
+    };
+
+    const fetchFinancialRecords = async () => {
+        try {
+            setLoading(true);
+            const params = new URLSearchParams();
+            params.append("page", page.toString());
+            params.append("limit", "50");
+            if (statusFilter !== "all") {
+                params.append("status", statusFilter);
+            }
+            if (clientFilter !== "all") {
+                params.append("client_id", clientFilter);
+            }
+
+            const response = await fetch(apiUrl(`api/financial-records?${params.toString()}`), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setFinancialRecords(data.records || []);
+                    setTotalPages(data.pagination?.totalPages || 1);
+                    setTotal(data.pagination?.total || 0);
+                }
+            }
+        } catch {
+            toast.error("Finansal kayıtlar yüklenirken bir hata oluştu");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const filteredRecords = financialRecords.filter((record) => {
+        if (!searchTerm) return true;
+        const searchLower = searchTerm.toLowerCase();
+        const clientName = `${record.first_name} ${record.last_name}`.toLowerCase();
+        const description = (record.description || "").toLowerCase();
+        return (
+            clientName.includes(searchLower) ||
+            description.includes(searchLower) ||
+            record.amount.toString().includes(searchTerm)
+        );
+    });
+
+    // İstatistikler için tüm kayıtları çekmek gerekebilir, şimdilik mevcut kayıtlar üzerinden hesaplıyoruz
+    const totalAmount = filteredRecords.reduce((sum, record) => sum + Number(record.amount), 0);
+    const paidAmount = filteredRecords
+        .filter((r) => r.status === "paid")
+        .reduce((sum, record) => sum + Number(record.amount), 0);
+    const pendingAmount = filteredRecords
+        .filter((r) => r.status === "pending")
+        .reduce((sum, record) => sum + Number(record.amount), 0);
+    const overdueAmount = filteredRecords
+        .filter((r) => r.status === "overdue")
+        .reduce((sum, record) => sum + Number(record.amount), 0);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[400px]">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                    <div className="text-muted-foreground">Yükleniyor...</div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-8 p-6">
+            {/* Header */}
+            <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tight">Finansal Kayıtlar</h1>
+                <p className="text-muted-foreground">
+                    Tüm danışanların finansal kayıtlarını görüntüleyin ve yönetin
+                </p>
+            </div>
+
+            {/* Summary Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="border rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground mb-1">Toplam</p>
+                    <p className="text-2xl font-semibold">{totalAmount.toFixed(2)} ₺</p>
+                </div>
+                <div className="border rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground mb-1">Ödenen</p>
+                    <p className="text-2xl font-semibold text-green-600">{paidAmount.toFixed(2)} ₺</p>
+                </div>
+                <div className="border rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground mb-1">Bekleyen</p>
+                    <p className="text-2xl font-semibold text-orange-600">{pendingAmount.toFixed(2)} ₺</p>
+                </div>
+                <div className="border rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground mb-1">Gecikmiş</p>
+                    <p className="text-2xl font-semibold text-red-600">{overdueAmount.toFixed(2)} ₺</p>
+                </div>
+            </div>
+
+            {/* Filters Section */}
+            <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-primary/10 p-2">
+                        <Filter className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-semibold">Filtrele ve Ara</h2>
+                        <p className="text-sm text-muted-foreground">
+                            Finansal kayıtları filtreleyin ve arayın
+                        </p>
+                    </div>
+                </div>
+                
+                <Separator />
+                
+                <div className="flex gap-4">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            placeholder="Danışan adı, açıklama veya tutar ara..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="pl-9"
+                        />
+                    </div>
+                    <Select value={statusFilter} onValueChange={(value) => {
+                        setStatusFilter(value);
+                        setPage(1);
+                    }}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Durum" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Tüm Durumlar</SelectItem>
+                            <SelectItem value="pending">Beklemede</SelectItem>
+                            <SelectItem value="paid">Ödendi</SelectItem>
+                            <SelectItem value="overdue">Gecikmiş</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Select value={clientFilter} onValueChange={(value) => {
+                        setClientFilter(value);
+                        setPage(1);
+                    }}>
+                        <SelectTrigger className="w-[200px]">
+                            <SelectValue placeholder="Danışan" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Tüm Danışanlar</SelectItem>
+                            {clients.map((client) => (
+                                <SelectItem key={client.id} value={client.id}>
+                                    {client.first_name} {client.last_name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
+
+            {/* Financial Records Table */}
+            <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                    <div className="rounded-lg bg-primary/10 p-2">
+                        <DollarSign className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                        <h2 className="text-xl font-semibold">Kayıtlar</h2>
+                        <p className="text-sm text-muted-foreground">
+                            {total} kayıt bulundu
+                        </p>
+                    </div>
+                </div>
+                
+                <Separator />
+
+                {filteredRecords.length === 0 ? (
+                    <div className="text-center py-12 border rounded-lg">
+                        <DollarSign className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                        <p className="text-sm text-muted-foreground">
+                            {searchTerm || statusFilter !== "all" || clientFilter !== "all"
+                                ? "Filtrelere uygun kayıt bulunamadı"
+                                : "Henüz finansal kayıt yok"}
+                        </p>
+                    </div>
+                ) : (
+                    <>
+                        <div className="border rounded-lg">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Danışan</TableHead>
+                                        <TableHead>Tutar</TableHead>
+                                        <TableHead>Durum</TableHead>
+                                        <TableHead>Ödeme Tarihi</TableHead>
+                                        <TableHead>Ödeme Yöntemi</TableHead>
+                                        <TableHead>Açıklama</TableHead>
+                                        <TableHead>Oluşturulma</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {filteredRecords.map((record) => (
+                                        <TableRow key={record.id}>
+                                            <TableCell>
+                                                <Link
+                                                    to={`/clients/${record.client_id}/financial`}
+                                                    className="flex items-center gap-2 text-primary hover:underline"
+                                                >
+                                                    <User className="h-4 w-4" />
+                                                    <span>
+                                                        {record.first_name} {record.last_name}
+                                                    </span>
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell className="font-semibold">
+                                                {record.amount.toFixed(2)} {record.currency}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Badge
+                                                    variant={
+                                                        record.status === "paid"
+                                                            ? "default"
+                                                            : record.status === "overdue"
+                                                            ? "destructive"
+                                                            : "secondary"
+                                                    }
+                                                >
+                                                    {record.status === "paid"
+                                                        ? "Ödendi"
+                                                        : record.status === "overdue"
+                                                        ? "Gecikmiş"
+                                                        : "Beklemede"}
+                                                </Badge>
+                                            </TableCell>
+                                            <TableCell>
+                                                {record.payment_date
+                                                    ? new Date(record.payment_date).toLocaleDateString("tr-TR")
+                                                    : "-"}
+                                            </TableCell>
+                                            <TableCell>
+                                                {record.payment_method || "-"}
+                                            </TableCell>
+                                            <TableCell className="max-w-[200px] truncate">
+                                                {record.description || "-"}
+                                            </TableCell>
+                                            <TableCell className="text-sm text-muted-foreground">
+                                                {new Date(record.created_at).toLocaleDateString("tr-TR")}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+
+                        {/* Pagination */}
+                        {totalPages > 1 && (
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm text-muted-foreground">
+                                    Sayfa {page} / {totalPages}
+                                </p>
+                                <div className="flex gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                                        disabled={page === 1}
+                                    >
+                                        Önceki
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                                        disabled={page === totalPages}
+                                    >
+                                        Sonraki
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </div>
+    );
+}
+

@@ -79,5 +79,22 @@ export default class FinancialRecordController {
             next(error);
         }
     }
+
+    async getAllRecords(req, res, next) {
+        try {
+            const dietitianId = req.user.id;
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 50;
+            const status = req.query.status || null;
+            const clientId = req.query.client_id || null;
+            const result = await this.financialRecordService.getAllRecords(dietitianId, page, limit, status, clientId);
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 

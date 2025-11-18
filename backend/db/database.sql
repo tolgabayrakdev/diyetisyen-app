@@ -117,6 +117,35 @@ CREATE TABLE diet_plan_meals (
     meal_time VARCHAR(50),
     foods JSONB,
     calories NUMERIC,
+    day_of_week INTEGER, -- 0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (opsiyonel)
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 4️⃣.1 Diyet Şablonları (Diyetisyenlerin oluşturduğu profesyonel diyet listeleri)
+CREATE TABLE diet_templates (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    category VARCHAR(100), -- Örn: 'kilo_verme', 'kilo_alma', 'saglikli_beslenme', 'sporcu_beslenmesi'
+    total_calories NUMERIC, -- Günlük toplam kalori
+    duration_days INTEGER, -- Şablonun kaç günlük olduğu (örn: 7, 14, 30)
+    pdf_url TEXT, -- PDF dosyası URL'i (opsiyonel)
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 4️⃣.2 Diyet Şablonu Öğünleri
+CREATE TABLE diet_template_meals (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    diet_template_id UUID NOT NULL REFERENCES diet_templates(id) ON DELETE CASCADE,
+    meal_time VARCHAR(50) NOT NULL, -- Örn: 'kahvalti', 'ogle_yemegi', 'aksam_yemegi', 'atistirma'
+    foods JSONB NOT NULL, -- Yiyecek listesi: [{"name": "Yumurta", "amount": "2 adet", "calories": 140}, ...]
+    calories NUMERIC,
+    day_of_week INTEGER, -- 0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (NULL = her gün aynı)
+    notes TEXT, -- Özel notlar
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );

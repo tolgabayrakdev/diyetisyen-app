@@ -402,3 +402,18 @@ warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:03.687Z"}
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:18.901Z"}
 warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-17T17:21:18.907Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T18:15:39.719Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T18:15:41.775Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:16.522Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:17.854Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.287Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.973Z"}
+error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:24.144Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:31.475Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:31.480Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:31.549Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:31.551Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:33.281Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:05:33.285Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:06:03.306Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-18T07:06:03.309Z"}

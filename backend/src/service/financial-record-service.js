@@ -257,5 +257,72 @@ export default class FinancialRecordService {
             client.release();
         }
     }
+
+    /**
+     * Diyetisyenin tüm danışanlarının finansal kayıtlarını getir
+     */
+    async getAllRecords(dietitianId, page = 1, limit = 50, status = null, clientId = null) {
+        const offset = (page - 1) * limit;
+        let query = `
+            SELECT 
+                fr.*,
+                c.id as client_id,
+                c.first_name,
+                c.last_name
+            FROM financial_records fr
+            INNER JOIN clients c ON fr.client_id = c.id
+            WHERE c.dietitian_id = $1
+        `;
+        const params = [dietitianId];
+        let paramIndex = 2;
+
+        if (clientId) {
+            query += ` AND fr.client_id = $${paramIndex++}`;
+            params.push(clientId);
+        }
+
+        if (status) {
+            query += ` AND fr.status = $${paramIndex++}`;
+            params.push(status);
+        }
+
+        query += ` ORDER BY fr.payment_date DESC, fr.created_at DESC LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+        params.push(limit, offset);
+
+        const result = await pool.query(query, params);
+
+        // Toplam sayıyı al
+        let countQuery = `
+            SELECT COUNT(*) 
+            FROM financial_records fr
+            INNER JOIN clients c ON fr.client_id = c.id
+            WHERE c.dietitian_id = $1
+        `;
+        const countParams = [dietitianId];
+        let countParamIndex = 2;
+
+        if (clientId) {
+            countQuery += ` AND fr.client_id = $${countParamIndex++}`;
+            countParams.push(clientId);
+        }
+
+        if (status) {
+            countQuery += ` AND fr.status = $${countParamIndex++}`;
+            countParams.push(status);
+        }
+
+        const countResult = await pool.query(countQuery, countParams);
+        const total = parseInt(countResult.rows[0].count);
+
+        return {
+            records: result.rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                totalPages: Math.ceil(total / limit)
+            }
+        };
+    }
 }
 
