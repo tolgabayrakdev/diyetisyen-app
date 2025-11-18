@@ -19,6 +19,7 @@ import SignUp from "@/pages/auth/sign-up"
 import ForgotPassword from "@/pages/auth/forgot-password"
 import SubscriptionPage from "@/pages/subscription/index"
 import PaymentPage from "@/pages/subscription/payment"
+import NotFound from "@/pages/not-found"
 
 export const router = createBrowserRouter([
     {
@@ -99,6 +100,9 @@ export const router = createBrowserRouter([
     {
         path: '/subscription/payment',
         element: <PaymentPage />
+    },
+    {
+        path: '*',
+        element: <NotFound />
     }
-
 ])

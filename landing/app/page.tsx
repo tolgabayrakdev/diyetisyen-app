@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { FadeInUp, FadeIn, StaggerContainer, StaggerItem, Counter, ScaleOnHover } from "./components/animations";
+import { FadeInUp, StaggerContainer, StaggerItem, Counter, ScaleOnHover } from "./components/animations";
 import { FeatureCard } from "./components/feature-card";
 import { AnimatedText } from "./components/animated-text";
 import { StarsBackground } from "./components/stars-background";

@@ -636,7 +636,7 @@ export default function DietTemplateDetailPage() {
 
             {/* Add/Edit Meal Dialog */}
             <Dialog open={isMealDialogOpen} onOpenChange={setIsMealDialogOpen}>
-                <DialogContent className="min-w-[48rem] max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="min-w-3xl max-w-4xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>{editingMeal ? "Öğünü Düzenle" : "Yeni Öğün Ekle"}</DialogTitle>
                         <DialogDescription>

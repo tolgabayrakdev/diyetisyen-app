@@ -78,12 +78,6 @@ export function FinancialPDFReport({
             overdue: 'Gecikmiş'
         };
 
-        const statusColors: Record<string, string> = {
-            paid: '#16a34a',
-            pending: '#ea580c',
-            overdue: '#dc2626'
-        };
-
         return `
 <!DOCTYPE html>
 <html lang="tr">
@@ -385,7 +379,7 @@ export function FinancialPDFReport({
         <div class="filters-section">
             <div class="filters-title">Uygulanan Filtreler</div>
             ${filters.searchTerm ? `<div class="filter-item"><strong>Arama:</strong> ${filters.searchTerm}</div>` : ''}
-            ${filters.statusFilter !== 'all' ? `<div class="filter-item"><strong>Durum:</strong> ${statusLabels[filters.statusFilter] || filters.statusFilter}</div>` : ''}
+            ${filters.statusFilter && filters.statusFilter !== 'all' ? `<div class="filter-item"><strong>Durum:</strong> ${statusLabels[filters.statusFilter] || filters.statusFilter}</div>` : ''}
             ${filters.clientFilter !== 'all' && filters.clientName ? `<div class="filter-item"><strong>Danışan:</strong> ${filters.clientName}</div>` : ''}
             ${filters.timeFilter !== 'all' ? `<div class="filter-item"><strong>Zaman Aralığı:</strong> ${
                 filters.timeFilter === 'weekly' ? 'Son 7 Gün' :
