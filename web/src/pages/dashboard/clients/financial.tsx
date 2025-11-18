@@ -93,7 +93,12 @@ export default function ClientFinancialPage() {
             if (response.ok) {
                 const data = await response.json();
                 if (data.success) {
-                    setFinancialRecords(data.records || []);
+                    // API'den gelen amount değerlerini number'a dönüştür
+                    const records = (data.records || []).map((record: FinancialRecord) => ({
+                        ...record,
+                        amount: typeof record.amount === 'string' ? parseFloat(record.amount) : record.amount,
+                    }));
+                    setFinancialRecords(records);
                 }
             }
         } catch {
@@ -241,7 +246,7 @@ export default function ClientFinancialPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                                         <p className="text-base font-semibold">
-                                            {record.amount} {record.currency}
+                                            {Number(record.amount).toFixed(2)} {record.currency}
                                         </p>
                                         <Badge
                                             variant={
