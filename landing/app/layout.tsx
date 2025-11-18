@@ -75,7 +75,6 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Google Search Console verification code buraya eklenecek
     google: "A6b2GxiL5iBDO3N7LY7eGK2b6zxQ3OhjlvE_tF3Erxc",
   },
   alternates: {
