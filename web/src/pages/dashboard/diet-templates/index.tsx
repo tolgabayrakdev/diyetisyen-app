@@ -244,12 +244,12 @@ export default function DietTemplatesPage() {
     }
 
     return (
-        <div className="space-y-8 p-6">
+        <div className="space-y-6">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div className="space-y-2">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="space-y-1">
                     <h1 className="text-3xl font-bold tracking-tight">Diyet Şablonları</h1>
-                    <p className="text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                         Profesyonel diyet listeleri oluşturun ve danışanlarınıza atayın
                     </p>
                 </div>
@@ -275,8 +275,8 @@ export default function DietTemplatesPage() {
                 
                 <Separator />
                 
-                <div className="flex gap-4">
-                    <div className="relative flex-1">
+                <div className="flex flex-wrap gap-4">
+                    <div className="relative flex-1 min-w-[200px]">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                             placeholder="Şablon ara..."

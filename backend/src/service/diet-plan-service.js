@@ -95,7 +95,26 @@ export default class DietPlanService {
             throw new HttpException(404, "Diyet planı bulunamadı");
         }
 
-        return result.rows[0];
+        const plan = result.rows[0];
+
+        // Öğünleri al
+        const mealsResult = await pool.query(
+            `SELECT * FROM diet_plan_meals 
+             WHERE diet_plan_id = $1 
+             ORDER BY day_of_week NULLS FIRST, meal_time`,
+            [planId]
+        );
+
+        // JSONB alanlarını parse et
+        const meals = mealsResult.rows.map(row => ({
+            ...row,
+            foods: row.foods ? (typeof row.foods === 'string' ? JSON.parse(row.foods) : row.foods) : null
+        }));
+
+        return {
+            ...plan,
+            meals
+        };
     }
 
     async updateDietPlan(dietitianId, planId, planData) {

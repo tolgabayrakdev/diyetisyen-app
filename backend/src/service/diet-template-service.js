@@ -124,9 +124,25 @@ export default class DietTemplateService {
             foods: row.foods ? (typeof row.foods === 'string' ? JSON.parse(row.foods) : row.foods) : null
         }));
 
+        // Bu şablondan oluşturulmuş planları ve danışanları bul
+        // diet_plans tablosunda title'a göre eşleştirme yapıyoruz
+        // (Şablon atandığında title kopyalanıyor, assignmentData.title yoksa template.title kullanılıyor)
+        const assignedClientsResult = await pool.query(
+            `SELECT DISTINCT c.id, c.first_name, c.last_name
+             FROM diet_plans dp
+             INNER JOIN clients c ON dp.client_id = c.id
+             WHERE c.dietitian_id = $1
+               AND dp.title = $2
+             ORDER BY c.first_name, c.last_name`,
+            [dietitianId, template.title]
+        );
+
+        const assignedClients = assignedClientsResult.rows;
+
         return {
             ...template,
-            meals
+            meals,
+            assigned_clients: assignedClients
         };
     }
 
@@ -465,6 +481,27 @@ export default class DietTemplateService {
                 throw new HttpException(400, "Bazı danışanlar bulunamadı veya size ait değil");
             }
 
+            // Aynı şablonun aynı danışana tekrar atanmasını engelle
+            const duplicateAssignments = await client.query(
+                `SELECT dp.client_id 
+                 FROM diet_plans dp
+                 WHERE dp.template_id = $1
+                   AND dp.client_id = ANY($2::uuid[])`,
+                [templateId, clientIds]
+            );
+
+            if (duplicateAssignments.rows.length > 0) {
+                const alreadyAssignedClientIds = duplicateAssignments.rows.map(row => row.client_id);
+                const alreadyAssignedClients = clientsCheck.rows
+                    .filter(c => alreadyAssignedClientIds.includes(c.id))
+                    .map(c => `${c.first_name} ${c.last_name}`);
+
+                throw new HttpException(
+                    400,
+                    `Bu şablon zaten şu danışanlara atanmış: ${alreadyAssignedClients.join(", ")}`
+                );
+            }
+
             const assignedPlans = [];
             
             // Eğer şablonda PDF varsa, her client için kopyala
@@ -483,15 +520,16 @@ export default class DietTemplateService {
                 // Diet plan oluştur
                 const planResult = await client.query(
                     `INSERT INTO diet_plans (
-                        client_id, title, description, start_date, end_date
-                    ) VALUES ($1, $2, $3, $4, $5)
+                        client_id, title, description, start_date, end_date, template_id
+                    ) VALUES ($1, $2, $3, $4, $5, $6)
                     RETURNING *`,
                     [
                         clientId,
                         assignmentData.title || template.title,
                         assignmentData.description || template.description,
                         assignmentData.start_date || null,
-                        assignmentData.end_date || null
+                        assignmentData.end_date || null,
+                        templateId
                     ]
                 );
 

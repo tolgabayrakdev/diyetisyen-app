@@ -35,6 +35,7 @@ interface DietPlan {
     description: string | null;
     start_date: string | null;
     end_date: string | null;
+    template_id?: string | null;
     created_at: string;
 }
 

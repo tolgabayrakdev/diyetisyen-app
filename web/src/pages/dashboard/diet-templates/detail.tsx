@@ -58,6 +58,7 @@ interface DietTemplate {
     created_at: string;
     updated_at: string;
     meals: Meal[];
+    assigned_clients?: Client[];
 }
 
 interface Meal {
@@ -137,6 +138,14 @@ export default function DietTemplateDetailPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
+
+    useEffect(() => {
+        // Dialog açıldığında, atanmış danışanları seçili olarak işaretle
+        if (isAssignDialogOpen && template?.assigned_clients) {
+            const assignedIds = template.assigned_clients.map(client => client.id);
+            setSelectedClientIds(assignedIds);
+        }
+    }, [isAssignDialogOpen, template]);
 
     const fetchTemplate = async () => {
         try {
@@ -345,7 +354,8 @@ export default function DietTemplateDetailPage() {
 
             toast.success(`${selectedClientIds.length} danışana şablon başarıyla atandı`);
             setIsAssignDialogOpen(false);
-            setSelectedClientIds([]);
+            // Şablonu yeniden yükle ki atanmış danışanlar güncellensin
+            await fetchTemplate();
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
             toast.error(errorMessage);
@@ -392,7 +402,7 @@ export default function DietTemplateDetailPage() {
     }, {} as Record<string | number, Meal[]>);
 
     return (
-        <div className="space-y-8 p-6">
+        <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
                 <BreadcrumbList>
@@ -407,16 +417,16 @@ export default function DietTemplateDetailPage() {
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-start justify-between">
-                <div className="space-y-2">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="space-y-1">
                     <div className="flex items-center gap-3">
                         <Button variant="ghost" size="icon" onClick={() => navigate("/diet-templates")}>
                             <ArrowLeft className="h-4 w-4" />
                         </Button>
-                        <h1 className="text-3xl font-bold tracking-tight">{template.title}</h1>
+                        <h1 className="text-2xl font-bold tracking-tight">{template.title}</h1>
                     </div>
                     {template.description && (
-                        <p className="text-muted-foreground">{template.description}</p>
+                        <p className="text-sm text-muted-foreground">{template.description}</p>
                     )}
                 </div>
                 <div className="flex gap-2">
@@ -481,6 +491,21 @@ export default function DietTemplateDetailPage() {
                         </Label>
                         <p className="text-base">{template.meals.length} öğün</p>
                     </div>
+                    {template.assigned_clients && template.assigned_clients.length > 0 && (
+                        <div className="space-y-2 md:col-span-2">
+                            <Label className="text-sm font-medium flex items-center gap-2">
+                                <Users className="h-4 w-4 text-muted-foreground" />
+                                Atanan Danışanlar
+                            </Label>
+                            <div className="flex flex-wrap gap-2">
+                                {template.assigned_clients.map((client) => (
+                                    <Badge key={client.id} variant="secondary">
+                                        {client.first_name} {client.last_name}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                     {template.pdf_url && (
                         <div className="space-y-2">
                             <Label className="text-sm font-medium flex items-center gap-2">
@@ -815,30 +840,40 @@ export default function DietTemplateDetailPage() {
                                     </p>
                                 ) : (
                                     <div className="space-y-2">
-                                        {clients.map((client) => (
-                                            <label
-                                                key={client.id}
-                                                className="flex items-center space-x-2 p-2 hover:bg-accent rounded cursor-pointer"
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedClientIds.includes(client.id)}
-                                                    onChange={(e) => {
-                                                        if (e.target.checked) {
-                                                            setSelectedClientIds([...selectedClientIds, client.id]);
-                                                        } else {
-                                                            setSelectedClientIds(
-                                                                selectedClientIds.filter((id) => id !== client.id)
-                                                            );
-                                                        }
-                                                    }}
-                                                    className="rounded"
-                                                />
-                                                <span className="text-sm">
-                                                    {client.first_name} {client.last_name}
-                                                </span>
-                                            </label>
-                                        ))}
+                                        {clients.map((client) => {
+                                            const isAssigned = template?.assigned_clients?.some(
+                                                (ac) => ac.id === client.id
+                                            );
+                                            return (
+                                                <label
+                                                    key={client.id}
+                                                    className="flex items-center space-x-2 p-2 hover:bg-accent rounded cursor-pointer"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedClientIds.includes(client.id)}
+                                                        onChange={(e) => {
+                                                            if (e.target.checked) {
+                                                                setSelectedClientIds([...selectedClientIds, client.id]);
+                                                            } else {
+                                                                setSelectedClientIds(
+                                                                    selectedClientIds.filter((id) => id !== client.id)
+                                                                );
+                                                            }
+                                                        }}
+                                                        className="rounded"
+                                                    />
+                                                    <span className="text-sm flex items-center gap-2">
+                                                        {client.first_name} {client.last_name}
+                                                        {isAssigned && (
+                                                            <Badge variant="outline" className="text-xs">
+                                                                Atanmış
+                                                            </Badge>
+                                                        )}
+                                                    </span>
+                                                </label>
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>

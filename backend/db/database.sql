@@ -106,9 +106,11 @@ CREATE TABLE diet_plans (
     description TEXT,
     start_date DATE,
     end_date DATE,
+    template_id UUID REFERENCES diet_templates(id) ON DELETE SET NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
+CREATE INDEX IF NOT EXISTS idx_diet_plans_template_id ON diet_plans(template_id);
 
 -- 4️⃣ Diyet Planı Öğünleri
 CREATE TABLE diet_plan_meals (

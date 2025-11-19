@@ -190,14 +190,14 @@ export default function FinancialRecordsPage() {
     }
 
     return (
-        <div className="space-y-8 p-6">
+        <div className="space-y-6">
             {/* Header */}
-            <div className="flex items-start justify-between">
-            <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tight">Finansal Kayıtlar</h1>
-                <p className="text-muted-foreground">
-                    Tüm danışanların finansal kayıtlarını görüntüleyin ve yönetin
-                </p>
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="space-y-1">
+                    <h1 className="text-3xl font-bold tracking-tight">Finansal Kayıtlar</h1>
+                    <p className="text-sm text-muted-foreground">
+                        Tüm danışanların finansal kayıtlarını görüntüleyin ve yönetin
+                    </p>
                 </div>
                 {filteredRecords.length > 0 && (() => {
                     const selectedClient = clientFilter !== "all" 
