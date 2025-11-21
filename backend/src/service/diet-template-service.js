@@ -169,7 +169,7 @@ export default class DietTemplateService {
             const updateValues = [];
             let paramIndex = 1;
 
-            const allowedFields = ['title', 'description', 'category', 'total_calories', 'duration_days', 'pdf_url', 'is_active'];
+            const allowedFields = ['title', 'description', 'category', 'total_calories', 'duration_days', 'pdf_url', 'is_active', 'content'];
             allowedFields.forEach(field => {
                 if (templateData[field] !== undefined) {
                     updateFields.push(`${field} = $${paramIndex++}`);

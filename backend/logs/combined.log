@@ -439,3 +439,47 @@ warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-19T09:
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-19T09:36:09.752Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-19T09:36:09.833Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-19T09:36:09.834Z"}
+warn: POST /api/clients/c69b8d94-ce7d-4377-b666-854b39dfc05c/diet-plans - 500 - column "content" of relation "diet_plans" does not exist {"timestamp":"2025-11-19T11:06:56.497Z"}
+warn: POST /api/clients/c69b8d94-ce7d-4377-b666-854b39dfc05c/diet-plans - 500 - column "content" of relation "diet_plans" does not exist {"timestamp":"2025-11-19T11:06:57.677Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T15:07:23.294Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T15:07:23.299Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T15:07:23.382Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T15:07:23.384Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T18:21:20.518Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T18:21:20.527Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T18:21:20.591Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T18:21:20.593Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:27.636Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:27.640Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:27.703Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:27.706Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:29.813Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:29.819Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:41.191Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-20T19:44:41.196Z"}
+error: PUT /api/diet-plans/2a8fa2c7-40b7-45d0-9a90-0200be27bb27 - 500 - request entity too large {"timestamp":"2025-11-20T20:43:33.171Z"}
+warn: PUT /api/diet-plans/2a8fa2c7-40b7-45d0-9a90-0200be27bb27 - 500 - column "pdf_url" of relation "diet_plans" does not exist {"timestamp":"2025-11-20T20:51:29.875Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:10:12.961Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:10:12.964Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:10:13.019Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:10:13.023Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:29.579Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:29.583Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:29.645Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:29.646Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.649Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.652Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.768Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.769Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.956Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:33.957Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:34.102Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-20T21:39:34.104Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:51.454Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:51.458Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:51.531Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:51.533Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.091Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.095Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.149Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.150Z"}

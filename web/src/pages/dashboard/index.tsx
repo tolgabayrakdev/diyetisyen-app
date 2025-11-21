@@ -4,7 +4,8 @@ import { apiUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import { Users, TrendingUp, Plus, FileText, DollarSign } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Users, TrendingUp, FileText, DollarSign, Activity, Clock } from "lucide-react";
 
 interface UserData {
     id: string;
@@ -21,6 +22,17 @@ interface Stats {
     totalFinancial: number;
 }
 
+interface ActivityLog {
+    id: string;
+    client_id: string | null;
+    client_first_name: string | null;
+    client_last_name: string | null;
+    entity_type: string | null;
+    action_type: string | null;
+    description: string | null;
+    created_at: string;
+}
+
 export default function DashboardIndex() {
     const navigate = useNavigate();
     const [user, setUser] = useState<UserData | null>(null);
@@ -31,6 +43,7 @@ export default function DashboardIndex() {
         totalNotes: 0,
         totalFinancial: 0,
     });
+    const [recentActivities, setRecentActivities] = useState<ActivityLog[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,6 +76,19 @@ export default function DashboardIndex() {
                             totalNotes: statisticsData.totalNotes || 0,
                             totalFinancial: statisticsData.totalFinancial || 0,
                         });
+                    }
+                }
+
+                // Fetch recent activities
+                const activitiesResponse = await fetch(apiUrl("api/activity-logs?page=1&limit=5"), {
+                    method: "GET",
+                    credentials: "include",
+                });
+
+                if (activitiesResponse.ok) {
+                    const activitiesData = await activitiesResponse.json();
+                    if (activitiesData.success) {
+                        setRecentActivities(activitiesData.logs || []);
                     }
                 }
             } catch (error) {
@@ -156,48 +182,99 @@ export default function DashboardIndex() {
                 </div>
             </div>
 
-            {/* Hızlı Erişim */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
-                        <Plus className="h-5 w-5 text-primary" />
+            {/* Son Aktiviteler */}
+            <div className="space-y-4 mt-10">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-lg bg-primary/10 p-2">
+                            <Activity className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold">Son Aktiviteler</h2>
+                        </div>
                     </div>
-                    <div>
-                        <h2 className="text-xl font-semibold">Hızlı Erişim</h2>
-                        <p className="text-sm text-muted-foreground">
-                            En sık kullanılan işlemler
-                        </p>
-                    </div>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => navigate("/activity-logs")}
+                    >
+                        Tümünü Gör
+                    </Button>
                 </div>
                 
                 <Separator />
                 
-                <div className="space-y-2">
-                    <Button
-                        variant="outline"
-                        className="w-full justify-start gap-2"
-                        onClick={() => navigate("/clients")}
-                    >
-                        <Users className="h-4 w-4" />
-                        Tüm Danışanlar
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="w-full justify-start gap-2"
-                        onClick={() => navigate("/clients")}
-                    >
-                        <Plus className="h-4 w-4" />
-                        Yeni Danışan Ekle
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="w-full justify-start gap-2"
-                        onClick={() => navigate("/activity-logs")}
-                    >
-                        <TrendingUp className="h-4 w-4" />
-                        Aktivite Logları
-                    </Button>
-                </div>
+                {recentActivities.length === 0 ? (
+                    <div className="text-center py-6 border rounded-lg">
+                        <p className="text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
+                    </div>
+                ) : (
+                    <div className="space-y-1.5">
+                        {recentActivities.map((log) => {
+                            const getActionTypeBadge = (actionType: string | null) => {
+                                if (!actionType) return null;
+                                const variants: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
+                                    create: { label: "Oluşturuldu", variant: "default" },
+                                    update: { label: "Güncellendi", variant: "secondary" },
+                                    delete: { label: "Silindi", variant: "destructive" },
+                                };
+                                const action = variants[actionType] || { label: actionType, variant: "outline" as const };
+                                return <Badge variant={action.variant} className="text-xs">{action.label}</Badge>;
+                            };
+
+                            const getEntityTypeLabel = (entityType: string | null) => {
+                                if (!entityType) return "Bilinmeyen";
+                                const labels: Record<string, string> = {
+                                    client: "Danışan",
+                                    diet_plan: "Diyet Planı",
+                                    note: "Not",
+                                    financial_record: "Finansal Kayıt",
+                                    progress_log: "İlerleme Kaydı",
+                                    document: "Belge",
+                                };
+                                return labels[entityType] || entityType;
+                            };
+
+                            const formatTimeAgo = (dateString: string) => {
+                                const date = new Date(dateString);
+                                const now = new Date();
+                                const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+                                
+                                if (diffInSeconds < 60) return "Az önce";
+                                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} dk`;
+                                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} sa`;
+                                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} gün`;
+                                
+                                return date.toLocaleDateString("tr-TR", {
+                                    day: "numeric",
+                                    month: "short",
+                                });
+                            };
+
+                            return (
+                                <div key={log.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
+                                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                                        {getActionTypeBadge(log.action_type)}
+                                        {log.entity_type && (
+                                            <span className="text-muted-foreground text-xs">
+                                                {getEntityTypeLabel(log.entity_type)}
+                                            </span>
+                                        )}
+                                        {log.client_first_name && log.client_last_name && (
+                                            <span className="text-muted-foreground truncate">
+                                                {log.client_first_name} {log.client_last_name}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
+                                        <Clock className="h-3 w-3" />
+                                        <span>{formatTimeAgo(log.created_at)}</span>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </div>
     );

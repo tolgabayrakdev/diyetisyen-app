@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, FileText, Calendar } from "lucide-react";
+import { Plus, FileText, Calendar, Edit, Trash2 } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -46,12 +46,20 @@ export default function ClientDietPlansPage() {
     const [client, setClient] = useState<Client | null>(null);
     const [dietPlans, setDietPlans] = useState<DietPlan[]>([]);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [isDeletingPlan, setIsDeletingPlan] = useState<string | null>(null);
+    const [editingPlan, setEditingPlan] = useState<DietPlan | null>(null);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         start_date: "",
         end_date: "",
+    });
+    const [editFormData, setEditFormData] = useState({
+        title: "",
+        description: "",
     });
 
     useEffect(() => {
@@ -133,12 +141,63 @@ export default function ClientDietPlansPage() {
                 start_date: "",
                 end_date: "",
             });
-            fetchDietPlans();
+            
+            // Plan oluşturulduktan sonra direkt plan detay sayfasına yönlendir
+            if (data.dietPlan && data.dietPlan.id) {
+                navigate(`/clients/${id}/diet-plans/${data.dietPlan.id}`);
+            } else {
+                fetchDietPlans();
+            }
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
             toast.error(errorMessage);
         } finally {
             setIsCreating(false);
+        }
+    };
+
+    const handleEditPlan = (plan: DietPlan) => {
+        setEditingPlan(plan);
+        setEditFormData({
+            title: plan.title,
+            description: plan.description || "",
+        });
+        setIsEditDialogOpen(true);
+    };
+
+    const handleSaveEdit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingPlan) return;
+
+        setIsSaving(true);
+        try {
+            const response = await fetch(apiUrl(`api/diet-plans/${editingPlan.id}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    title: editFormData.title,
+                    description: editFormData.description || null,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Plan güncellenemedi");
+            }
+
+            toast.success("Plan başarıyla güncellendi");
+            setIsEditDialogOpen(false);
+            setEditingPlan(null);
+            fetchDietPlans();
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
+            toast.error(errorMessage);
+        } finally {
+            setIsSaving(false);
         }
     };
 
@@ -207,11 +266,13 @@ export default function ClientDietPlansPage() {
                     {dietPlans.map((plan) => (
                         <div
                             key={plan.id}
-                            className="border rounded-lg p-3 hover:bg-muted/50 transition-colors cursor-pointer"
-                            onClick={() => navigate(`/clients/${id}/diet-plans/${plan.id}`)}
+                            className="border rounded-lg p-3 hover:bg-muted/50 transition-colors"
                         >
                             <div className="flex items-center justify-between">
-                                <div className="flex-1 min-w-0">
+                                <div 
+                                    className="flex-1 min-w-0 cursor-pointer"
+                                    onClick={() => navigate(`/clients/${id}/diet-plans/${plan.id}`)}
+                                >
                                     <h3 className="font-semibold text-sm mb-1 truncate">{plan.title}</h3>
                                     {plan.description && (
                                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
@@ -228,6 +289,58 @@ export default function ClientDietPlansPage() {
                                         </div>
                                     )}
                                 </div>
+                                <div className="flex items-center gap-2 shrink-0 ml-4">
+                                    <div className="text-xs text-muted-foreground">
+                                        {new Date(plan.created_at).toLocaleDateString("tr-TR")}
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleEditPlan(plan);
+                                        }}
+                                    >
+                                        <Edit className="h-4 w-4" />
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 text-destructive hover:text-destructive"
+                                        onClick={async (e) => {
+                                            e.stopPropagation();
+                                            if (!confirm("Bu diyet planını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
+                                                return;
+                                            }
+                                            setIsDeletingPlan(plan.id);
+                                            try {
+                                                const response = await fetch(apiUrl(`api/diet-plans/${plan.id}`), {
+                                                    method: "DELETE",
+                                                    credentials: "include",
+                                                });
+                                                const data = await response.json();
+                                                if (!response.ok) {
+                                                    throw new Error(data.message || "Diyet planı silinemedi");
+                                                }
+                                                toast.success("Diyet planı başarıyla silindi");
+                                                fetchDietPlans();
+                                            } catch (error) {
+                                                const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
+                                                toast.error(errorMessage);
+                                            } finally {
+                                                setIsDeletingPlan(null);
+                                            }
+                                        }}
+                                        disabled={isDeletingPlan === plan.id}
+                                    >
+                                        {isDeletingPlan === plan.id ? (
+                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                        ) : (
+                                            <Trash2 className="h-4 w-4" />
+                                        )}
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -240,7 +353,7 @@ export default function ClientDietPlansPage() {
                     <DialogHeader>
                         <DialogTitle>Yeni Diyet Planı</DialogTitle>
                         <DialogDescription>
-                            Danışan için yeni bir diyet planı oluşturun.
+                            Danışan için yeni bir diyet planı oluşturun. Plan oluşturduktan sonra içeriği ekleyebilirsiniz.
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleCreateDietPlan} className="space-y-4">
@@ -265,32 +378,8 @@ export default function ClientDietPlansPage() {
                                     setFormData({ ...formData, description: e.target.value })
                                 }
                                 className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                placeholder="Plan hakkında açıklama..."
+                                placeholder="Plan hakkında kısa açıklama..."
                             />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="start_date">Başlangıç Tarihi</Label>
-                                <Input
-                                    id="start_date"
-                                    type="date"
-                                    value={formData.start_date}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, start_date: e.target.value })
-                                    }
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="end_date">Bitiş Tarihi</Label>
-                                <Input
-                                    id="end_date"
-                                    type="date"
-                                    value={formData.end_date}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, end_date: e.target.value })
-                                    }
-                                />
-                            </div>
                         </div>
                         <DialogFooter>
                             <Button
@@ -303,6 +392,60 @@ export default function ClientDietPlansPage() {
                             </Button>
                             <Button type="submit" disabled={isCreating}>
                                 {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Edit Dialog */}
+            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Planı Düzenle</DialogTitle>
+                        <DialogDescription>
+                            Diyet planının başlık ve açıklamasını düzenleyin.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleSaveEdit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="edit_title">Başlık *</Label>
+                            <Input
+                                id="edit_title"
+                                value={editFormData.title}
+                                onChange={(e) =>
+                                    setEditFormData({ ...editFormData, title: e.target.value })
+                                }
+                                required
+                                placeholder="Örn: Kilo Verme Planı"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="edit_description">Açıklama</Label>
+                            <textarea
+                                id="edit_description"
+                                value={editFormData.description}
+                                onChange={(e) =>
+                                    setEditFormData({ ...editFormData, description: e.target.value })
+                                }
+                                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Plan hakkında kısa açıklama..."
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => {
+                                    setIsEditDialogOpen(false);
+                                    setEditingPlan(null);
+                                }}
+                                disabled={isSaving}
+                            >
+                                İptal
+                            </Button>
+                            <Button type="submit" disabled={isSaving}>
+                                {isSaving ? "Kaydediliyor..." : "Kaydet"}
                             </Button>
                         </DialogFooter>
                     </form>

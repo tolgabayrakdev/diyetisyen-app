@@ -1,4 +1,5 @@
 import DietPlanService from "../service/diet-plan-service.js";
+import { saveBase64Pdf, deleteFile } from "../util/file-upload.js";
 
 export default class DietPlanController {
     constructor() {
@@ -52,7 +53,45 @@ export default class DietPlanController {
         try {
             const dietitianId = req.user.id;
             const planId = req.params.id;
-            const result = await this.dietPlanService.updateDietPlan(dietitianId, planId, req.body);
+            const planData = { ...req.body };
+            
+            // Eğer yeni PDF yükleniyorsa
+            if (planData.pdf_base64) {
+                try {
+                    // Eski PDF'i sil (varsa)
+                    const existingPlan = await this.dietPlanService.getDietPlanById(dietitianId, planId);
+                    if (existingPlan.pdf_url) {
+                        await deleteFile(existingPlan.pdf_url);
+                    }
+                    
+                    // Yeni PDF'i Cloudinary'e yükle
+                    const pdfUrl = await saveBase64Pdf(planData.pdf_base64, planData.pdf_file_name, "diet-plans");
+                    planData.pdf_url = pdfUrl;
+                    delete planData.pdf_base64;
+                    delete planData.pdf_file_name;
+                } catch (error) {
+                    return res.status(400).json({
+                        success: false,
+                        message: `PDF yüklenemedi: ${error.message}`
+                    });
+                }
+            }
+            
+            // Eğer PDF siliniyorsa (pdf_url null olarak gönderilirse)
+            if (planData.pdf_url === null || planData.pdf_url === "") {
+                try {
+                    const existingPlan = await this.dietPlanService.getDietPlanById(dietitianId, planId);
+                    if (existingPlan.pdf_url) {
+                        await deleteFile(existingPlan.pdf_url);
+                    }
+                    planData.pdf_url = null;
+                } catch (error) {
+                    // PDF silme hatası kritik değil, devam et
+                    console.error("PDF silme hatası:", error);
+                }
+            }
+            
+            const result = await this.dietPlanService.updateDietPlan(dietitianId, planId, planData);
             res.status(200).json({
                 success: true,
                 message: "Diyet planı güncellendi",

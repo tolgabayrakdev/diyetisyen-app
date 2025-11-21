@@ -22,14 +22,16 @@ export default class DietPlanMealService {
 
             const result = await client.query(
                 `INSERT INTO diet_plan_meals (
-                    diet_plan_id, meal_time, foods, calories
-                ) VALUES ($1, $2, $3, $4)
+                    diet_plan_id, meal_time, foods, calories, content, day_of_week
+                ) VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING *`,
                 [
                     dietPlanId,
                     mealData.meal_time || null,
                     mealData.foods ? JSON.stringify(mealData.foods) : null,
-                    mealData.calories || null
+                    mealData.calories || null,
+                    mealData.content || null,
+                    mealData.day_of_week !== undefined ? mealData.day_of_week : null
                 ]
             );
 
@@ -126,6 +128,16 @@ export default class DietPlanMealService {
             if (mealData.calories !== undefined) {
                 updateFields.push(`calories = $${paramIndex++}`);
                 updateValues.push(mealData.calories);
+            }
+
+            if (mealData.content !== undefined) {
+                updateFields.push(`content = $${paramIndex++}`);
+                updateValues.push(mealData.content);
+            }
+
+            if (mealData.day_of_week !== undefined) {
+                updateFields.push(`day_of_week = $${paramIndex++}`);
+                updateValues.push(mealData.day_of_week);
             }
 
             if (updateFields.length === 0) {

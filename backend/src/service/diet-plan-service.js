@@ -21,13 +21,14 @@ export default class DietPlanService {
 
             const result = await client.query(
                 `INSERT INTO diet_plans (
-                    client_id, title, description, start_date, end_date
-                ) VALUES ($1, $2, $3, $4, $5)
+                    client_id, title, description, content, start_date, end_date
+                ) VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING *`,
                 [
                     clientId,
                     planData.title,
                     planData.description || null,
+                    planData.content || null,
                     planData.start_date || null,
                     planData.end_date || null
                 ]
@@ -95,26 +96,7 @@ export default class DietPlanService {
             throw new HttpException(404, "Diyet planı bulunamadı");
         }
 
-        const plan = result.rows[0];
-
-        // Öğünleri al
-        const mealsResult = await pool.query(
-            `SELECT * FROM diet_plan_meals 
-             WHERE diet_plan_id = $1 
-             ORDER BY day_of_week NULLS FIRST, meal_time`,
-            [planId]
-        );
-
-        // JSONB alanlarını parse et
-        const meals = mealsResult.rows.map(row => ({
-            ...row,
-            foods: row.foods ? (typeof row.foods === 'string' ? JSON.parse(row.foods) : row.foods) : null
-        }));
-
-        return {
-            ...plan,
-            meals
-        };
+        return result.rows[0];
     }
 
     async updateDietPlan(dietitianId, planId, planData) {
@@ -138,7 +120,7 @@ export default class DietPlanService {
             const updateValues = [];
             let paramIndex = 1;
 
-            const allowedFields = ['title', 'description', 'start_date', 'end_date'];
+            const allowedFields = ['title', 'description', 'content', 'start_date', 'end_date', 'pdf_url'];
             allowedFields.forEach(field => {
                 if (planData[field] !== undefined) {
                     updateFields.push(`${field} = $${paramIndex++}`);

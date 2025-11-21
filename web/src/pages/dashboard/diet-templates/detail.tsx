@@ -45,11 +45,13 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { RichTextEditor } from "@/components/rich-text-editor";
 
 interface DietTemplate {
     id: string;
     title: string;
     description: string | null;
+    content: string | null;
     category: string | null;
     total_calories: number | null;
     duration_days: number | null;
@@ -117,11 +119,15 @@ export default function DietTemplateDetailPage() {
     const [template, setTemplate] = useState<DietTemplate | null>(null);
     const [isMealDialogOpen, setIsMealDialogOpen] = useState(false);
     const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false);
+    const [isCreateMethodDialogOpen, setIsCreateMethodDialogOpen] = useState(false);
+    const [isContentDialogOpen, setIsContentDialogOpen] = useState(false);
+    const [isSavingContent, setIsSavingContent] = useState(false);
     const [isDeletingMeal, setIsDeletingMeal] = useState<string | null>(null);
     const [isAssigning, setIsAssigning] = useState(false);
     const [clients, setClients] = useState<Client[]>([]);
     const [selectedClientIds, setSelectedClientIds] = useState<string[]>([]);
     const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
+    const [contentData, setContentData] = useState("");
 
     const [mealFormData, setMealFormData] = useState({
         meal_time: "",
@@ -162,6 +168,7 @@ export default function DietTemplateDetailPage() {
             const data = await response.json();
             if (data.success) {
                 setTemplate(data.template);
+                setContentData(data.template.content || "");
             }
         } catch {
             toast.error("Şablon yüklenirken bir hata oluştu");
@@ -364,6 +371,53 @@ export default function DietTemplateDetailPage() {
         }
     };
 
+    const handleCreateContent = () => {
+        setIsCreateMethodDialogOpen(true);
+    };
+
+    const handleSelectCreateMethod = (method: "text" | "meal") => {
+        setIsCreateMethodDialogOpen(false);
+        if (method === "text") {
+            setContentData(template?.content || "");
+            setIsContentDialogOpen(true);
+        } else {
+            openMealDialog();
+        }
+    };
+
+    const handleSaveContent = async () => {
+        if (!id) return;
+        setIsSavingContent(true);
+
+        try {
+            const response = await fetch(apiUrl(`api/diet-templates/${id}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    content: contentData || null,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "İçerik kaydedilemedi");
+            }
+
+            toast.success("Diyet şablonu içeriği başarıyla kaydedildi");
+            setIsContentDialogOpen(false);
+            fetchTemplate();
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
+            toast.error(errorMessage);
+        } finally {
+            setIsSavingContent(false);
+        }
+    };
+
     const openMealDialog = () => {
         setEditingMeal(null);
         setMealFormData({
@@ -430,14 +484,32 @@ export default function DietTemplateDetailPage() {
                     )}
                 </div>
                 <div className="flex gap-2">
-                    <Button onClick={() => setIsAssignDialogOpen(true)} disabled={template.meals.length === 0}>
+                    <Button onClick={() => setIsAssignDialogOpen(true)} disabled={template.meals.length === 0 && !template.content}>
                         <Users className="h-4 w-4 mr-2" />
                         Danışanlara Ata
                     </Button>
-                    <Button onClick={openMealDialog}>
-                        <Plus className="h-4 w-4 mr-2" />
-                        Öğün Ekle
-                    </Button>
+                    {!template.content && template.meals.length === 0 && (
+                        <Button onClick={handleCreateContent}>
+                            <Plus className="h-4 w-4 mr-2" />
+                            İçerik Oluştur
+                        </Button>
+                    )}
+                    {(template.content || template.meals.length > 0) && (
+                        <>
+                            {!template.content && (
+                                <Button onClick={() => handleSelectCreateMethod("text")} variant="outline">
+                                    <FileText className="h-4 w-4 mr-2" />
+                                    Metin Editörü Ekle
+                                </Button>
+                            )}
+                            {template.meals.length === 0 && (
+                                <Button onClick={openMealDialog} variant="outline">
+                                    <Plus className="h-4 w-4 mr-2" />
+                                    Öğün Ekle
+                                </Button>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
 
@@ -528,35 +600,60 @@ export default function DietTemplateDetailPage() {
                 </div>
             </div>
 
-            {/* Meals Section */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
-                        <Clock className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                        <h2 className="text-xl font-semibold">Öğünler</h2>
-                        <p className="text-sm text-muted-foreground">
-                            Şablonun öğün listesi ve yiyecek bilgileri
-                        </p>
-                    </div>
-                </div>
-                
-                <Separator />
-
-                {template.meals.length === 0 ? (
-                    <div className="rounded-lg bg-muted/50 p-12 text-center space-y-4">
-                        <Clock className="h-12 w-12 text-muted-foreground mx-auto" />
-                        <h3 className="text-lg font-semibold">Henüz öğün yok</h3>
-                        <p className="text-muted-foreground">
-                            Şablona öğün ekleyerek başlayın
-                        </p>
-                        <Button onClick={openMealDialog}>
-                            <Plus className="h-4 w-4 mr-2" />
-                            İlk Öğünü Ekle
+            {/* Template Content - Text Editor */}
+            {template.content && (
+                <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-lg bg-primary/10 p-2">
+                            <FileText className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-semibold">Şablon İçeriği (Metin)</h2>
+                            <p className="text-sm text-muted-foreground">
+                                Şablonun metin editörü ile oluşturulmuş içeriği
+                            </p>
+                        </div>
+                        <Button onClick={() => handleSelectCreateMethod("text")} variant="outline" size="sm" className="gap-2">
+                            <Edit className="h-4 w-4" />
+                            İçeriği Düzenle
                         </Button>
                     </div>
-                ) : (
+                    
+                    <Separator />
+
+                    <div className="space-y-4">
+                        <div className="border rounded-lg p-6 bg-card">
+                            <div 
+                                className="prose prose-sm sm:prose-base max-w-none"
+                                dangerouslySetInnerHTML={{ __html: template.content }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Meals Section */}
+            {template.meals.length > 0 && (
+                <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-lg bg-primary/10 p-2">
+                            <Clock className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1">
+                            <h2 className="text-xl font-semibold">Öğünler</h2>
+                            <p className="text-sm text-muted-foreground">
+                                Şablonun öğün listesi ve yiyecek bilgileri
+                            </p>
+                        </div>
+                        <Button onClick={openMealDialog} size="sm" className="gap-2">
+                            <Plus className="h-4 w-4" />
+                            Öğün Ekle
+                        </Button>
+                    </div>
+                    
+                    <Separator />
+
+                    {template.meals.length === 0 ? null : (
                     <div className="space-y-6">
                         {/* Her gün için öğünler */}
                         {Object.keys(mealsByDay).map((day) => {
@@ -658,6 +755,116 @@ export default function DietTemplateDetailPage() {
                     </div>
                 )}
             </div>
+            )}
+
+            {/* Empty State */}
+            {!template.content && template.meals.length === 0 && (
+                <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-lg bg-primary/10 p-2">
+                            <FileText className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                            <h2 className="text-xl font-semibold">Şablon İçeriği</h2>
+                            <p className="text-sm text-muted-foreground">
+                                Şablonun detaylı içeriği
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <Separator />
+
+                    <div className="rounded-lg bg-muted/50 p-12 text-center space-y-4">
+                        <FileText className="h-12 w-12 text-muted-foreground mx-auto" />
+                        <h3 className="text-lg font-semibold">Henüz içerik yok</h3>
+                        <p className="text-muted-foreground mb-4">
+                            Bu şablon için henüz içerik eklenmemiş. Metin editörü kullanarak veya öğün seçerek içerik oluşturabilirsiniz.
+                        </p>
+                        <Button onClick={handleCreateContent}>
+                            <Plus className="h-4 w-4 mr-2" />
+                            İçerik Oluştur
+                        </Button>
+                    </div>
+                </div>
+            )}
+
+            {/* Create Method Selection Dialog */}
+            <Dialog open={isCreateMethodDialogOpen} onOpenChange={setIsCreateMethodDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>İçerik Oluşturma Yöntemi Seçin</DialogTitle>
+                        <DialogDescription>
+                            Diyet şablonu içeriğini nasıl oluşturmak istersiniz?
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                        <button
+                            onClick={() => handleSelectCreateMethod("text")}
+                            className="h-auto p-6 flex flex-col items-center gap-3 border rounded-lg hover:bg-accent hover:border-primary transition-colors cursor-pointer text-left w-full"
+                        >
+                            <FileText className="h-8 w-8 shrink-0" />
+                            <div className="text-center w-full space-y-1">
+                                <div className="font-semibold text-base">Metin Editörü</div>
+                                <div className="text-sm text-muted-foreground mt-1 break-words px-2">
+                                    Zengin metin editörü ile Word benzeri formatlamalar yapabilirsiniz
+                                </div>
+                            </div>
+                        </button>
+                        <button
+                            onClick={() => handleSelectCreateMethod("meal")}
+                            className="h-auto p-6 flex flex-col items-center gap-3 border rounded-lg hover:bg-accent hover:border-primary transition-colors cursor-pointer text-left w-full"
+                        >
+                            <Clock className="h-8 w-8 shrink-0" />
+                            <div className="text-center w-full space-y-1">
+                                <div className="font-semibold text-base">Öğün Seçimi</div>
+                                <div className="text-sm text-muted-foreground mt-1 break-words px-2">
+                                    Öğünler ve yiyecekler ekleyerek yapılandırılmış şablon oluşturun
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setIsCreateMethodDialogOpen(false)}>
+                            İptal
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Content Creation/Edit Dialog - Fullscreen */}
+            <Dialog open={isContentDialogOpen} onOpenChange={setIsContentDialogOpen}>
+                <DialogContent 
+                    className="max-w-none! w-screen! h-screen! max-h-screen! m-0! p-0! rounded-none overflow-hidden flex flex-col translate-x-0! translate-y-0! top-0! left-0! right-0! bottom-0! inset-0!"
+                    showCloseButton={true}
+                >
+                    <DialogHeader className="px-6 pt-6 pb-4 border-b shrink-0">
+                        <DialogTitle>Diyet Şablonu İçeriği</DialogTitle>
+                        <DialogDescription>
+                            Yeni bir belge oluşturun. Haftanın günlerini, öğünleri ve tüm detayları istediğiniz gibi formatlayabilirsiniz.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex-1 overflow-hidden px-6 py-4 min-h-0 flex flex-col">
+                        <RichTextEditor
+                            content={contentData}
+                            onChange={(content) => setContentData(content)}
+                            placeholder="Diyet şablonunuzu buraya yazın. Başlık, liste ve formatlamalar ekleyebilirsiniz..."
+                        />
+                    </div>
+                    <DialogFooter className="px-6 pb-6 pt-4 border-t shrink-0">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => setIsContentDialogOpen(false)}
+                            disabled={isSavingContent}
+                        >
+                            İptal
+                        </Button>
+                        <Button onClick={handleSaveContent} disabled={isSavingContent}>
+                            {isSavingContent ? "Kaydediliyor..." : "Kaydet"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             {/* Add/Edit Meal Dialog */}
             <Dialog open={isMealDialogOpen} onOpenChange={setIsMealDialogOpen}>

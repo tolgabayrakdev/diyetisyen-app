@@ -101,3 +101,4 @@ error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2
 error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.287Z"}
 error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:23.973Z"}
 error: POST /api/diet-templates - 500 - request entity too large {"timestamp":"2025-11-17T19:01:24.144Z"}
+error: PUT /api/diet-plans/2a8fa2c7-40b7-45d0-9a90-0200be27bb27 - 500 - request entity too large {"timestamp":"2025-11-20T20:43:33.171Z"}

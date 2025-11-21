@@ -5,9 +5,10 @@ import HttpException from "../exceptions/http-exception.js";
  * Base64 string'den PDF dosyası oluştur ve Cloudinary'e yükle
  * @param {string} base64String - Base64 encoded PDF string
  * @param {string} fileName - Dosya adı (opsiyonel)
+ * @param {string} folder - Cloudinary folder (default: "diet-templates")
  * @returns {Promise<string>} - Cloudinary'deki dosyanın URL'i
  */
-export async function saveBase64Pdf(base64String, fileName = null) {
+export async function saveBase64Pdf(base64String, fileName = null, folder = "diet-templates") {
     try {
         // Base64 string'i temizle (data:application/pdf;base64, prefix'ini kaldır)
         const base64Data = base64String.replace(/^data:application\/pdf;base64,/, "");
@@ -18,18 +19,23 @@ export async function saveBase64Pdf(base64String, fileName = null) {
         // Dosya adını oluştur
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 15);
-        const publicId = fileName 
-            ? `diet-templates/${fileName.replace(/\.pdf$/i, "")}-${timestamp}`
-            : `diet-templates/diet-template-${timestamp}-${randomString}`;
+        const filePrefix = folder === "diet-plans" ? "diet-plan" : "diet-template";
+        let publicId;
+        if (fileName) {
+            // Dosya adından .pdf uzantısını kaldır, sonra tekrar ekle
+            const nameWithoutExt = fileName.replace(/\.pdf$/i, "");
+            publicId = `${folder}/${nameWithoutExt}-${timestamp}.pdf`;
+        } else {
+            publicId = `${folder}/${filePrefix}-${timestamp}-${randomString}.pdf`;
+        }
 
         // Cloudinary'e yükle - upload_stream kullanarak buffer gönder
         return new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                 {
-                    resource_type: "auto", // Cloudinary otomatik olarak PDF'yi algılar
+                    resource_type: "raw", // PDF'ler için raw resource type kullan
                     public_id: publicId,
-                    folder: "diet-templates",
-                    format: "pdf",
+                    folder: folder,
                 },
                 (error, result) => {
                     if (error) {

@@ -46,7 +46,7 @@ export default function ActivityLogsPage() {
             });
 
             if (!response.ok) {
-                throw new Error("Aktivite logları yüklenemedi");
+                throw new Error("Aktivite kayıtları yüklenemedi");
             }
 
             const data = await response.json();
@@ -55,7 +55,7 @@ export default function ActivityLogsPage() {
                 setTotalPages(data.pagination?.totalPages || 1);
             }
         } catch {
-            toast.error("Aktivite logları yüklenirken bir hata oluştu");
+            toast.error("Aktivite kayıtları yüklenirken bir hata oluştu");
         } finally {
             setLoading(false);
         }
@@ -100,7 +100,7 @@ export default function ActivityLogsPage() {
         <div className="space-y-6">
             {/* Header */}
             <div>
-                <h1 className="text-2xl font-bold tracking-tight">Aktivite Logları</h1>
+                <h1 className="text-2xl font-bold tracking-tight">Aktivite Kayıtları</h1>
                 <p className="text-sm text-muted-foreground mt-1">
                     Sistemdeki tüm aktiviteleri görüntüleyin
                 </p>
@@ -134,11 +134,11 @@ export default function ActivityLogsPage() {
                 )}
             </div>
 
-            {/* Logs List */}
+            {/* Kayıtlar Listesi */}
             {logs.length === 0 ? (
                 <div className="text-center py-8 border rounded-lg">
                     <Activity className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
-                    <p className="text-sm text-muted-foreground">Henüz aktivite logu yok</p>
+                    <p className="text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
                 </div>
             ) : (
                 <>

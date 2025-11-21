@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router"
-import { Home, Settings, User2, LogOut, Bell, Activity, Users, FileText, DollarSign } from "lucide-react"
+import { Home, Settings, User2, LogOut, Bell, Activity, Users, DollarSign } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 import {
@@ -158,11 +158,6 @@ export function AppSidebar() {
                   </SidebarMenuItem>
                 )
               })}
-   
-              <SidebarSeparator />
-              <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
-                Danışanlar
-              </SidebarGroupLabel>
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   asChild 
@@ -178,44 +173,6 @@ export function AppSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-              <SidebarSeparator />
-              <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
-                Şablonlar
-              </SidebarGroupLabel>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  asChild 
-                  isActive={location.pathname === '/diet-templates' || location.pathname.startsWith('/diet-templates')}
-                  className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
-                >
-                  <Link to="/diet-templates" className="flex items-center gap-3">
-                    {(location.pathname === '/diet-templates' || location.pathname.startsWith('/diet-templates')) && (
-                      <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary rounded-r" />
-                    )}
-                    <FileText className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/diet-templates' || location.pathname.startsWith('/diet-templates')) ? 'text-primary' : 'text-muted-foreground'}`} />
-                    <span className="truncate">Diyet Şablonları</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarSeparator />
-              <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
-                Genel
-              </SidebarGroupLabel>
-              <SidebarMenuItem>
-                <SidebarMenuButton 
-                  asChild 
-                  isActive={location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')}
-                  className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
-                >
-                  <Link to="/activity-logs" className="flex items-center gap-3">
-                    {(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) && (
-                      <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary rounded-r" />
-                    )}
-                    <Activity className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) ? 'text-primary' : 'text-muted-foreground'}`} />
-                    <span className="truncate">Aktivite Logları</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton 
                   asChild 
@@ -228,6 +185,25 @@ export function AppSidebar() {
                     )}
                     <DollarSign className={`h-4 w-4 shrink-0 transition-colors ${location.pathname === '/financial' ? 'text-primary' : 'text-muted-foreground'}`} />
                     <span className="truncate">Finansal Kayıtlar</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarSeparator />
+              <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
+                Sistem Raporları
+              </SidebarGroupLabel>
+              <SidebarMenuItem>
+                <SidebarMenuButton 
+                  asChild 
+                  isActive={location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')}
+                  className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
+                >
+                  <Link to="/activity-logs" className="flex items-center gap-3">
+                    {(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) && (
+                      <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary rounded-r" />
+                    )}
+                    <Activity className={`h-4 w-4 shrink-0 transition-colors ${(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <span className="truncate">Aktivite Kayıtları</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

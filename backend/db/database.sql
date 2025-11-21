@@ -37,8 +37,8 @@ CREATE TABLE plans (
     name VARCHAR(50) NOT NULL CHECK (name IN ('standard', 'pro')),
     duration VARCHAR(20) NOT NULL CHECK (duration IN ('monthly', 'yearly')),
     price DECIMAL(10, 2) NOT NULL,
-    original_price DECIMAL(10, 2), -- Yıllık planlar için orijinal fiyat (indirim öncesi)
-    client_limit INTEGER, -- NULL = sınırsız, sayı = limit
+    original_price DECIMAL(10, 2),
+    client_limit INTEGER,
     created_at TIMESTAMP DEFAULT now(),
     updated_at TIMESTAMP DEFAULT now(),
     UNIQUE(name, duration)
@@ -48,7 +48,7 @@ CREATE TABLE plans (
 CREATE TABLE subscriptions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    plan_id UUID REFERENCES plans(id) ON DELETE RESTRICT, -- NULL olabilir (trial için)
+    plan_id UUID REFERENCES plans(id) ON DELETE RESTRICT,
     status VARCHAR(50) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'cancelled', 'expired')),
     is_trial BOOLEAN DEFAULT false,
     trial_end_date TIMESTAMP,
@@ -61,10 +61,10 @@ CREATE TABLE subscriptions (
 
 -- Plan verilerini ekle
 INSERT INTO plans (name, duration, price, original_price, client_limit) VALUES
-    ('standard', 'monthly', 299.00, NULL, 100), -- Standard: 100 danışan limiti
-    ('standard', 'yearly', 2870.40, 3588.00, 100), -- 299 * 12 * 0.8 = 2870.40 (20% indirim)
-    ('pro', 'monthly', 399.00, NULL, NULL), -- Pro: Sınırsız danışan (NULL = sınırsız)
-    ('pro', 'yearly', 3830.40, 4788.00, NULL); -- 399 * 12 * 0.8 = 3830.40 (20% indirim)
+    ('standard', 'monthly', 299.00, NULL, 100),
+    ('standard', 'yearly', 2870.40, 3588.00, 100),
+    ('pro', 'monthly', 399.00, NULL, NULL),
+    ('pro', 'yearly', 3830.40, 4788.00, NULL);
 
 
 
@@ -98,61 +98,65 @@ CREATE TABLE client_documents (
     uploaded_at TIMESTAMP DEFAULT NOW()
 );
 
--- 3️⃣ Diyet Planları
+-- 3️⃣ Diyet Şablonları
+CREATE TABLE diet_templates (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    content TEXT,
+    category VARCHAR(100),
+    total_calories NUMERIC,
+    duration_days INTEGER,
+    pdf_url TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 3️⃣.1 Diyet Şablonu Öğünleri
+CREATE TABLE diet_template_meals (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    diet_template_id UUID NOT NULL REFERENCES diet_templates(id) ON DELETE CASCADE,
+    meal_time VARCHAR(50) NOT NULL,
+    foods JSONB NOT NULL,
+    calories NUMERIC,
+    content TEXT,
+    day_of_week INTEGER,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 4️⃣ Diyet Planları
 CREATE TABLE diet_plans (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    content TEXT,
     start_date DATE,
     end_date DATE,
     template_id UUID REFERENCES diet_templates(id) ON DELETE SET NULL,
+    pdf_url TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
-CREATE INDEX IF NOT EXISTS idx_diet_plans_template_id ON diet_plans(template_id);
 
--- 4️⃣ Diyet Planı Öğünleri
+-- 5️⃣ Diyet Planı Öğünleri
 CREATE TABLE diet_plan_meals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     diet_plan_id UUID NOT NULL REFERENCES diet_plans(id) ON DELETE CASCADE,
     meal_time VARCHAR(50),
     foods JSONB,
     calories NUMERIC,
-    day_of_week INTEGER, -- 0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (opsiyonel)
+    content TEXT,
+    day_of_week INTEGER,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- 4️⃣.1 Diyet Şablonları (Diyetisyenlerin oluşturduğu profesyonel diyet listeleri)
-CREATE TABLE diet_templates (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    category VARCHAR(100), -- Örn: 'kilo_verme', 'kilo_alma', 'saglikli_beslenme', 'sporcu_beslenmesi'
-    total_calories NUMERIC, -- Günlük toplam kalori
-    duration_days INTEGER, -- Şablonun kaç günlük olduğu (örn: 7, 14, 30)
-    pdf_url TEXT, -- PDF dosyası URL'i (opsiyonel)
-    is_active BOOLEAN DEFAULT true,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- 4️⃣.2 Diyet Şablonu Öğünleri
-CREATE TABLE diet_template_meals (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    diet_template_id UUID NOT NULL REFERENCES diet_templates(id) ON DELETE CASCADE,
-    meal_time VARCHAR(50) NOT NULL, -- Örn: 'kahvalti', 'ogle_yemegi', 'aksam_yemegi', 'atistirma'
-    foods JSONB NOT NULL, -- Yiyecek listesi: [{"name": "Yumurta", "amount": "2 adet", "calories": 140}, ...]
-    calories NUMERIC,
-    day_of_week INTEGER, -- 0=Pazar, 1=Pazartesi, ..., 6=Cumartesi (NULL = her gün aynı)
-    notes TEXT, -- Özel notlar
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- 5️⃣ Danışan Notları
+-- 6️⃣ Danışan Notları
 CREATE TABLE client_notes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -161,7 +165,7 @@ CREATE TABLE client_notes (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 6️⃣ Finansal Kayıtlar
+-- 7️⃣ Finansal Kayıtlar
 CREATE TABLE financial_records (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -174,7 +178,7 @@ CREATE TABLE financial_records (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 7️⃣ İlerleme Kayıtları
+-- 8️⃣ İlerleme Kayıtları
 CREATE TABLE progress_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -186,17 +190,14 @@ CREATE TABLE progress_logs (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 8️⃣ Aktivite / Audit Logları
+-- 9️⃣ Aktivite / Audit Logları
 CREATE TABLE activity_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
     user_id UUID NOT NULL REFERENCES users(id),
-    entity_type VARCHAR(50),    -- Örn: 'diet_plan', 'note', 'financial_record'
-    action_type VARCHAR(50),    -- Örn: 'create', 'update', 'delete'
+    entity_type VARCHAR(50),
+    action_type VARCHAR(50),
     description TEXT,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Seed Data: 100 Örnek Danışan
--- NOT: Bu script'i çalıştırmadan önce bir diyetisyen kullanıcısı oluşturmanız gerekiyor
--- Ayrı seed dosyası için: backend/db/seed-clients.sql dosyasına bakın
