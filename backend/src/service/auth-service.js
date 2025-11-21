@@ -289,7 +289,8 @@ export default class AuthService {
                 "INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES ($1, $2, $3)",
                 [userId, token, expiresAt]
             );
-            const resetLink = `https://${process.env.HOST}/reset-password?token=${token}`;
+            const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+            const resetLink = `${frontendUrl}/reset-password?token=${token}`;
 
             // Send password reset email with professional template
             const emailHtml = getPasswordResetTemplate(resetLink, 15);
