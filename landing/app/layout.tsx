@@ -105,11 +105,6 @@ export default function RootLayout({
                 priceCurrency: "TRY",
                 description: "7 gün ücretsiz deneme",
               },
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "4.8",
-                ratingCount: "50",
-              },
               description: "Diyetisyenler için profesyonel yönetim platformu",
               url: "https://diyetka.com",
             }),
