@@ -483,3 +483,4 @@ warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.095Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.149Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T10:30:55.150Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=5 - 500 - invalid input syntax for type uuid: "5" {"timestamp":"2025-11-21T10:42:53.860Z"}

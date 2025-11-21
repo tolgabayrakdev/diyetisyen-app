@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router";
 import { apiUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, TrendingUp, Weight, Activity } from "lucide-react";
+import { Plus, TrendingUp, TrendingDown, Weight, Activity, Minus, BarChart3, ChevronRight } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -15,6 +15,13 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+} from "@/components/ui/sheet";
+import {
     Breadcrumb,
     BreadcrumbList,
     BreadcrumbItem,
@@ -22,6 +29,12 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import {
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 
 interface Client {
     id: string;
@@ -46,6 +59,7 @@ export default function ClientProgressPage() {
     const [progressLogs, setProgressLogs] = useState<ProgressLog[]>([]);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [isAllLogsSheetOpen, setIsAllLogsSheetOpen] = useState(false);
     const [formData, setFormData] = useState({
         log_date: new Date().toISOString().split("T")[0],
         weight_kg: "",
@@ -144,6 +158,117 @@ export default function ClientProgressPage() {
         }
     };
 
+    // Grafik verilerini hazırla
+    const chartData = useMemo(() => {
+        const sortedLogs = [...progressLogs].sort(
+            (a, b) => new Date(a.log_date).getTime() - new Date(b.log_date).getTime()
+        );
+
+        return sortedLogs.map((log) => ({
+            date: new Date(log.log_date).toLocaleDateString("tr-TR", {
+                month: "short",
+                day: "numeric",
+            }),
+            fullDate: log.log_date,
+            weight: log.weight_kg,
+            bodyFat: log.body_fat_percent,
+            muscleMass: log.muscle_mass_kg,
+        }));
+    }, [progressLogs]);
+
+    // İstatistikleri hesapla
+    const stats = useMemo(() => {
+        const weightLogs = progressLogs.filter((log) => log.weight_kg !== null);
+        const bodyFatLogs = progressLogs.filter((log) => log.body_fat_percent !== null);
+        const muscleMassLogs = progressLogs.filter((log) => log.muscle_mass_kg !== null);
+
+        const calculateStats = (logs: ProgressLog[], field: keyof ProgressLog): {
+            first: number;
+            last: number;
+            avg: number;
+            change: number;
+            changePercent: string;
+            trend: "up" | "down" | "neutral";
+        } | null => {
+            if (logs.length === 0) return null;
+
+            const values = logs.map((log) => log[field] as number);
+            const sorted = [...values].sort((a, b) => a - b);
+            const first = sorted[0];
+            const last = sorted[sorted.length - 1];
+            const avg = values.reduce((a, b) => a + b, 0) / values.length;
+            const change = last - first;
+            const changePercent = first !== 0 ? ((change / first) * 100).toFixed(1) : "0";
+
+            return {
+                first,
+                last,
+                avg: Number(avg.toFixed(1)),
+                change: Number(change.toFixed(1)),
+                changePercent,
+                trend: change > 0 ? ("up" as const) : change < 0 ? ("down" as const) : ("neutral" as const),
+            };
+        };
+
+        return {
+            weight: calculateStats(weightLogs, "weight_kg"),
+            bodyFat: calculateStats(bodyFatLogs, "body_fat_percent"),
+            muscleMass: calculateStats(muscleMassLogs, "muscle_mass_kg"),
+        };
+    }, [progressLogs]);
+
+    const StatCard = ({
+        title,
+        value,
+        unit,
+        change,
+        changePercent,
+        trend,
+        invertTrend = false,
+    }: {
+        title: string;
+        value: number | string;
+        unit: string;
+        change?: number;
+        changePercent?: string;
+        trend?: "up" | "down" | "neutral";
+        invertTrend?: boolean;
+    }) => {
+        const effectiveTrend = invertTrend
+            ? trend === "up"
+                ? "down"
+                : trend === "down"
+                  ? "up"
+                  : "neutral"
+            : trend;
+        const TrendIcon = effectiveTrend === "up" ? TrendingUp : effectiveTrend === "down" ? TrendingDown : Minus;
+        const trendColor =
+            effectiveTrend === "up"
+                ? "text-red-600 dark:text-red-400"
+                : effectiveTrend === "down"
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-muted-foreground";
+
+        return (
+            <div className="border rounded-lg p-3">
+                <p className="text-xs text-muted-foreground mb-1">{title}</p>
+                <div className="flex items-baseline gap-2">
+                    <span className="text-lg font-semibold">{value}</span>
+                    <span className="text-sm text-muted-foreground">{unit}</span>
+                </div>
+                {change !== undefined && changePercent && (
+                    <div className={`flex items-center gap-1 mt-1 text-xs ${trendColor}`}>
+                        <TrendIcon className="h-3 w-3" />
+                        <span>
+                            {change > 0 ? "+" : ""}
+                            {change} ({changePercent}%)
+                        </span>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
@@ -194,7 +319,177 @@ export default function ClientProgressPage() {
                 </Button>
             </div>
 
-            {/* Progress Logs List */}
+            {/* İstatistik Kartları */}
+            {progressLogs.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {stats.weight && (
+                        <StatCard
+                            title="Kilo"
+                            value={stats.weight.last}
+                            unit="kg"
+                            change={stats.weight.change}
+                            changePercent={stats.weight.changePercent}
+                            trend={stats.weight.trend}
+                        />
+                    )}
+                    {stats.bodyFat && (
+                        <StatCard
+                            title="Vücut Yağı"
+                            value={stats.bodyFat.last}
+                            unit="%"
+                            change={stats.bodyFat.change}
+                            changePercent={stats.bodyFat.changePercent}
+                            trend={stats.bodyFat.trend}
+                            invertTrend={true}
+                        />
+                    )}
+                    {stats.muscleMass && (
+                        <StatCard
+                            title="Kas Kütlesi"
+                            value={stats.muscleMass.last}
+                            unit="kg"
+                            change={stats.muscleMass.change}
+                            changePercent={stats.muscleMass.changePercent}
+                            trend={stats.muscleMass.trend}
+                        />
+                    )}
+                </div>
+            )}
+
+            {/* Grafikler Bölümü */}
+            {chartData.length > 0 && (
+                <div className="space-y-4">
+                    <div>
+                        <h2 className="text-lg font-semibold mb-4">Grafikler</h2>
+                    </div>
+                    <div className="space-y-6">
+                        {/* Kilo Grafiği */}
+                    {chartData.some((d) => d.weight !== null) && (
+                        <div className="border rounded-lg p-4">
+                            <div className="flex items-center gap-2 mb-4">
+                                <Weight className="h-4 w-4 text-primary" />
+                                <h3 className="font-semibold">Kilo Takibi</h3>
+                            </div>
+                            <ChartContainer
+                                config={{
+                                    weight: {
+                                        label: "Kilo (kg)",
+                                        color: "hsl(217, 91%, 60%)", // Mavi - daha belirgin
+                                    },
+                                }}
+                                className="h-[250px]"
+                            >
+                                <LineChart data={chartData}>
+                                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                    <XAxis
+                                        dataKey="date"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        className="text-xs"
+                                    />
+                                    <YAxis
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        className="text-xs"
+                                        domain={["auto", "auto"]}
+                                    />
+                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="weight"
+                                        stroke="hsl(217, 91%, 60%)"
+                                        strokeWidth={3}
+                                        dot={{ r: 5, fill: "hsl(217, 91%, 60%)" }}
+                                        activeDot={{ r: 7, fill: "hsl(217, 91%, 60%)" }}
+                                    />
+                                </LineChart>
+                            </ChartContainer>
+                        </div>
+                    )}
+
+                    {/* Vücut Yağı ve Kas Kütlesi Grafiği */}
+                    {(chartData.some((d) => d.bodyFat !== null) || chartData.some((d) => d.muscleMass !== null)) && (
+                        <div className="border rounded-lg p-4">
+                            <div className="flex items-center gap-2 mb-4">
+                                <BarChart3 className="h-4 w-4 text-primary" />
+                                <h3 className="font-semibold">Vücut Kompozisyonu</h3>
+                            </div>
+                            <ChartContainer
+                                config={{
+                                    bodyFat: {
+                                        label: "Vücut Yağı (%)",
+                                        color: "hsl(0, 72%, 51%)", // Kırmızı - vücut yağı için
+                                    },
+                                    muscleMass: {
+                                        label: "Kas Kütlesi (kg)",
+                                        color: "hsl(142, 76%, 36%)", // Yeşil - kas için
+                                    },
+                                }}
+                                className="h-[250px]"
+                            >
+                                <LineChart data={chartData}>
+                                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                    <XAxis
+                                        dataKey="date"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        className="text-xs"
+                                    />
+                                    <YAxis
+                                        tickLine={false}
+                                        axisLine={false}
+                                        tickMargin={8}
+                                        className="text-xs"
+                                        domain={["auto", "auto"]}
+                                    />
+                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    {chartData.some((d) => d.bodyFat !== null) && (
+                                        <Line
+                                            type="monotone"
+                                            dataKey="bodyFat"
+                                            stroke="hsl(0, 72%, 51%)"
+                                            strokeWidth={3}
+                                            dot={{ r: 5, fill: "hsl(0, 72%, 51%)" }}
+                                            activeDot={{ r: 7, fill: "hsl(0, 72%, 51%)" }}
+                                        />
+                                    )}
+                                    {chartData.some((d) => d.muscleMass !== null) && (
+                                        <Line
+                                            type="monotone"
+                                            dataKey="muscleMass"
+                                            stroke="hsl(142, 76%, 36%)"
+                                            strokeWidth={3}
+                                            dot={{ r: 5, fill: "hsl(142, 76%, 36%)" }}
+                                            activeDot={{ r: 7, fill: "hsl(142, 76%, 36%)" }}
+                                        />
+                                    )}
+                                </LineChart>
+                            </ChartContainer>
+                        </div>
+                    )}
+                    </div>
+                </div>
+            )}
+
+            {/* İlerleme Kayıtları Bölümü */}
+            <div>
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold">İlerleme Kayıtları</h2>
+                    {progressLogs.length > 3 && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setIsAllLogsSheetOpen(true)}
+                            className="gap-2"
+                        >
+                            Tümünü Gör ({progressLogs.length})
+                            <ChevronRight className="h-4 w-4" />
+                        </Button>
+                    )}
+                </div>
             {progressLogs.length === 0 ? (
                 <div className="text-center py-8 border rounded-lg">
                     <TrendingUp className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
@@ -206,7 +501,36 @@ export default function ClientProgressPage() {
                 </div>
             ) : (
                 <div className="space-y-3">
-                    {progressLogs.map((log) => (
+                        {progressLogs.slice(0, 3).map((log) => {
+                            // Önceki kaydı bul (tüm listeden)
+                            const currentIndexInFullList = progressLogs.findIndex((l) => l.id === log.id);
+                            const previousLog = currentIndexInFullList < progressLogs.length - 1 ? progressLogs[currentIndexInFullList + 1] : null;
+
+                            // Karşılaştırma fonksiyonu
+                            const getComparison = (
+                                current: number | null,
+                                previous: number | null,
+                                invert: boolean = false
+                            ) => {
+                                if (!current || !previous) return null;
+                                const diff = current - previous;
+                                const percent = previous !== 0 ? ((diff / previous) * 100).toFixed(1) : "0";
+                                const isPositive = invert ? diff < 0 : diff > 0;
+                                return { diff, percent, isPositive };
+                            };
+
+                            const weightComparison = getComparison(log.weight_kg, previousLog?.weight_kg || null);
+                            const bodyFatComparison = getComparison(
+                                log.body_fat_percent,
+                                previousLog?.body_fat_percent || null,
+                                true
+                            );
+                            const muscleMassComparison = getComparison(
+                                log.muscle_mass_kg,
+                                previousLog?.muscle_mass_kg || null
+                            );
+
+                            return (
                         <div key={log.id} className="border rounded-lg p-3">
                             <div className="flex items-center justify-between mb-3">
                                 <h3 className="font-semibold text-sm">
@@ -221,27 +545,69 @@ export default function ClientProgressPage() {
                                 {log.weight_kg && (
                                     <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
                                         <Weight className="h-4 w-4 text-primary shrink-0" />
-                                        <div className="min-w-0">
+                                                <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Kilo</p>
+                                                    <div className="flex items-center gap-2">
                                             <p className="text-sm font-semibold">{log.weight_kg} kg</p>
+                                                        {weightComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    weightComparison.isPositive
+                                                                        ? "text-red-600"
+                                                                        : "text-green-600"
+                                                                }`}
+                                                            >
+                                                                {weightComparison.isPositive ? "+" : ""}
+                                                                {weightComparison.diff.toFixed(1)} kg
+                                                            </span>
+                                                        )}
+                                                    </div>
                                         </div>
                                     </div>
                                 )}
                                 {log.body_fat_percent && (
                                     <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
                                         <Activity className="h-4 w-4 text-primary shrink-0" />
-                                        <div className="min-w-0">
+                                                <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Vücut Yağı</p>
+                                                    <div className="flex items-center gap-2">
                                             <p className="text-sm font-semibold">%{log.body_fat_percent}</p>
+                                                        {bodyFatComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    bodyFatComparison.isPositive
+                                                                        ? "text-green-600"
+                                                                        : "text-red-600"
+                                                                }`}
+                                                            >
+                                                                {bodyFatComparison.isPositive ? "-" : "+"}
+                                                                {Math.abs(bodyFatComparison.diff).toFixed(1)}%
+                                                            </span>
+                                                        )}
+                                                    </div>
                                         </div>
                                     </div>
                                 )}
                                 {log.muscle_mass_kg && (
                                     <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
                                         <TrendingUp className="h-4 w-4 text-primary shrink-0" />
-                                        <div className="min-w-0">
+                                                <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Kas Kütlesi</p>
+                                                    <div className="flex items-center gap-2">
                                             <p className="text-sm font-semibold">{log.muscle_mass_kg} kg</p>
+                                                        {muscleMassComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    muscleMassComparison.isPositive
+                                                                        ? "text-green-600"
+                                                                        : "text-red-600"
+                                                                }`}
+                                                            >
+                                                                {muscleMassComparison.isPositive ? "+" : ""}
+                                                                {muscleMassComparison.diff.toFixed(1)} kg
+                                                            </span>
+                                                        )}
+                                                    </div>
                                         </div>
                                     </div>
                                 )}
@@ -253,19 +619,188 @@ export default function ClientProgressPage() {
                                 </div>
                             )}
                         </div>
-                    ))}
+                            );
+                        })}
                 </div>
             )}
+            </div>
+
+            {/* Tüm Kayıtlar Sheet */}
+            <Sheet open={isAllLogsSheetOpen} onOpenChange={setIsAllLogsSheetOpen}>
+                <SheetContent className="w-full sm:max-w-2xl overflow-y-auto px-6">
+                    <SheetHeader className="px-0">
+                        <SheetTitle>Tüm İlerleme Kayıtları</SheetTitle>
+                        <SheetDescription>
+                            {client && `${client.first_name} ${client.last_name} - `}Tüm ilerleme kayıtlarını görüntüleyin
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-3 px-0">
+                        {progressLogs.map((log, index) => {
+                            // Önceki kaydı bul
+                            const previousLog = index < progressLogs.length - 1 ? progressLogs[index + 1] : null;
+
+                            // Karşılaştırma fonksiyonu
+                            const getComparison = (
+                                current: number | null,
+                                previous: number | null,
+                                invert: boolean = false
+                            ) => {
+                                if (!current || !previous) return null;
+                                const diff = current - previous;
+                                const percent = previous !== 0 ? ((diff / previous) * 100).toFixed(1) : "0";
+                                const isPositive = invert ? diff < 0 : diff > 0;
+                                return { diff, percent, isPositive };
+                            };
+
+                            const weightComparison = getComparison(log.weight_kg, previousLog?.weight_kg || null);
+                            const bodyFatComparison = getComparison(
+                                log.body_fat_percent,
+                                previousLog?.body_fat_percent || null,
+                                true
+                            );
+                            const muscleMassComparison = getComparison(
+                                log.muscle_mass_kg,
+                                previousLog?.muscle_mass_kg || null
+                            );
+
+                            return (
+                                <div key={log.id} className="border rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h3 className="font-semibold text-sm">
+                                            {new Date(log.log_date).toLocaleDateString("tr-TR", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            })}
+                                        </h3>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+                                        {log.weight_kg && (
+                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+                                                <Weight className="h-4 w-4 text-primary shrink-0" />
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-xs text-muted-foreground">Kilo</p>
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="text-sm font-semibold">{log.weight_kg} kg</p>
+                                                        {weightComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    weightComparison.isPositive
+                                                                        ? "text-red-600"
+                                                                        : "text-green-600"
+                                                                }`}
+                                                            >
+                                                                {weightComparison.isPositive ? "+" : ""}
+                                                                {weightComparison.diff.toFixed(1)} kg
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {log.body_fat_percent && (
+                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+                                                <Activity className="h-4 w-4 text-primary shrink-0" />
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-xs text-muted-foreground">Vücut Yağı</p>
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="text-sm font-semibold">%{log.body_fat_percent}</p>
+                                                        {bodyFatComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    bodyFatComparison.isPositive
+                                                                        ? "text-green-600"
+                                                                        : "text-red-600"
+                                                                }`}
+                                                            >
+                                                                {bodyFatComparison.isPositive ? "-" : "+"}
+                                                                {Math.abs(bodyFatComparison.diff).toFixed(1)}%
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {log.muscle_mass_kg && (
+                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
+                                                <TrendingUp className="h-4 w-4 text-primary shrink-0" />
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-xs text-muted-foreground">Kas Kütlesi</p>
+                                                    <div className="flex items-center gap-2">
+                                                        <p className="text-sm font-semibold">{log.muscle_mass_kg} kg</p>
+                                                        {muscleMassComparison && (
+                                                            <span
+                                                                className={`text-xs ${
+                                                                    muscleMassComparison.isPositive
+                                                                        ? "text-green-600"
+                                                                        : "text-red-600"
+                                                                }`}
+                                                            >
+                                                                {muscleMassComparison.isPositive ? "+" : ""}
+                                                                {muscleMassComparison.diff.toFixed(1)} kg
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                    {log.notes && (
+                                        <div className="pt-3 border-t">
+                                            <p className="text-xs text-muted-foreground mb-1">Notlar</p>
+                                            <p className="text-xs whitespace-pre-wrap leading-relaxed">{log.notes}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </SheetContent>
+            </Sheet>
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogContent>
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Yeni İlerleme Kaydı</DialogTitle>
                         <DialogDescription>
                             Danışan için yeni bir ilerleme kaydı oluşturun.
                         </DialogDescription>
                     </DialogHeader>
+
+                    {/* Önceki Kayıtlar */}
+                    {progressLogs.length > 0 && (
+                        <div className="border rounded-lg p-3 bg-muted/30">
+                            <p className="text-xs font-semibold text-muted-foreground mb-2">Son Kayıtlar (Referans)</p>
+                            <div className="space-y-2 max-h-[150px] overflow-y-auto">
+                                {progressLogs.slice(0, 3).map((prevLog) => (
+                                    <div key={prevLog.id} className="text-xs border-b pb-2 last:border-0 last:pb-0">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <span className="font-medium">
+                                                {new Date(prevLog.log_date).toLocaleDateString("tr-TR", {
+                                                    day: "numeric",
+                                                    month: "short",
+                                                    year: "numeric",
+                                                })}
+                                            </span>
+                                        </div>
+                                        <div className="flex gap-3 text-muted-foreground">
+                                            {prevLog.weight_kg && (
+                                                <span>Kilo: {prevLog.weight_kg} kg</span>
+                                            )}
+                                            {prevLog.body_fat_percent && (
+                                                <span>Vücut Yağı: %{prevLog.body_fat_percent}</span>
+                                            )}
+                                            {prevLog.muscle_mass_kg && (
+                                                <span>Kas: {prevLog.muscle_mass_kg} kg</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
                     <form onSubmit={handleCreateProgressLog} className="space-y-4">
                         <div className="space-y-2">
                             <Label htmlFor="log_date">Tarih</Label>
