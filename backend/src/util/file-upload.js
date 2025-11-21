@@ -5,10 +5,10 @@ import HttpException from "../exceptions/http-exception.js";
  * Base64 string'den PDF dosyası oluştur ve Cloudinary'e yükle
  * @param {string} base64String - Base64 encoded PDF string
  * @param {string} fileName - Dosya adı (opsiyonel)
- * @param {string} folder - Cloudinary folder (default: "diet-templates")
+ * @param {string} folder - Cloudinary folder (default: "diet-plans")
  * @returns {Promise<string>} - Cloudinary'deki dosyanın URL'i
  */
-export async function saveBase64Pdf(base64String, fileName = null, folder = "diet-templates") {
+export async function saveBase64Pdf(base64String, fileName = null, folder = "diet-plans") {
     try {
         // Base64 string'i temizle (data:application/pdf;base64, prefix'ini kaldır)
         const base64Data = base64String.replace(/^data:application\/pdf;base64,/, "");
@@ -19,7 +19,7 @@ export async function saveBase64Pdf(base64String, fileName = null, folder = "die
         // Dosya adını oluştur
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 15);
-        const filePrefix = folder === "diet-plans" ? "diet-plan" : "diet-template";
+        const filePrefix = "diet-plan";
         let publicId;
         if (fileName) {
             // Dosya adından .pdf uzantısını kaldır, sonra tekrar ekle
@@ -100,12 +100,13 @@ export async function deleteFile(fileUrl) {
 }
 
 /**
- * PDF dosyasını Cloudinary'de kopyala (şablon atama için)
+ * PDF dosyasını Cloudinary'de kopyala
  * @param {string} sourceUrl - Kaynak dosya Cloudinary URL'i
  * @param {string} newFileName - Yeni dosya adı (opsiyonel)
+ * @param {string} folder - Cloudinary folder (default: "diet-plans")
  * @returns {Promise<string>} - Yeni dosyanın Cloudinary URL'i
  */
-export async function copyPdfFile(sourceUrl, newFileName = null) {
+export async function copyPdfFile(sourceUrl, newFileName = null, folder = "diet-plans") {
     try {
         if (!sourceUrl) return null;
         
@@ -116,8 +117,8 @@ export async function copyPdfFile(sourceUrl, newFileName = null) {
         const timestamp = Date.now();
         const randomString = Math.random().toString(36).substring(2, 15);
         const newPublicId = newFileName
-            ? `diet-templates/${newFileName.replace(/\.pdf$/i, "")}-${timestamp}`
-            : `diet-templates/diet-template-${timestamp}-${randomString}`;
+            ? `${folder}/${newFileName.replace(/\.pdf$/i, "")}-${timestamp}`
+            : `${folder}/diet-plan-${timestamp}-${randomString}`;
         
         // Cloudinary'de direkt kopyalama yok, bu yüzden URL'den indirip yeniden yükleyeceğiz
         const response = await fetch(sourceUrl);
@@ -134,7 +135,7 @@ export async function copyPdfFile(sourceUrl, newFileName = null) {
                 {
                     resource_type: "auto", // Cloudinary otomatik olarak PDF'yi algılar
                     public_id: newPublicId,
-                    folder: "diet-templates",
+                    folder: folder,
                     format: "pdf",
                 },
                 (error, result) => {

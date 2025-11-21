@@ -3,16 +3,12 @@ import { useParams, useNavigate, Link } from "react-router";
 import { apiUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import {
     FileText,
     Edit,
     Plus,
-    Clock,
     Trash2,
     File,
     Download,
@@ -26,13 +22,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import {
     Breadcrumb,
@@ -43,7 +32,6 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { DietPlanPDFReport } from "@/components/diet-plan-pdf-report";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface DietPlan {
     id: string;
@@ -52,7 +40,6 @@ interface DietPlan {
     content: string | null;
     start_date: string | null;
     end_date: string | null;
-    template_id?: string | null;
     pdf_url?: string | null;
     created_at: string;
 }
@@ -77,40 +64,6 @@ interface Dietitian {
     last_name: string;
 }
 
-interface Meal {
-    id: string;
-    meal_time: string;
-    foods: Food[];
-    calories: number | null;
-    day_of_week: number | null;
-    notes: string | null;
-    content: string | null;
-}
-
-interface Food {
-    name: string;
-    amount: string;
-    calories?: number;
-}
-
-const MEAL_TIME_LABELS: Record<string, string> = {
-    kahvalti: "Kahvaltı",
-    ogle_yemegi: "Öğle Yemeği",
-    aksam_yemegi: "Akşam Yemeği",
-    atistirma: "Atıştırmalık",
-    aksam_atistirma: "Akşam Atıştırmalığı",
-};
-
-const DAY_LABELS: Record<number, string> = {
-    0: "Pazar",
-    1: "Pazartesi",
-    2: "Salı",
-    3: "Çarşamba",
-    4: "Perşembe",
-    5: "Cuma",
-    6: "Cumartesi",
-};
-
 export default function DietPlanDetailPage() {
     const { id: clientId, planId } = useParams<{ id: string; planId: string }>();
     const navigate = useNavigate();
@@ -122,16 +75,11 @@ export default function DietPlanDetailPage() {
     const [isContentDialogOpen, setIsContentDialogOpen] = useState(false);
     const [isCreateMethodDialogOpen, setIsCreateMethodDialogOpen] = useState(false);
     const [isPdfDialogOpen, setIsPdfDialogOpen] = useState(false);
-    const [isMealDialogOpen, setIsMealDialogOpen] = useState(false);
     const [pdfFile, setPdfFile] = useState<File | null>(null);
     const [isUploadingPdf, setIsUploadingPdf] = useState(false);
     const [isDeletingPdf, setIsDeletingPdf] = useState(false);
-    const [isDeletingPlan, setIsDeletingPlan] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [isSavingContent, setIsSavingContent] = useState(false);
-    const [isDeletingMeal, setIsDeletingMeal] = useState<string | null>(null);
-    const [meals, setMeals] = useState<Meal[]>([]);
-    const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
     const [editFormData, setEditFormData] = useState({
         title: "",
         description: "",
@@ -140,20 +88,12 @@ export default function DietPlanDetailPage() {
         end_date: "",
     });
     const [contentData, setContentData] = useState("");
-    const [mealFormData, setMealFormData] = useState({
-        meal_time: "",
-        foods: [{ name: "", amount: "", calories: "" }] as Array<{ name: string; amount: string; calories: string }>,
-        calories: "",
-        day_of_week: "all",
-        notes: "",
-    });
 
     useEffect(() => {
         if (clientId && planId) {
             fetchClient();
             fetchDietPlan();
             fetchDietitian();
-            fetchMeals();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [clientId, planId]);
@@ -226,38 +166,6 @@ export default function DietPlanDetailPage() {
             }
         } catch (error) {
             console.error("Dietitian fetch error:", error);
-        }
-    };
-
-    const fetchMeals = async () => {
-        if (!planId) return;
-        try {
-            const response = await fetch(apiUrl(`api/diet-plans/${planId}/meals`), {
-                method: "GET",
-                credentials: "include",
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.success) {
-                    setMeals(data.meals || []);
-                }
-            }
-        } catch (error) {
-            console.error("Meals fetch error:", error);
-        }
-    };
-
-    const handleEdit = () => {
-        if (plan) {
-            setEditFormData({
-                title: plan.title || "",
-                description: plan.description || "",
-                content: "",
-                start_date: "",
-                end_date: "",
-            });
-            setIsEditDialogOpen(true);
         }
     };
 
@@ -379,156 +287,6 @@ export default function DietPlanDetailPage() {
         }
     };
 
-    const openMealDialog = () => {
-        setEditingMeal(null);
-        setMealFormData({
-            meal_time: "",
-            foods: [{ name: "", amount: "", calories: "" }],
-            calories: "",
-            day_of_week: "all",
-            notes: "",
-        });
-        setIsMealDialogOpen(true);
-    };
-
-    const handleAddFood = () => {
-        setMealFormData({
-            ...mealFormData,
-            foods: [...mealFormData.foods, { name: "", amount: "", calories: "" }],
-        });
-    };
-
-    const handleRemoveFood = (index: number) => {
-        const newFoods = mealFormData.foods.filter((_, i) => i !== index);
-        setMealFormData({ ...mealFormData, foods: newFoods });
-    };
-
-    const handleFoodChange = (index: number, field: string, value: string) => {
-        const newFoods = [...mealFormData.foods];
-        newFoods[index] = { ...newFoods[index], [field]: value };
-        setMealFormData({ ...mealFormData, foods: newFoods });
-    };
-
-    const calculateTotalCalories = () => {
-        const foodCalories = mealFormData.foods.reduce((sum, food) => {
-            return sum + (food.calories ? parseFloat(food.calories) : 0);
-        }, 0);
-        return foodCalories || mealFormData.calories;
-    };
-
-    const handleSaveMeal = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const foods = mealFormData.foods
-            .filter((f) => f.name.trim() !== "")
-            .map((f) => ({
-                name: f.name,
-                amount: f.amount,
-                calories: f.calories ? parseFloat(f.calories) : undefined,
-            }));
-
-        if (foods.length === 0) {
-            toast.error("En az bir yiyecek eklemelisiniz");
-            return;
-        }
-
-        const totalCalories = calculateTotalCalories();
-
-        try {
-            const url = editingMeal
-                ? apiUrl(`api/meals/${editingMeal.id}`)
-                : apiUrl(`api/diet-plans/${planId}/meals`);
-            const method = editingMeal ? "PUT" : "POST";
-
-            const response = await fetch(url, {
-                method,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    meal_time: mealFormData.meal_time,
-                    foods,
-                    calories: totalCalories ? parseFloat(totalCalories.toString()) : null,
-                    day_of_week: mealFormData.day_of_week === "all" || mealFormData.day_of_week === "" 
-                        ? null 
-                        : parseInt(mealFormData.day_of_week),
-                    notes: mealFormData.notes || null,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Öğün kaydedilemedi");
-            }
-
-            toast.success(editingMeal ? "Öğün güncellendi" : "Öğün eklendi");
-            setIsMealDialogOpen(false);
-            setEditingMeal(null);
-            setMealFormData({
-                meal_time: "",
-                foods: [{ name: "", amount: "", calories: "" }],
-                calories: "",
-                day_of_week: "all",
-                notes: "",
-            });
-            fetchMeals();
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
-            toast.error(errorMessage);
-        }
-    };
-
-    const handleDeleteMeal = async (mealId: string) => {
-        if (!confirm("Bu öğünü silmek istediğinizden emin misiniz?")) {
-            return;
-        }
-
-        setIsDeletingMeal(mealId);
-        try {
-            const response = await fetch(apiUrl(`api/meals/${mealId}`), {
-                method: "DELETE",
-                credentials: "include",
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Öğün silinemedi");
-            }
-
-            toast.success("Öğün silindi");
-            fetchMeals();
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
-            toast.error(errorMessage);
-        } finally {
-            setIsDeletingMeal(null);
-        }
-    };
-
-    const handleEditMeal = (meal: Meal) => {
-        setEditingMeal(meal);
-        setMealFormData({
-            meal_time: meal.meal_time,
-            foods:
-                meal.foods && meal.foods.length > 0
-                    ? meal.foods.map((f) => ({
-                          name: f.name,
-                          amount: f.amount,
-                          calories: f.calories?.toString() || "",
-                      }))
-                    : [{ name: "", amount: "", calories: "" }],
-            calories: meal.calories?.toString() || "",
-            day_of_week: meal.day_of_week !== null && meal.day_of_week !== undefined 
-                ? meal.day_of_week.toString() 
-                : "all",
-            notes: meal.notes || "",
-        });
-        setIsMealDialogOpen(true);
-    };
-
     const handleSaveContent = async () => {
         setIsSavingContent(true);
 
@@ -558,34 +316,6 @@ export default function DietPlanDetailPage() {
             toast.error(errorMessage);
         } finally {
             setIsSavingContent(false);
-        }
-    };
-
-    const handleDeletePlan = async () => {
-        if (!confirm("Bu diyet planını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
-            return;
-        }
-
-        setIsDeletingPlan(true);
-        try {
-            const response = await fetch(apiUrl(`api/diet-plans/${planId}`), {
-                method: "DELETE",
-                credentials: "include",
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || "Diyet planı silinemedi");
-            }
-
-            toast.success("Diyet planı başarıyla silindi");
-            navigate(`/clients/${clientId}/diet-plans`);
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
-            toast.error(errorMessage);
-        } finally {
-            setIsDeletingPlan(false);
         }
     };
 
@@ -797,141 +527,8 @@ export default function DietPlanDetailPage() {
             </div>
             )}
 
-            {/* Plan Meals - Şimdilik gizli, sadece metin ve PDF kullanılıyor */}
-            {false && meals.length > 0 && (
-                <div className="space-y-6">
-                    <div className="flex items-center gap-3">
-                        <div className="rounded-lg bg-primary/10 p-2">
-                            <Clock className="h-5 w-5 text-primary" />
-                        </div>
-                        <div className="flex-1">
-                            <h2 className="text-xl font-semibold">Öğünler</h2>
-                            <p className="text-sm text-muted-foreground">
-                                Planın öğün listesi ve yiyecek bilgileri
-                            </p>
-                        </div>
-                        <Button onClick={openMealDialog} size="sm" className="gap-2">
-                            <Plus className="h-4 w-4" />
-                            Öğün Ekle
-                        </Button>
-                    </div>
-                    
-                    <Separator />
-
-                    <div className="space-y-6">
-                        {(() => {
-                            const mealsByDay = meals.reduce((acc, meal) => {
-                                const day = meal.day_of_week !== null ? meal.day_of_week : "all";
-                                if (!acc[day]) {
-                                    acc[day] = [];
-                                }
-                                acc[day].push(meal);
-                                return acc;
-                            }, {} as Record<string | number, Meal[]>);
-
-                            return Object.keys(mealsByDay).map((day) => {
-                                const dayNum = day === "all" ? null : parseInt(day);
-                                const dayMeals = mealsByDay[day];
-
-                                return (
-                                    <div key={day} className="space-y-4">
-                                        <div className="flex items-center gap-2">
-                                            <h3 className="text-lg font-semibold">
-                                                {dayNum !== null ? DAY_LABELS[dayNum] : "Tüm Günler"}
-                                            </h3>
-                                            <Badge variant="outline" className="ml-2">
-                                                {dayMeals.length} öğün
-                                            </Badge>
-                                        </div>
-                                        <Separator />
-                                        <div className="border rounded-lg">
-                                            <Table>
-                                                <TableHeader>
-                                                    <TableRow>
-                                                        <TableHead>Öğün</TableHead>
-                                                        <TableHead>Yiyecekler</TableHead>
-                                                        <TableHead className="text-right">Kalori</TableHead>
-                                                        <TableHead className="text-right">İşlemler</TableHead>
-                                                    </TableRow>
-                                                </TableHeader>
-                                                <TableBody>
-                                                    {dayMeals.map((meal) => (
-                                                        <TableRow key={meal.id}>
-                                                            <TableCell className="font-medium">
-                                                                {MEAL_TIME_LABELS[meal.meal_time] || meal.meal_time}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <div className="space-y-1">
-                                                                    {meal.foods && meal.foods.length > 0 ? (
-                                                                        meal.foods.map((food, idx) => (
-                                                                            <div key={idx} className="text-sm">
-                                                                                <span className="font-medium">{food.name}</span>
-                                                                                {food.amount && (
-                                                                                    <span className="text-muted-foreground ml-1">
-                                                                                        ({food.amount})
-                                                                                    </span>
-                                                                                )}
-                                                                            </div>
-                                                                        ))
-                                                                    ) : (
-                                                                        <span className="text-muted-foreground text-sm">
-                                                                            Yiyecek bilgisi yok
-                                                                        </span>
-                                                                    )}
-                                                                </div>
-                                                                {meal.notes && (
-                                                                    <p className="text-xs text-muted-foreground mt-1">
-                                                                        {meal.notes}
-                                                                    </p>
-                                                                )}
-                                                            </TableCell>
-                                                            <TableCell className="text-right">
-                                                                {meal.calories ? (
-                                                                    <Badge variant="outline">{meal.calories} kcal</Badge>
-                                                                ) : (
-                                                                    <span className="text-muted-foreground text-sm">-</span>
-                                                                )}
-                                                            </TableCell>
-                                                            <TableCell className="text-right">
-                                                                <div className="flex justify-end gap-2">
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="sm"
-                                                                        onClick={() => handleEditMeal(meal)}
-                                                                        className="h-8 w-8 p-0"
-                                                                    >
-                                                                        <Edit className="h-4 w-4" />
-                                                                    </Button>
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="sm"
-                                                                        onClick={() => handleDeleteMeal(meal.id)}
-                                                                        disabled={isDeletingMeal === meal.id}
-                                                                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                                                                    >
-                                                                        {isDeletingMeal === meal.id ? (
-                                                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                                                                        ) : (
-                                                                            <Trash2 className="h-4 w-4" />
-                                                                        )}
-                                                                    </Button>
-                                                                </div>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </div>
-                                    </div>
-                                );
-                            });
-                        })()}
-                    </div>
-                </div>
-            )}
-
             {/* Empty State */}
-            {!plan.content && meals.length === 0 && !plan.pdf_url && (
+            {!plan.content && !plan.pdf_url && (
                 <div className="space-y-6">
                     <div className="flex items-center gap-3">
                         <div className="rounded-lg bg-primary/10 p-2">
@@ -978,7 +575,7 @@ export default function DietPlanDetailPage() {
                             <FileText className="h-8 w-8 shrink-0" />
                             <div className="text-center w-full space-y-1">
                                 <div className="font-semibold text-base">Metin Editörü</div>
-                                <div className="text-sm text-muted-foreground mt-1 break-words px-2">
+                                <div className="text-sm text-muted-foreground mt-1 wrap-break-words px-2">
                                     Zengin metin editörü ile Word benzeri formatlamalar yapabilirsiniz
                                 </div>
                             </div>
@@ -990,7 +587,7 @@ export default function DietPlanDetailPage() {
                             <File className="h-8 w-8 shrink-0" />
                             <div className="text-center w-full space-y-1">
                                 <div className="font-semibold text-base">PDF Yükle</div>
-                                <div className="text-sm text-muted-foreground mt-1 break-words px-2">
+                                <div className="text-sm text-muted-foreground mt-1 wrap-break-words px-2">
                                     Hazır PDF dosyası yükleyerek diyet planını paylaşın
                                 </div>
                             </div>
@@ -1171,166 +768,6 @@ export default function DietPlanDetailPage() {
                 </DialogContent>
             </Dialog>
 
-            {/* Add/Edit Meal Dialog */}
-            <Dialog open={isMealDialogOpen} onOpenChange={setIsMealDialogOpen}>
-                <DialogContent className="min-w-3xl max-w-4xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle>{editingMeal ? "Öğünü Düzenle" : "Yeni Öğün Ekle"}</DialogTitle>
-                        <DialogDescription>
-                            Plan'a yeni bir öğün ekleyin veya mevcut öğünü düzenleyin
-                        </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleSaveMeal}>
-                        <div className="space-y-4 py-4">
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="meal_time">Öğün Zamanı *</Label>
-                                    <Select
-                                        value={mealFormData.meal_time}
-                                        onValueChange={(value) =>
-                                            setMealFormData({ ...mealFormData, meal_time: value })
-                                        }
-                                        required
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Öğün seçin" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {Object.entries(MEAL_TIME_LABELS).map(([value, label]) => (
-                                                <SelectItem key={value} value={value}>
-                                                    {label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="day_of_week">Gün</Label>
-                                    <Select
-                                        value={mealFormData.day_of_week}
-                                        onValueChange={(value) =>
-                                            setMealFormData({ ...mealFormData, day_of_week: value })
-                                        }
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Tüm günler" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">Tüm Günler</SelectItem>
-                                            {Object.entries(DAY_LABELS).map(([value, label]) => (
-                                                <SelectItem key={value} value={value}>
-                                                    {label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label>Yiyecekler *</Label>
-                                {mealFormData.foods.map((food, index) => (
-                                    <div key={index} className="grid grid-cols-12 gap-2 items-end">
-                                        <div className="col-span-5">
-                                            <Input
-                                                placeholder="Yiyecek adı"
-                                                value={food.name}
-                                                onChange={(e) =>
-                                                    handleFoodChange(index, "name", e.target.value)
-                                                }
-                                                required={index === 0}
-                                            />
-                                        </div>
-                                        <div className="col-span-3">
-                                            <Input
-                                                placeholder="Miktar"
-                                                value={food.amount}
-                                                onChange={(e) =>
-                                                    handleFoodChange(index, "amount", e.target.value)
-                                                }
-                                            />
-                                        </div>
-                                        <div className="col-span-2">
-                                            <Input
-                                                type="number"
-                                                placeholder="Kalori"
-                                                value={food.calories}
-                                                onChange={(e) =>
-                                                    handleFoodChange(index, "calories", e.target.value)
-                                                }
-                                                min="0"
-                                            />
-                                        </div>
-                                        <div className="col-span-2 flex gap-1">
-                                            {mealFormData.foods.length > 1 && (
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    onClick={() => handleRemoveFood(index)}
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            )}
-                                            {index === mealFormData.foods.length - 1 && (
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    onClick={handleAddFood}
-                                                >
-                                                    <Plus className="h-4 w-4" />
-                                                </Button>
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="calories">Toplam Kalori (Otomatik hesaplanır)</Label>
-                                <Input
-                                    id="calories"
-                                    type="number"
-                                    value={calculateTotalCalories() || ""}
-                                    onChange={(e) =>
-                                        setMealFormData({ ...mealFormData, calories: e.target.value })
-                                    }
-                                    placeholder="Otomatik hesaplanır"
-                                    min="0"
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="notes">Notlar</Label>
-                                <Textarea
-                                    id="notes"
-                                    value={mealFormData.notes}
-                                    onChange={(e) =>
-                                        setMealFormData({ ...mealFormData, notes: e.target.value })
-                                    }
-                                    placeholder="Özel notlar..."
-                                    rows={2}
-                                />
-                            </div>
-                        </div>
-                        <DialogFooter>
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => {
-                                    setIsMealDialogOpen(false);
-                                    setEditingMeal(null);
-                                }}
-                            >
-                                İptal
-                            </Button>
-                            <Button type="submit">Kaydet</Button>
-                        </DialogFooter>
-                    </form>
-                </DialogContent>
-            </Dialog>
         </div>
     );
 }

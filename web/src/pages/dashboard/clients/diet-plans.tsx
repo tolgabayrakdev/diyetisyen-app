@@ -35,7 +35,6 @@ interface DietPlan {
     description: string | null;
     start_date: string | null;
     end_date: string | null;
-    template_id?: string | null;
     created_at: string;
 }
 
@@ -101,7 +100,7 @@ export default function ClientDietPlansPage() {
                     setDietPlans(data.dietPlans || []);
                 }
             }
-        } catch (error) {
+        } catch {
             toast.error("Diyet planları yüklenirken bir hata oluştu");
         } finally {
             setLoading(false);

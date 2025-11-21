@@ -88,47 +88,7 @@ CREATE TABLE clients (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- 2️⃣ Danışan Belgeleri
-CREATE TABLE client_documents (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
-    file_url TEXT NOT NULL,
-    file_type VARCHAR(50),
-    description TEXT,
-    uploaded_at TIMESTAMP DEFAULT NOW()
-);
-
--- 3️⃣ Diyet Şablonları
-CREATE TABLE diet_templates (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    content TEXT,
-    category VARCHAR(100),
-    total_calories NUMERIC,
-    duration_days INTEGER,
-    pdf_url TEXT,
-    is_active BOOLEAN DEFAULT true,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- 3️⃣.1 Diyet Şablonu Öğünleri
-CREATE TABLE diet_template_meals (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    diet_template_id UUID NOT NULL REFERENCES diet_templates(id) ON DELETE CASCADE,
-    meal_time VARCHAR(50) NOT NULL,
-    foods JSONB NOT NULL,
-    calories NUMERIC,
-    content TEXT,
-    day_of_week INTEGER,
-    notes TEXT,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- 4️⃣ Diyet Planları
+-- 2️⃣ Diyet Planları
 CREATE TABLE diet_plans (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -137,26 +97,12 @@ CREATE TABLE diet_plans (
     content TEXT,
     start_date DATE,
     end_date DATE,
-    template_id UUID REFERENCES diet_templates(id) ON DELETE SET NULL,
     pdf_url TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- 5️⃣ Diyet Planı Öğünleri
-CREATE TABLE diet_plan_meals (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    diet_plan_id UUID NOT NULL REFERENCES diet_plans(id) ON DELETE CASCADE,
-    meal_time VARCHAR(50),
-    foods JSONB,
-    calories NUMERIC,
-    content TEXT,
-    day_of_week INTEGER,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-);
-
--- 6️⃣ Danışan Notları
+-- 3️⃣ Danışan Notları
 CREATE TABLE client_notes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -165,7 +111,7 @@ CREATE TABLE client_notes (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 7️⃣ Finansal Kayıtlar
+-- 4️⃣ Finansal Kayıtlar
 CREATE TABLE financial_records (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -178,7 +124,7 @@ CREATE TABLE financial_records (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 8️⃣ İlerleme Kayıtları
+-- 5️⃣ İlerleme Kayıtları
 CREATE TABLE progress_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
@@ -190,7 +136,7 @@ CREATE TABLE progress_logs (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
--- 9️⃣ Aktivite / Audit Logları
+-- 6️⃣ Aktivite / Audit Logları
 CREATE TABLE activity_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
