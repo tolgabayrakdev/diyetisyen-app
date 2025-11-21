@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Edit, User, Phone, Mail, Calendar, Ruler, Weight, FileText, DollarSign, TrendingUp, StickyNote, Heart, Pill, AlertTriangle } from "lucide-react";
+import { Edit, User, Phone, Mail, Calendar, Ruler, Weight, FileText, DollarSign, TrendingUp, TrendingDown, StickyNote, Heart, Pill, AlertTriangle, Activity, Minus } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -40,10 +40,21 @@ interface Client {
     created_at: string;
 }
 
+interface ProgressLog {
+    id: string;
+    log_date: string;
+    weight_kg: number | null;
+    body_fat_percent: number | null;
+    muscle_mass_kg: number | null;
+    notes: string | null;
+    created_at: string;
+}
+
 export default function ClientDetailPage() {
     const { id } = useParams<{ id: string }>();
     const [loading, setLoading] = useState(true);
     const [client, setClient] = useState<Client | null>(null);
+    const [progressLogs, setProgressLogs] = useState<ProgressLog[]>([]);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [formData, setFormData] = useState({
@@ -63,6 +74,7 @@ export default function ClientDetailPage() {
     useEffect(() => {
         if (id) {
             fetchClient();
+            fetchProgressLogs();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
@@ -100,6 +112,24 @@ export default function ClientDetailPage() {
             toast.error("Danışan bilgileri yüklenirken bir hata oluştu");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchProgressLogs = async () => {
+        try {
+            const response = await fetch(apiUrl(`api/clients/${id}/progress-logs`), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success) {
+                    setProgressLogs(data.logs || []);
+                }
+            }
+        } catch (error) {
+            console.error("Progress logs fetch error:", error);
         }
     };
 
@@ -290,6 +320,220 @@ export default function ClientDetailPage() {
                             </div>
                         </div>
                     )}
+                </div>
+            )}
+
+            {/* İlerleme Özeti - Başlangıç vs Şimdi */}
+            {progressLogs.length > 0 && client.weight_kg && (
+                <div className="border rounded-lg p-4">
+                    <div className="flex items-center gap-2 mb-4">
+                        <TrendingUp className="h-5 w-5 text-primary" />
+                        <h2 className="text-lg font-semibold">İlerleme Özeti</h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {/* Kilo Karşılaştırması */}
+                        {client.weight_kg && progressLogs[0]?.weight_kg && (
+                            <div className="bg-background border rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <Weight className="h-4 w-4 text-primary" />
+                                    <p className="text-sm font-semibold">Kilo</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Başlangıç</span>
+                                        <span className="text-sm font-semibold">{client.weight_kg} kg</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Şimdi</span>
+                                        <span className="text-sm font-semibold">{progressLogs[0].weight_kg} kg</span>
+                                    </div>
+                                    <div className="pt-2 border-t">
+                                        {(() => {
+                                            const diff = progressLogs[0].weight_kg - client.weight_kg;
+                                            const percent = client.weight_kg !== 0 ? ((diff / client.weight_kg) * 100).toFixed(1) : "0";
+                                            const isPositive = diff > 0;
+                                            const TrendIcon = isPositive ? TrendingUp : diff < 0 ? TrendingDown : Minus;
+                                            const trendColor = isPositive
+                                                ? "text-red-600 dark:text-red-400"
+                                                : diff < 0
+                                                  ? "text-green-600 dark:text-green-400"
+                                                  : "text-muted-foreground";
+                                            return (
+                                                <div className={`flex items-center gap-2 ${trendColor}`}>
+                                                    <TrendIcon className="h-4 w-4" />
+                                                    <span className="text-sm font-semibold">
+                                                        {isPositive ? "+" : ""}
+                                                        {diff.toFixed(1)} kg ({percent}%)
+                                                    </span>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Vücut Yağı Karşılaştırması */}
+                        {progressLogs[0]?.body_fat_percent && (
+                            <div className="bg-background border rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <Activity className="h-4 w-4 text-primary" />
+                                    <p className="text-sm font-semibold">Vücut Yağı</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">İlk Kayıt</span>
+                                        <span className="text-sm font-semibold">
+                                            {(() => {
+                                                const firstLog = progressLogs[progressLogs.length - 1];
+                                                return firstLog?.body_fat_percent ? `%${firstLog.body_fat_percent}` : "-";
+                                            })()}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Şimdi</span>
+                                        <span className="text-sm font-semibold">%{progressLogs[0].body_fat_percent}</span>
+                                    </div>
+                                    <div className="pt-2 border-t">
+                                        {(() => {
+                                            const firstLog = progressLogs[progressLogs.length - 1];
+                                            if (!firstLog?.body_fat_percent) return null;
+                                            const diff = progressLogs[0].body_fat_percent - firstLog.body_fat_percent;
+                                            const percent =
+                                                firstLog.body_fat_percent !== 0
+                                                    ? ((diff / firstLog.body_fat_percent) * 100).toFixed(1)
+                                                    : "0";
+                                            const isPositive = diff < 0; // Azalış iyi
+                                            const TrendIcon = isPositive ? TrendingDown : diff > 0 ? TrendingUp : Minus;
+                                            const trendColor = isPositive
+                                                ? "text-green-600 dark:text-green-400"
+                                                : diff > 0
+                                                  ? "text-red-600 dark:text-red-400"
+                                                  : "text-muted-foreground";
+                                            return (
+                                                <div className={`flex items-center gap-2 ${trendColor}`}>
+                                                    <TrendIcon className="h-4 w-4" />
+                                                    <span className="text-sm font-semibold">
+                                                        {isPositive ? "-" : "+"}
+                                                        {Math.abs(diff).toFixed(1)}% ({percent}%)
+                                                    </span>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Kas Kütlesi Karşılaştırması */}
+                        {progressLogs[0]?.muscle_mass_kg && (
+                            <div className="bg-background border rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <TrendingUp className="h-4 w-4 text-primary" />
+                                    <p className="text-sm font-semibold">Kas Kütlesi</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">İlk Kayıt</span>
+                                        <span className="text-sm font-semibold">
+                                            {(() => {
+                                                const firstLog = progressLogs[progressLogs.length - 1];
+                                                return firstLog?.muscle_mass_kg ? `${firstLog.muscle_mass_kg} kg` : "-";
+                                            })()}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Şimdi</span>
+                                        <span className="text-sm font-semibold">{progressLogs[0].muscle_mass_kg} kg</span>
+                                    </div>
+                                    <div className="pt-2 border-t">
+                                        {(() => {
+                                            const firstLog = progressLogs[progressLogs.length - 1];
+                                            if (!firstLog?.muscle_mass_kg) return null;
+                                            const diff = progressLogs[0].muscle_mass_kg - firstLog.muscle_mass_kg;
+                                            const percent =
+                                                firstLog.muscle_mass_kg !== 0
+                                                    ? ((diff / firstLog.muscle_mass_kg) * 100).toFixed(1)
+                                                    : "0";
+                                            const isPositive = diff > 0;
+                                            const TrendIcon = isPositive ? TrendingUp : diff < 0 ? TrendingDown : Minus;
+                                            const trendColor = isPositive
+                                                ? "text-green-600 dark:text-green-400"
+                                                : diff < 0
+                                                  ? "text-red-600 dark:text-red-400"
+                                                  : "text-muted-foreground";
+                                            return (
+                                                <div className={`flex items-center gap-2 ${trendColor}`}>
+                                                    <TrendIcon className="h-4 w-4" />
+                                                    <span className="text-sm font-semibold">
+                                                        {isPositive ? "+" : ""}
+                                                        {diff.toFixed(1)} kg ({percent}%)
+                                                    </span>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* BMI Karşılaştırması */}
+                        {client.height_cm && client.weight_kg && progressLogs[0]?.weight_kg && (
+                            <div className="bg-background border rounded-lg p-4">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <TrendingUp className="h-4 w-4 text-primary" />
+                                    <p className="text-sm font-semibold">BMI</p>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Başlangıç</span>
+                                        <span className="text-sm font-semibold">
+                                            {(() => {
+                                                const heightInMeters = client.height_cm / 100;
+                                                const bmi = client.weight_kg / (heightInMeters * heightInMeters);
+                                                return bmi.toFixed(1);
+                                            })()}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Şimdi</span>
+                                        <span className="text-sm font-semibold">
+                                            {(() => {
+                                                const heightInMeters = client.height_cm / 100;
+                                                const bmi = progressLogs[0].weight_kg / (heightInMeters * heightInMeters);
+                                                return bmi.toFixed(1);
+                                            })()}
+                                        </span>
+                                    </div>
+                                    <div className="pt-2 border-t">
+                                        {(() => {
+                                            const heightInMeters = client.height_cm / 100;
+                                            const startBMI = client.weight_kg / (heightInMeters * heightInMeters);
+                                            const currentBMI = progressLogs[0].weight_kg / (heightInMeters * heightInMeters);
+                                            const diff = currentBMI - startBMI;
+                                            const percent = startBMI !== 0 ? ((diff / startBMI) * 100).toFixed(1) : "0";
+                                            const isPositive = diff < 0; // BMI azalışı iyi
+                                            const TrendIcon = isPositive ? TrendingDown : diff > 0 ? TrendingUp : Minus;
+                                            const trendColor = isPositive
+                                                ? "text-green-600 dark:text-green-400"
+                                                : diff > 0
+                                                  ? "text-red-600 dark:text-red-400"
+                                                  : "text-muted-foreground";
+                                            return (
+                                                <div className={`flex items-center gap-2 ${trendColor}`}>
+                                                    <TrendIcon className="h-4 w-4" />
+                                                    <span className="text-sm font-semibold">
+                                                        {isPositive ? "-" : "+"}
+                                                        {Math.abs(diff).toFixed(1)} ({percent}%)
+                                                    </span>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
 
