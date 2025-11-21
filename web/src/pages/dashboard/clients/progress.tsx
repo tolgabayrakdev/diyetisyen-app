@@ -365,109 +365,121 @@ export default function ClientProgressPage() {
                     <div className="space-y-6">
                         {/* Kilo Grafiği */}
                     {chartData.some((d) => d.weight !== null) && (
-                        <div className="border rounded-lg p-4">
-                            <div className="flex items-center gap-2 mb-4">
-                                <Weight className="h-4 w-4 text-primary" />
-                                <h3 className="font-semibold">Kilo Takibi</h3>
+                        <div className="border rounded-lg p-2 md:p-4 overflow-x-auto">
+                            <div className="flex items-center gap-2 mb-3 md:mb-4">
+                                <Weight className="h-4 w-4 text-primary shrink-0" />
+                                <h3 className="font-semibold text-sm md:text-base">Kilo Takibi</h3>
                             </div>
-                            <ChartContainer
-                                config={{
-                                    weight: {
-                                        label: "Kilo (kg)",
-                                        color: "hsl(217, 91%, 60%)", // Mavi - daha belirgin
-                                    },
-                                }}
-                                className="h-[250px]"
-                            >
-                                <LineChart data={chartData}>
-                                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                                    <XAxis
-                                        dataKey="date"
-                                        tickLine={false}
-                                        axisLine={false}
-                                        tickMargin={8}
-                                        className="text-xs"
-                                    />
-                                    <YAxis
-                                        tickLine={false}
-                                        axisLine={false}
-                                        tickMargin={8}
-                                        className="text-xs"
-                                        domain={["auto", "auto"]}
-                                    />
-                                    <ChartTooltip content={<ChartTooltipContent />} />
-                                    <Line
-                                        type="monotone"
-                                        dataKey="weight"
-                                        stroke="hsl(217, 91%, 60%)"
-                                        strokeWidth={3}
-                                        dot={{ r: 5, fill: "hsl(217, 91%, 60%)" }}
-                                        activeDot={{ r: 7, fill: "hsl(217, 91%, 60%)" }}
-                                    />
-                                </LineChart>
-                            </ChartContainer>
+                            <div className="min-w-[600px] md:min-w-0">
+                                <ChartContainer
+                                    config={{
+                                        weight: {
+                                            label: "Kilo (kg)",
+                                            color: "hsl(217, 91%, 60%)", // Mavi - daha belirgin
+                                        },
+                                    }}
+                                    className="h-[200px] md:h-[250px] w-full"
+                                >
+                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                        <XAxis
+                                            dataKey="date"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            className="text-[10px] md:text-xs"
+                                            angle={-45}
+                                            textAnchor="end"
+                                            height={60}
+                                        />
+                                        <YAxis
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            className="text-[10px] md:text-xs"
+                                            domain={["auto", "auto"]}
+                                            width={50}
+                                        />
+                                        <ChartTooltip content={<ChartTooltipContent />} />
+                                        <Line
+                                            type="monotone"
+                                            dataKey="weight"
+                                            stroke="hsl(217, 91%, 60%)"
+                                            strokeWidth={2}
+                                            dot={{ r: 3, fill: "hsl(217, 91%, 60%)" }}
+                                            activeDot={{ r: 5, fill: "hsl(217, 91%, 60%)" }}
+                                        />
+                                    </LineChart>
+                                </ChartContainer>
+                            </div>
                         </div>
                     )}
 
                     {/* Vücut Yağı ve Kas Kütlesi Grafiği */}
                     {(chartData.some((d) => d.bodyFat !== null) || chartData.some((d) => d.muscleMass !== null)) && (
-                        <div className="border rounded-lg p-4">
-                            <div className="flex items-center gap-2 mb-4">
-                                <BarChart3 className="h-4 w-4 text-primary" />
-                                <h3 className="font-semibold">Vücut Kompozisyonu</h3>
+                        <div className="border rounded-lg p-2 md:p-4 overflow-x-auto">
+                            <div className="flex items-center gap-2 mb-3 md:mb-4">
+                                <BarChart3 className="h-4 w-4 text-primary shrink-0" />
+                                <h3 className="font-semibold text-sm md:text-base">Vücut Kompozisyonu</h3>
                             </div>
-                            <ChartContainer
-                                config={{
-                                    bodyFat: {
-                                        label: "Vücut Yağı (%)",
-                                        color: "hsl(0, 72%, 51%)", // Kırmızı - vücut yağı için
-                                    },
-                                    muscleMass: {
-                                        label: "Kas Kütlesi (kg)",
-                                        color: "hsl(142, 76%, 36%)", // Yeşil - kas için
-                                    },
-                                }}
-                                className="h-[250px]"
-                            >
-                                <LineChart data={chartData}>
-                                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                                    <XAxis
-                                        dataKey="date"
-                                        tickLine={false}
-                                        axisLine={false}
-                                        tickMargin={8}
-                                        className="text-xs"
-                                    />
-                                    <YAxis
-                                        tickLine={false}
-                                        axisLine={false}
-                                        tickMargin={8}
-                                        className="text-xs"
-                                        domain={["auto", "auto"]}
-                                    />
-                                    <ChartTooltip content={<ChartTooltipContent />} />
-                                    {chartData.some((d) => d.bodyFat !== null) && (
-                                        <Line
-                                            type="monotone"
-                                            dataKey="bodyFat"
-                                            stroke="hsl(0, 72%, 51%)"
-                                            strokeWidth={3}
-                                            dot={{ r: 5, fill: "hsl(0, 72%, 51%)" }}
-                                            activeDot={{ r: 7, fill: "hsl(0, 72%, 51%)" }}
+                            <div className="min-w-[600px] md:min-w-0">
+                                <ChartContainer
+                                    config={{
+                                        bodyFat: {
+                                            label: "Vücut Yağı (%)",
+                                            color: "hsl(0, 72%, 51%)", // Kırmızı - vücut yağı için
+                                        },
+                                        muscleMass: {
+                                            label: "Kas Kütlesi (kg)",
+                                            color: "hsl(142, 76%, 36%)", // Yeşil - kas için
+                                        },
+                                    }}
+                                    className="h-[200px] md:h-[250px] w-full"
+                                >
+                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                                        <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                                        <XAxis
+                                            dataKey="date"
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            className="text-[10px] md:text-xs"
+                                            angle={-45}
+                                            textAnchor="end"
+                                            height={60}
                                         />
-                                    )}
-                                    {chartData.some((d) => d.muscleMass !== null) && (
-                                        <Line
-                                            type="monotone"
-                                            dataKey="muscleMass"
-                                            stroke="hsl(142, 76%, 36%)"
-                                            strokeWidth={3}
-                                            dot={{ r: 5, fill: "hsl(142, 76%, 36%)" }}
-                                            activeDot={{ r: 7, fill: "hsl(142, 76%, 36%)" }}
+                                        <YAxis
+                                            tickLine={false}
+                                            axisLine={false}
+                                            tickMargin={8}
+                                            className="text-[10px] md:text-xs"
+                                            domain={["auto", "auto"]}
+                                            width={50}
                                         />
-                                    )}
-                                </LineChart>
-                            </ChartContainer>
+                                        <ChartTooltip content={<ChartTooltipContent />} />
+                                        {chartData.some((d) => d.bodyFat !== null) && (
+                                            <Line
+                                                type="monotone"
+                                                dataKey="bodyFat"
+                                                stroke="hsl(0, 72%, 51%)"
+                                                strokeWidth={2}
+                                                dot={{ r: 3, fill: "hsl(0, 72%, 51%)" }}
+                                                activeDot={{ r: 5, fill: "hsl(0, 72%, 51%)" }}
+                                            />
+                                        )}
+                                        {chartData.some((d) => d.muscleMass !== null) && (
+                                            <Line
+                                                type="monotone"
+                                                dataKey="muscleMass"
+                                                stroke="hsl(142, 76%, 36%)"
+                                                strokeWidth={2}
+                                                dot={{ r: 3, fill: "hsl(142, 76%, 36%)" }}
+                                                activeDot={{ r: 5, fill: "hsl(142, 76%, 36%)" }}
+                                            />
+                                        )}
+                                    </LineChart>
+                                </ChartContainer>
+                            </div>
                         </div>
                     )}
                     </div>
