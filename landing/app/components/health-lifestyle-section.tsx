@@ -20,7 +20,7 @@ const benefits = [
   {
     icon: "📋",
     title: "İşlerinizi Kolaylaştırın",
-    description: "Hazır diyet planı şablonları, otomatik hatırlatmalar ve akıllı önerilerle iş yükünüzü %60 azaltın.",
+    description: "Zengin metin editörü ile diyet planları oluşturun, PDF yükleyin, ilerleme takibi yapın ve finansal kayıtlarınızı tutun. Tüm işlemleriniz tek platformda.",
   },
   {
     icon: "📊",

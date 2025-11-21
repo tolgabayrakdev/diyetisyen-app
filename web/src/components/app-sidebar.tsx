@@ -131,7 +131,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <div className="flex items-center justify-between px-3 py-2">
             <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              Diyetka
+              DiyetKa
             </SidebarGroupLabel>
             <ModeToggle />
           </div>

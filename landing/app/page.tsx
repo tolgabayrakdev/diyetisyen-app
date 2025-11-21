@@ -11,7 +11,7 @@ import { HealthLifestyleSection } from "./components/health-lifestyle-section";
 import { FreeTrialForm } from "./components/free-trial-form";
 
 export const metadata: Metadata = {
-  title: "DiyetKa - Danışan Yönetim Yazılımı | Diyetisyen Platformu",
+  title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
   description: "Diyetisyenler için profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme ile başlayın. Zamandan tasarruf edin, gelirinizi artırın.",
   keywords: [
     "diyetisyen yazılımı",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "ücretsiz deneme",
   ],
   openGraph: {
-    title: "DiyetKa - Profesyonel Diyetisyen Yönetim Platformu",
+    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. 7 gün ücretsiz deneme.",
     url: "https://diyetka.com",
   },
@@ -100,7 +100,7 @@ export default function Home() {
           <div className="text-center space-y-6 max-w-4xl mx-auto">
             <FadeInUp delay={0.1}>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary mb-4">
-                <span>Profesyonel Diyetisyen Platformu</span>
+                <span>Danışan yönetim platformu</span>
               </div>
             </FadeInUp>
             <FadeInUp delay={0.2}>
@@ -111,8 +111,8 @@ export default function Home() {
             </FadeInUp>
             <FadeInUp delay={0.3}>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Danışanlarınızı kolayca yönetin, kişiselleştirilmiş diyet planları
-                oluşturun, ilerlemelerini takip edin ve işinizi büyütün.
+                Danışanlarınızı kolayca yönetin, detaylı diyet planları
+                oluşturun, ilerlemelerini takip edin, finansal kayıtlarınızı tutun ve işinizi büyütün.
               </p>
             </FadeInUp>
             <FadeInUp delay={0.4}>
@@ -214,7 +214,7 @@ export default function Home() {
               <FeatureCard
                 emoji="📋"
                 title="Diyet Planları"
-                description="Kişiselleştirilmiş diyet planları oluşturun. Şablonlar kullanarak zamandan tasarruf edin."
+                description="Zengin metin editörü ile detaylı diyet planları oluşturun. PDF yükleyebilir veya sıfırdan plan oluşturabilirsiniz."
                 index={1}
               />
             </StaggerItem>

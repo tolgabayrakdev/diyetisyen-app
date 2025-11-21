@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="space-y-3">
             <h3 className="text-base font-semibold">DiyetKa</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Profesyonel diyetisyen yönetim platformu. Danışanlarınızı kolayca
+              DiyetKa - Diyetisyenler için akıllı danışan yönetimi. Danışanlarınızı kolayca
               yönetin, diyet planları oluşturun ve takip edin.
             </p>
           </div>

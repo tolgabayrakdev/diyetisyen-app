@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://diyetka.com"),
   title: {
-    default: "DiyetKa - Profesyonel Diyetisyen Yönetim Platformu",
+    default: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     template: "%s | DiyetKa",
   },
   description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme ile başlayın.",
@@ -46,20 +46,20 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "https://diyetka.com",
     siteName: "DiyetKa",
-    title: "DiyetKa - Profesyonel Diyetisyen Yönetim Platformu",
+    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "DiyetKa - Profesyonel Diyetisyen Yönetim Platformu",
+        alt: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DiyetKa - Profesyonel Diyetisyen Yönetim Platformu",
+    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu.",
     images: ["/og-image.jpg"],
   },

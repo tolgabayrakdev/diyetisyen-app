@@ -58,7 +58,7 @@ export default function FAQ() {
         name: "Danışan sayısı limiti nedir?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Başlangıç planında 50, Profesyonel planında 200 danışan limiti vardır. Kurumsal planında sınırsız danışan ekleyebilirsiniz.",
+          text: "Standard planında 100'e kadar danışan ekleyebilirsiniz. Pro planında ise sınırsız danışan ekleme imkanı vardır.",
         },
       },
       {
@@ -66,7 +66,7 @@ export default function FAQ() {
         name: "Fiyatlandırmayı değiştirebilir miyim?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Evet, istediğiniz zaman planınızı yükseltebilir veya düşürebilirsiniz. Değişiklikler bir sonraki fatura döneminde geçerli olur.",
+          text: "Evet, istediğiniz zaman planınızı yükseltebilir veya düşürebilirsiniz. Standard planı 299 TL/ay, Pro planı 399 TL/ay'dır. Değişiklikler bir sonraki fatura döneminde geçerli olur.",
         },
       },
       {
@@ -74,15 +74,7 @@ export default function FAQ() {
         name: "Destek nasıl sağlanıyor?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Başlangıç planında e-posta desteği, Profesyonel planında öncelikli destek, Kurumsal planında ise 7/24 telefon desteği sunulmaktadır.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Diyet planı şablonları var mı?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Evet, platformda hazır diyet planı şablonları bulunmaktadır. Bunları özelleştirerek kullanabilir veya sıfırdan oluşturabilirsiniz.",
+          text: "Standard planında e-posta desteği sunulmaktadır. Pro planında ise öncelikli e-posta desteği mevcuttur.",
         },
       },
       {
@@ -90,7 +82,47 @@ export default function FAQ() {
         name: "Verilerimi dışa aktarabilir miyim?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Evet, tüm verilerinizi Excel veya PDF formatında dışa aktarabilirsiniz. Profesyonel ve Kurumsal planlarda API erişimi de mevcuttur.",
+          text: "Evet, tüm verilerinizi Excel veya PDF formatında dışa aktarabilirsiniz. Pro planında API erişimi de mevcuttur.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Diyet planları nasıl oluşturulur?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Platformda zengin metin editörü ile detaylı diyet planları oluşturabilirsiniz. PDF yükleyebilir, şablonlar kullanabilir veya sıfırdan plan oluşturabilirsiniz. Her plan danışana özel olarak hazırlanabilir.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Danışan ilerlemelerini nasıl takip edebilirim?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Her danışan için kilo, vücut yağı, kas kütlesi gibi ölçümleri kaydedebilir ve görsel grafiklerle ilerlemeyi takip edebilirsiniz. PDF formatında ilerleme raporları oluşturabilirsiniz.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Finansal kayıtları yönetebilir miyim?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Evet, gelir ve gider kayıtlarınızı tutabilir, ödeme geçmişini takip edebilirsiniz. Finansal raporları PDF olarak dışa aktarabilirsiniz.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Danışan notları tutabilir miyim?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Evet, her danışan için özel notlar tutabilir, görüşme kayıtlarını saklayabilirsiniz. Notlarınız güvenli bir şekilde saklanır ve istediğiniz zaman düzenleyebilirsiniz.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "İstatistikler ve raporlar nasıl?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Platformda toplam danışan sayısı, aktif danışanlar, oluşturulan diyet planları, finansal özet gibi detaylı istatistikler bulunmaktadır. Tüm verilerinizi görsel grafiklerle analiz edebilirsiniz.",
         },
       },
     ],
