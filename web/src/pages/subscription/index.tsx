@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Check, Crown, Zap, CreditCard, Sparkles, Gift } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Check, Crown, Zap, CreditCard, Sparkles, Gift, Loader2 } from "lucide-react";
 import { apiUrl } from "@/lib/api";
 import { toast } from "sonner";
 
@@ -31,9 +32,11 @@ export default function SubscriptionPage() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [trialLoading, setTrialLoading] = useState(false);
+    const [redirecting, setRedirecting] = useState(false);
     const [allPlans, setAllPlans] = useState<SubscriptionPlan[]>([]);
     const [hasUsedTrial, setHasUsedTrial] = useState(false);
     const [duration, setDuration] = useState<'monthly' | 'yearly'>('monthly');
+    const [showTrialDialog, setShowTrialDialog] = useState(false);
 
     useEffect(() => {
         fetchPlans();
@@ -150,11 +153,19 @@ export default function SubscriptionPage() {
         navigate(`/subscription/payment?planId=${planId}`);
     };
 
+    const handleOpenTrialDialog = () => {
+        setShowTrialDialog(true);
+    };
+
     const handleStartTrial = async () => {
         setTrialLoading(true);
         
         try {
-            const response = await fetch(apiUrl("api/subscription/trial"), {
+            // Minimum 1.5 saniye loading göster (daha profesyonel UX için)
+            const minLoadingTime = new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // API çağrısını yap
+            const apiCall = fetch(apiUrl("api/subscription/trial"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -162,21 +173,30 @@ export default function SubscriptionPage() {
                 credentials: "include",
             });
 
+            // Hem API çağrısı hem de minimum bekleme süresi tamamlansın
+            const [response] = await Promise.all([apiCall, minLoadingTime]);
+
             const data = await response.json();
 
             if (response.ok) {
-                toast.success("Deneme başlatıldı!", {
-                    description: "7 günlük ücretsiz deneme süreniz başladı. Ana sayfaya yönlendiriliyorsunuz...",
-                    duration: 3000,
-                });
+                // Dialog'u kapat
+                setShowTrialDialog(false);
+                
+                // Dialog'un kapanma animasyonu bitene kadar bekle, sonra overlay'i göster
                 setTimeout(() => {
-                    toast.info("Yönlendiriliyorsunuz...", {
-                        duration: 1000,
+                    setRedirecting(true);
+                    
+                    // Başarı mesajını göster
+                    toast.success("Deneme sürümünüz başlatıldı!", {
+                        description: "7 günlük ücretsiz deneme süreniz başladı.",
+                        duration: 2000,
                     });
-                }, 1000);
-                setTimeout(() => {
-                    navigate('/');
-                }, 2000);
+                    
+                    // Ana sayfaya yönlendir
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2500);
+                }, 300); // Dialog kapanma animasyonu için kısa bekleme
             } else {
                 toast.error(data.message || "Deneme başlatılamadı");
             }
@@ -370,13 +390,13 @@ export default function SubscriptionPage() {
                         </div>
                     </div>
                     <Button
-                        onClick={handleStartTrial}
+                        onClick={handleOpenTrialDialog}
                         disabled={trialLoading}
                         variant="default"
                         className="w-full"
                     >
                         <Gift className="h-4 w-4 mr-2" />
-                        {trialLoading ? "Başlatılıyor..." : "Ücretsiz Denemeyi Başlat"}
+                        Ücretsiz Denemeyi Başlat
                     </Button>
                 </div>
             )}
@@ -386,6 +406,55 @@ export default function SubscriptionPage() {
                     <p className="text-sm text-muted-foreground text-center">
                         Ücretsiz deneme süreniz zaten kullanılmış. Bir plan seçerek devam edebilirsiniz.
                     </p>
+                </div>
+            )}
+
+            {/* Trial Onay Dialog */}
+            <Dialog open={showTrialDialog} onOpenChange={(open) => {
+                if (!trialLoading) {
+                    setShowTrialDialog(open);
+                }
+            }}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>7 Günlük Ücretsiz Deneme</DialogTitle>
+                        <DialogDescription>
+                            7 günlük deneme sürenizi başlatmak istiyor musunuz? Tüm özellikleri ücretsiz olarak deneyebileceksiniz.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button
+                            variant="outline"
+                            onClick={() => setShowTrialDialog(false)}
+                            disabled={trialLoading}
+                        >
+                            İptal
+                        </Button>
+                        <Button
+                            onClick={handleStartTrial}
+                            disabled={trialLoading}
+                        >
+                            {trialLoading ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    Başlatılıyor...
+                                </>
+                            ) : (
+                                "Evet, Başlat"
+                            )}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Yönlendirme Overlay */}
+            {redirecting && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+                    <div className="flex flex-col items-center gap-4">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <div className="text-lg font-semibold">Yönlendiriliyorsunuz...</div>
+                        <p className="text-sm text-muted-foreground">Ana sayfaya yönlendiriliyorsunuz</p>
+                    </div>
                 </div>
             )}
         </div>
