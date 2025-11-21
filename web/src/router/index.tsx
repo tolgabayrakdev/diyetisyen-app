@@ -16,6 +16,7 @@ import FinancialRecordsPage from "@/pages/dashboard/financial/index"
 import SignIn from "@/pages/auth/sign-in"
 import SignUp from "@/pages/auth/sign-up"
 import ForgotPassword from "@/pages/auth/forgot-password"
+import ResetPassword from "@/pages/auth/reset-password"
 import SubscriptionPage from "@/pages/subscription/index"
 import PaymentPage from "@/pages/subscription/payment"
 import NotFound from "@/pages/not-found"
@@ -87,6 +88,10 @@ export const router = createBrowserRouter([
     {
         path: '/forgot-password',
         element: <ForgotPassword />
+    },
+    {
+        path: '/reset-password',
+        element: <ResetPassword />
     },
     {
         path: '/subscription',
