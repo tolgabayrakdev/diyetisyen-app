@@ -391,7 +391,7 @@ export default function ClientProgressPage() {
                                     }}
                                     className="h-[200px] md:h-[250px] w-full"
                                 >
-                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
                                         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                                         <XAxis
                                             dataKey="date"
@@ -409,7 +409,7 @@ export default function ClientProgressPage() {
                                             tickMargin={8}
                                             className="text-[10px] md:text-xs"
                                             domain={["auto", "auto"]}
-                                            width={50}
+                                            width={55}
                                         />
                                         <ChartTooltip content={<ChartTooltipContent />} />
                                         <Line
@@ -447,7 +447,7 @@ export default function ClientProgressPage() {
                                     }}
                                     className="h-[200px] md:h-[250px] w-full"
                                 >
-                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
+                                    <LineChart data={chartData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
                                         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                                         <XAxis
                                             dataKey="date"
@@ -465,7 +465,7 @@ export default function ClientProgressPage() {
                                             tickMargin={8}
                                             className="text-[10px] md:text-xs"
                                             domain={["auto", "auto"]}
-                                            width={50}
+                                            width={55}
                                         />
                                         <ChartTooltip content={<ChartTooltipContent />} />
                                         {chartData.some((d) => d.bodyFat !== null) && (
