@@ -49,7 +49,7 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-3">
           <Link
-            href="/si-gin"
+            href="https://app.diyetka.com/sign-in"
             className="hidden md:inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Giriş Yap

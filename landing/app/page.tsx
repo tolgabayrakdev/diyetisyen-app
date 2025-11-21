@@ -128,7 +128,7 @@ export default function Home() {
                 </ScaleOnHover>
                 <ScaleOnHover>
                   <Link
-                    href="/si-gin"
+                    href="https://app.diyetka.com/sign-in"
                     className="inline-flex h-12 items-center justify-center rounded-lg border-2 border-primary/20 bg-background/80 backdrop-blur-sm px-8 text-base font-semibold hover:border-primary/40 hover:bg-primary/5 transition-all"
                   >
                     Giriş Yap
