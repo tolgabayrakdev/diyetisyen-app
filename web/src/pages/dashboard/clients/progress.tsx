@@ -35,11 +35,13 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
+import { ProgressPDFReport } from "@/components/progress-pdf-report";
 
 interface Client {
     id: string;
     first_name: string;
     last_name: string;
+    height_cm: number | null;
 }
 
 interface ProgressLog {
@@ -313,10 +315,19 @@ export default function ClientProgressPage() {
                         {client && `${client.first_name} ${client.last_name} - `}İlerleme kayıtlarını görüntüleyin
                     </p>
                 </div>
-                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    Yeni Kayıt
-                </Button>
+                <div className="flex items-center gap-2">
+                    {progressLogs.length > 0 && client && (
+                        <ProgressPDFReport
+                            logs={progressLogs}
+                            client={client}
+                            stats={stats}
+                        />
+                    )}
+                    <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
+                        <Plus className="h-4 w-4" />
+                        Yeni Kayıt
+                    </Button>
+                </div>
             </div>
 
             {/* İstatistik Kartları */}
