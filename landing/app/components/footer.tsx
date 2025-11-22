@@ -81,8 +81,8 @@ export default function Footer() {
                   Bize Ulaşın
                 </Link>
               </li>
-              <li>Email: info@diyetka.com</li>
-              <li>Tel: +90 (555) 123 45 67</li>
+              <li>Email: diyetka@gmail.com</li>
+              <li>Tel: +90 5379854487</li>
             </ul>
           </div>
         </div>

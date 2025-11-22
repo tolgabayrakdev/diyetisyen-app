@@ -17,6 +17,7 @@ export default function SignUp() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [checkingAuth, setCheckingAuth] = useState(true);
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
     const navigate = useNavigate();
 
     // Check if user is already logged in
@@ -66,6 +67,12 @@ export default function SignUp() {
         e.preventDefault();
         setError("");
         setSuccess(false);
+
+        // Terms kabul kontrolü
+        if (!acceptedTerms) {
+            setError("Lütfen yasal şartları kabul edin");
+            return;
+        }
 
         // Telefon numarası validasyonu (10 haneli olmalı)
         if (formData.phone.length !== 10) {
@@ -238,12 +245,48 @@ export default function SignUp() {
                             minLength={6}
                         />
                     </div>
+                    <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                checked={acceptedTerms}
+                                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                                disabled={loading}
+                                className="mt-1 h-4 w-4 rounded border-input text-primary focus:ring-primary"
+                                required
+                            />
+                            <label htmlFor="terms" className="text-sm leading-relaxed cursor-pointer">
+                                <span className="font-medium">Yasal şartları kabul ediyorum</span>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    <a 
+                                        href="https://diyetka.com/terms" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-primary hover:underline"
+                                    >
+                                        Kullanım Koşulları
+                                    </a>
+                                    {", "}
+                                    <a 
+                                        href="https://diyetka.com/privacy" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-primary hover:underline"
+                                    >
+                                        Gizlilik Politikası
+                                    </a>
+                                    'ni okudum ve kabul ediyorum.
+                                </p>
+                            </label>
+                        </div>
+                    </div>
                     <Button 
                         type="submit" 
                         className="w-full" 
-                        disabled={loading}
+                        disabled={loading || !acceptedTerms}
                     >
-                        {loading ? "Kayıt yapılıyor..." : "Kayıt Ol"}
+                        {loading ? "Kayıt yapılıyor..." : "Hesap Oluştur"}
                     </Button>
                 </form>
                 )}

@@ -208,24 +208,6 @@ export default function Pricing() {
             })}
           </div>
 
-          {/* CTA Section */}
-          <FadeInUp delay={0.3}>
-            <div className="space-y-4 p-6 text-center bg-muted/50 rounded-xl border border-border">
-              <h2 className="text-xl font-semibold">
-                7 gün ücretsiz deneme ile başlayın
-              </h2>
-              <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                Kredi kartı gerektirmez. Tüm özellikleri test edin, istediğiniz
-                zaman iptal edebilirsiniz.
-              </p>
-              <Link
-                href="/#free-trial"
-                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/25"
-              >
-                Ücretsiz Denemeyi Başlat
-              </Link>
-            </div>
-          </FadeInUp>
         </div>
       </div>
     </>

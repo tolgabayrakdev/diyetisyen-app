@@ -77,7 +77,7 @@ export function ContactForm() {
             setFormData({ ...formData, phone: e.target.value })
           }
           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          placeholder="+90 (555) 123 45 67"
+          placeholder="+90 5379854487"
         />
       </div>
 

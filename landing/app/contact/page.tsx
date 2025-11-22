@@ -31,7 +31,7 @@ export default function Contact() {
     contactPoint: {
       "@type": "ContactPoint",
       email: "diyetka@gmail.com",
-      telephone: "+90 (555) 123 45 67",
+      telephone: "+90 5379854487",
       contactType: "Müşteri Hizmetleri",
       areaServed: "TR",
       availableLanguage: "Turkish",
@@ -70,18 +70,20 @@ export default function Contact() {
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <div>
                     <p className="font-medium text-foreground mb-1">E-posta</p>
-                    <p>info@diyetka.com</p>
+                    <p>diyetka@gmail.com</p>
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">Telefon</p>
-                    <p>+90 (555) 123 45 67</p>
+                    <p>+90 5379854487</p>
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">Adres</p>
                     <p className="leading-relaxed">
-                      İstanbul, Türkiye
+                      Giresun, Türkiye
                       <br />
-                      Çalışma Saatleri: Pazartesi - Cuma, 09:00 - 18:00
+                      Çalışma Saatleri: Hafta içi 09:00-17:00
+                      <br />
+                      Cumartesi-Pazar kapalı
                     </p>
                   </div>
                 </div>

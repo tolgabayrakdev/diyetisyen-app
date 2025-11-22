@@ -8,7 +8,6 @@ import { MeteorRain } from "./components/meteor-rain";
 import { FloatingParticles } from "./components/floating-particles";
 import { AnimatedSectionBg } from "./components/animated-section-bg";
 import { HealthLifestyleSection } from "./components/health-lifestyle-section";
-import { FreeTrialForm } from "./components/free-trial-form";
 
 export const metadata: Metadata = {
   title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
@@ -118,20 +117,19 @@ export default function Home() {
             <FadeInUp delay={0.4}>
               <div className="flex items-center justify-center gap-4 flex-wrap pt-4">
                 <ScaleOnHover>
-                  <a
-                    href="#free-trial"
+                  <Link
+                    href="https://app.diyetka.com/sign-in"
                     className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
                   >
-                    Ücretsiz Başlayın
-                    <span className="ml-2">→</span>
-                  </a>
+                    Giriş Yap
+                  </Link>
                 </ScaleOnHover>
                 <ScaleOnHover>
                   <Link
-                    href="https://app.diyetka.com/sign-in"
+                    href="/pricing"
                     className="inline-flex h-12 items-center justify-center rounded-lg border-2 border-primary/20 bg-background/80 backdrop-blur-sm px-8 text-base font-semibold hover:border-primary/40 hover:bg-primary/5 transition-all"
                   >
-                    Giriş Yap
+                    Fiyatları Görün
                   </Link>
                 </ScaleOnHover>
               </div>
@@ -257,31 +255,65 @@ export default function Home() {
       {/* Health & Lifestyle Section */}
       <HealthLifestyleSection />
 
-      {/* CTA Section with Gradient */}
-      <div id="free-trial" className="relative overflow-hidden bg-linear-to-r from-primary/10 via-primary/5 to-background scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
+      {/* How It Works Section */}
+      <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20 overflow-hidden">
+        <div className="relative z-10 space-y-12">
           <FadeInUp>
-            <div className="text-center space-y-8 max-w-2xl mx-auto">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold">7 Gün Ücretsiz Deneme</h2>
-                <p className="text-base text-muted-foreground">
-                  DiyetKa ile işinizi dijitalleştirin ve danışanlarınıza daha iyi
-                  hizmet verin. Kredi kartı gerektirmez, hemen başlayın.
+            <div className="text-center space-y-3">
+              <h2 className="text-3xl md:text-4xl font-bold">Nasıl Çalışır?</h2>
+              <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+                DiyetKa ile başlamak çok kolay. Sadece birkaç adımda profesyonel danışan yönetim sisteminiz hazır.
+              </p>
+            </div>
+          </FadeInUp>
+          
+          <StaggerContainer className="grid gap-8 md:grid-cols-3">
+            <StaggerItem>
+              <div className="text-center space-y-4 p-6 rounded-xl border border-border hover:border-primary/50 transition-colors">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary text-2xl font-bold mb-2">
+                  1
+                </div>
+                <h3 className="text-xl font-semibold">Kayıt Olun</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Hemen kayıt olun ve hesabınızı oluşturun. Kredi kartı gerektirmez, sadece birkaç dakika sürer.
                 </p>
               </div>
-              
-              <FreeTrialForm />
-              
-              <div className="flex items-center justify-center gap-4 flex-wrap pt-4">
-                <ScaleOnHover>
-                  <Link
-                    href="/pricing"
-                    className="inline-flex h-12 items-center justify-center rounded-lg border-2 border-primary/20 bg-background/80 backdrop-blur-sm px-8 text-base font-semibold hover:border-primary/40 hover:bg-primary/5 transition-all"
-                  >
-                    Fiyatları Görün
-                  </Link>
-                </ScaleOnHover>
+            </StaggerItem>
+            
+            <StaggerItem>
+              <div className="text-center space-y-4 p-6 rounded-xl border border-border hover:border-primary/50 transition-colors">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary text-2xl font-bold mb-2">
+                  2
+                </div>
+                <h3 className="text-xl font-semibold">Danışanlarınızı Ekleyin</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  İlk danışanınızı ekleyin ve detaylı bilgilerini kaydedin. Tüm bilgiler güvenli bir şekilde saklanır.
+                </p>
               </div>
+            </StaggerItem>
+            
+            <StaggerItem>
+              <div className="text-center space-y-4 p-6 rounded-xl border border-border hover:border-primary/50 transition-colors">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary text-2xl font-bold mb-2">
+                  3
+                </div>
+                <h3 className="text-xl font-semibold">Yönetmeye Başlayın</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Diyet planları oluşturun, ilerlemeleri takip edin, notlar tutun ve finansal kayıtlarınızı yönetin.
+                </p>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+
+          <FadeInUp delay={0.4}>
+            <div className="text-center pt-8">
+              <Link
+                href="https://app.diyetka.com/sign-up"
+                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
+              >
+                Hemen Başlayın
+                <span className="ml-2">→</span>
+              </Link>
             </div>
           </FadeInUp>
         </div>
