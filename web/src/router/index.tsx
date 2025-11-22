@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router"
 import DashboardLayout from "@/layouts/dashboard-layout"
 import DashboardIndex from "@/pages/dashboard/index"
 import AccountSettings from "@/pages/dashboard/settings/account-settings"
-import NotificationSettings from "@/pages/dashboard/settings/notification-settings"
 import ClientsPage from "@/pages/dashboard/clients/index"
 import ClientDetailPage from "@/pages/dashboard/clients/detail"
 import ClientDietPlansPage from "@/pages/dashboard/clients/diet-plans"
@@ -31,12 +30,8 @@ export const router = createBrowserRouter([
                 element: <DashboardIndex />
             },
             {
-                path: '/dashboard/settings/account',
+                path: '/settings/account',
                 element: <AccountSettings />
-            },
-            {
-                path: '/dashboard/settings/notifications',
-                element: <NotificationSettings />
             },
             {
                 path: '/clients',

@@ -123,7 +123,7 @@ export default function DashboardIndex() {
     return (
         <div className="space-y-8 p-6">
             {/* Header */}
-            <div className="space-y-2">
+            <div className="space-y-2" data-tour="welcome">
                 <h1 className="text-3xl font-bold tracking-tight">Hoş Geldiniz</h1>
                 <p className="text-muted-foreground">
                     {user.first_name} {user.last_name}, Diyetka sistemine hoş geldiniz.
@@ -131,7 +131,7 @@ export default function DashboardIndex() {
             </div>
 
             {/* İstatistikler */}
-            <div className="space-y-6">
+            <div className="space-y-6" data-tour="dashboard-stats">
                 <div className="flex items-center gap-3">
                     <div className="rounded-lg bg-primary/10 p-2">
                         <TrendingUp className="h-5 w-5 text-primary" />

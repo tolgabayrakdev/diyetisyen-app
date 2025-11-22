@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { BRAND_NAME } from "./email-templates.js";
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ class EmailService {
     async sendEmail(to, subject, html, options = {}) {
         const mailOptions = {
             from: {
-                name: "Diyetka",
+                name: BRAND_NAME,
                 address: process.env.EMAIL_USER,
             },
             replyTo: process.env.EMAIL_USER || process.env.EMAIL_REPLY_TO,
@@ -37,7 +38,7 @@ class EmailService {
             html,
             headers: {
                 'X-Entity-Ref-ID': 'diyetka',
-                'X-Mailer': 'Diyetka Email Service',
+                'X-Mailer': `${BRAND_NAME} Email Service`,
                 'List-Unsubscribe': `<mailto:${process.env.EMAIL_USER}?subject=Unsubscribe>`,
                 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
             },

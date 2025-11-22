@@ -1,6 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AuthProvider from "@/providers/auth-provider";
+import { OnboardingTour } from "@/components/onboarding-tour";
 import { Outlet } from "react-router";
 
 export default function DashboardLayout() {
@@ -18,6 +19,7 @@ export default function DashboardLayout() {
                         </div>
                     </div>
                 </SidebarInset>
+                <OnboardingTour />
             </SidebarProvider>
         </AuthProvider>
     )

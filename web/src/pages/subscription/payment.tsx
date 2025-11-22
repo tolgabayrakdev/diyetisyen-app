@@ -143,6 +143,8 @@ export default function PaymentPage() {
             }
 
             toast.success("Ödeme başarıyla tamamlandı! Yönlendiriliyorsunuz...");
+            // Onboarding'i tetikle
+            localStorage.setItem('show_onboarding', 'true');
             setTimeout(() => {
                 window.location.href = "/";
             }, 1500);

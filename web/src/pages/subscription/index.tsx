@@ -192,8 +192,9 @@ export default function SubscriptionPage() {
                         duration: 2000,
                     });
                     
-                    // Ana sayfaya yönlendir
+                    // Ana sayfaya yönlendir ve onboarding'i tetikle
                     setTimeout(() => {
+                        localStorage.setItem('show_onboarding', 'true');
                         navigate('/');
                     }, 2500);
                 }, 300); // Dialog kapanma animasyonu için kısa bekleme

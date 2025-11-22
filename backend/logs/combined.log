@@ -505,3 +505,40 @@ warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T13:
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T13:16:07.241Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T13:16:07.386Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T13:16:07.387Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:41.729Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:41.735Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:41.820Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:41.824Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:43.532Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-21T19:30:43.536Z"}
+warn: POST /api/auth/login - 401 - Sifre yanlış! {"timestamp":"2025-11-21T19:30:49.647Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:12:02.417Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:12:02.420Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:12:02.483Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:12:02.485Z"}
+warn: POST /api/auth/login - 401 - Sifre yanlış! {"timestamp":"2025-11-21T20:12:07.743Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:08.037Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:08.043Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:09.213Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:09.215Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:43.583Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:18:43.595Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:38:10.304Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-21T20:38:10.310Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:12:22.623Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:12:22.628Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:12:22.695Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:12:22.697Z"}
+warn: POST /api/auth/login - 401 - Sifre yanlış! {"timestamp":"2025-11-22T18:12:28.842Z"}
+warn: POST /api/auth/login - 401 - Sifre yanlış! {"timestamp":"2025-11-22T18:12:32.670Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:32.130Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:32.133Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:39.237Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:39.238Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:39.312Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:39.313Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:40.759Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:40.760Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:56.670Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-22T18:26:56.673Z"}
+warn: POST /api/auth/login - 401 - Sifre yanlış! {"timestamp":"2025-11-22T18:30:48.260Z"}

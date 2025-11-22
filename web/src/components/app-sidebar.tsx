@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router"
-import { Home, Settings, User2, LogOut, Bell, Activity, Users, DollarSign } from "lucide-react"
+import { Home, Settings, User2, LogOut, Activity, Users, DollarSign } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 import {
@@ -19,7 +19,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
@@ -163,6 +162,7 @@ export function AppSidebar() {
                   asChild 
                   isActive={location.pathname === '/clients' || location.pathname.startsWith('/clients')}
                   className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
+                  data-tour="sidebar-clients"
                 >
                   <Link to="/clients" className="flex items-center gap-3">
                     {(location.pathname === '/clients' || location.pathname.startsWith('/clients')) && (
@@ -178,6 +178,7 @@ export function AppSidebar() {
                   asChild 
                   isActive={location.pathname === '/financial'}
                   className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
+                  data-tour="sidebar-financial"
                 >
                   <Link to="/financial" className="flex items-center gap-3">
                     {location.pathname === '/financial' && (
@@ -197,6 +198,7 @@ export function AppSidebar() {
                   asChild 
                   isActive={location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')}
                   className="relative w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-sidebar-accent data-[active=true]:bg-sidebar-accent/50"
+                  data-tour="sidebar-activity"
                 >
                   <Link to="/activity-logs" className="flex items-center gap-3">
                     {(location.pathname === '/activity-logs' || location.pathname.startsWith('/activity-logs')) && (
@@ -229,6 +231,7 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full justify-start gap-2 h-auto p-2 hover:bg-sidebar-accent rounded-lg transition-all duration-200"
+                    data-tour="user-menu"
                   >
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar-accent shrink-0">
                       <User2 className="h-4 w-4 text-sidebar-foreground/70" />
@@ -262,18 +265,11 @@ export function AppSidebar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuItem asChild>
-                    <Link to="/dashboard/settings/account" className="flex items-center gap-2">
+                    <Link to="/settings/account" className="flex items-center gap-2">
                       <Settings className="h-4 w-4" />
                       Hesap Ayarları
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/dashboard/settings/notifications" className="flex items-center gap-2">
-                      <Bell className="h-4 w-4" />
-                      Bildirim Ayarları
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={logout}
                     className="flex items-center gap-2 text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"

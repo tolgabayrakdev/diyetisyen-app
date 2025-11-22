@@ -288,7 +288,7 @@ export default function AccountSettings() {
             {/* Header */}
             <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tight">Hesap Ayarları</h1>
-                <p className="text-muted-foreground">w
+                <p className="text-muted-foreground">
                     Hesap bilgilerinizi ve güvenlik ayarlarınızı buradan yönetebilirsiniz.
                 </p>
             </div>

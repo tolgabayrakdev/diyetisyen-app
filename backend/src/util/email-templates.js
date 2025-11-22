@@ -1,7 +1,14 @@
 /**
  * Profesyonel Email Template Sistemi
  * Tüm email template'leri burada merkezi olarak yönetilir
+ * Brand bilgileri landing/app/layout.tsx ile senkronize edilmiştir
  */
+
+// Brand bilgileri - landing/app/layout.tsx ile senkronize
+export const BRAND_NAME = "DiyetKa";
+export const BRAND_URL = "https://diyetka.com";
+export const BRAND_TAGLINE = "Diyetisyenler için akıllı danışan yönetimi";
+export const BRAND_DESCRIPTION = "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim.";
 
 const BRAND_COLOR = "#2563eb"; // Mavi ton
 const BRAND_SECONDARY = "#1e40af";
@@ -24,7 +31,7 @@ function getBaseTemplate(content, options = {}) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>${title || "Diyetka"}</title>
+    <title>${title || BRAND_NAME}</title>
     ${preheader ? `<style type="text/css">.preheader { display: none !important; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0; }</style>` : ''}
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: ${BACKGROUND_COLOR};">
@@ -39,10 +46,10 @@ function getBaseTemplate(content, options = {}) {
                     <tr>
                         <td style="background: linear-gradient(135deg, ${BRAND_COLOR} 0%, ${BRAND_SECONDARY} 100%); padding: 40px 30px; text-align: center;">
                             <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">
-                                Diyetka
+                                ${BRAND_NAME}
                             </h1>
                             <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 400;">
-                                Profesyonel Diyetisyen Yönetim Sistemi
+                                ${BRAND_TAGLINE}
                             </p>
                         </td>
                     </tr>
@@ -61,7 +68,7 @@ function getBaseTemplate(content, options = {}) {
                                 <tr>
                                     <td align="center" style="padding-bottom: 20px;">
                                         <p style="margin: 0; color: ${TEXT_SECONDARY}; font-size: 12px; line-height: 1.6;">
-                                            Bu e-posta <strong>www.diyetka.com</strong> tarafından gönderilmiştir.
+                                            Bu e-posta <strong><a href="${BRAND_URL}" style="color: ${BRAND_COLOR}; text-decoration: none;">${BRAND_URL}</a></strong> tarafından gönderilmiştir.
                                         </p>
                                     </td>
                                 </tr>
@@ -75,7 +82,7 @@ function getBaseTemplate(content, options = {}) {
                                 <tr>
                                     <td align="center">
                                         <p style="margin: 0; color: ${TEXT_SECONDARY}; font-size: 11px;">
-                                            © ${new Date().getFullYear()} Diyetka. Tüm hakları saklıdır.
+                                            © ${new Date().getFullYear()} ${BRAND_NAME}. Tüm hakları saklıdır.
                                         </p>
                                     </td>
                                 </tr>
@@ -128,13 +135,13 @@ export function getEmailVerificationTemplate(firstName, code) {
         
         <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid ${BORDER_COLOR};">
             <p style="margin: 0; color: ${TEXT_SECONDARY}; font-size: 12px; line-height: 1.6; text-align: center;">
-                <strong>Güvenlik Uyarısı:</strong> Bu kodu kimseyle paylaşmayın. Diyetka ekibi asla sizden bu kodu istemez.
+                <strong>Güvenlik Uyarısı:</strong> Bu kodu kimseyle paylaşmayın. ${BRAND_NAME} ekibi asla sizden bu kodu istemez.
             </p>
         </div>
     `;
     
     return getBaseTemplate(content, {
-        title: "E-posta Doğrulama Kodu - Diyetka",
+        title: `E-posta Doğrulama Kodu - ${BRAND_NAME}`,
         preheader: `Doğrulama kodunuz: ${code}`
     });
 }
@@ -193,7 +200,7 @@ export function getPasswordResetTemplate(resetLink, expiresInMinutes = 15) {
     `;
     
     return getBaseTemplate(content, {
-        title: "Şifre Sıfırlama - Diyetka",
+        title: `Şifre Sıfırlama - ${BRAND_NAME}`,
         preheader: "Hesabınız için şifre sıfırlama talebi"
     });
 }
@@ -210,7 +217,7 @@ export function getWelcomeTemplate(firstName, lastName) {
                 Hoş Geldiniz! 🎉
             </h2>
             <p style="margin: 0; color: ${TEXT_SECONDARY}; font-size: 14px;">
-                Diyetka ailesine katıldığınız için teşekkür ederiz
+                ${BRAND_NAME} ailesine katıldığınız için teşekkür ederiz
             </p>
         </div>
         
@@ -219,7 +226,7 @@ export function getWelcomeTemplate(firstName, lastName) {
                 Merhaba <strong>${fullName}</strong>,
             </p>
             <p style="margin: 0 0 20px 0; color: ${TEXT_COLOR}; font-size: 15px; line-height: 1.6;">
-                Diyetka'ya kaydolduğunuz için teşekkür ederiz! Artık profesyonel diyetisyen yönetim sistemimizin tüm özelliklerinden faydalanabilirsiniz.
+                ${BRAND_NAME}'ya kaydolduğunuz için teşekkür ederiz! ${BRAND_DESCRIPTION}
             </p>
             <p style="margin: 0 0 30px 0; color: ${TEXT_COLOR}; font-size: 15px; line-height: 1.6;">
                 Hesabınızı aktifleştirmek için e-posta adresinizi doğrulamanız gerekmektedir.
@@ -234,8 +241,8 @@ export function getWelcomeTemplate(firstName, lastName) {
     `;
     
     return getBaseTemplate(content, {
-        title: "Hoş Geldiniz - Diyetka",
-        preheader: "Diyetka'ya hoş geldiniz!"
+        title: `Hoş Geldiniz - ${BRAND_NAME}`,
+        preheader: `${BRAND_NAME}'ya hoş geldiniz!`
     });
 }
 
@@ -271,7 +278,7 @@ export function getInfoTemplate(title, message, buttonText = null, buttonLink = 
     `;
     
     return getBaseTemplate(content, {
-        title: `${title} - Diyetka`,
+        title: `${title} - ${BRAND_NAME}`,
         preheader: title
     });
 }

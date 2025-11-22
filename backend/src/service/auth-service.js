@@ -8,7 +8,8 @@ import { sendSms } from "../util/send-sms.js";
 import { 
     getEmailVerificationTemplate, 
     getPasswordResetTemplate,
-    getWelcomeTemplate 
+    getWelcomeTemplate,
+    BRAND_NAME
 } from "../util/email-templates.js";
 
 
@@ -49,7 +50,7 @@ export default class AuthService {
             const emailHtml = getEmailVerificationTemplate(user.first_name, code);
             await sendEmail(
                 user.email,
-                "Diyetka E-posta Doğrulama Kodu",
+                `${BRAND_NAME} E-posta Doğrulama Kodu`,
                 emailHtml
             );
 
@@ -71,7 +72,7 @@ export default class AuthService {
             if (!phoneNumber) {
                 throw new HttpException(400, "SMS doğrulaması için kayıtlı bir telefon numarası bulunamadı.");
             }
-            await sendSms({ msg: `Diyetka doğrulama kodunuz: ${code}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
+            await sendSms({ msg: `${BRAND_NAME} doğrulama kodunuz: ${code}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
 
             const maskedPhone = phoneNumber.replace(/(\+?\d{0,3})?(\d{2})(\d+)(\d{2})$/, (_m, cc = "", p2, mid, p4) => {
                 return `${cc || ""}${p2}${"*".repeat(mid.length)}${p4}`;
@@ -134,7 +135,7 @@ export default class AuthService {
                 const welcomeEmailHtml = getWelcomeTemplate(user.first_name, user.last_name);
                 await sendEmail(
                     user.email,
-                    "Diyetka'ya Hoş Geldiniz! 🎉",
+                    `${BRAND_NAME}'ya Hoş Geldiniz! 🎉`,
                     welcomeEmailHtml
                 );
             } catch (emailError) {
@@ -232,7 +233,7 @@ export default class AuthService {
         const emailHtml = getEmailVerificationTemplate(user.first_name, newCode);
         await sendEmail(
             user.email,
-            "Diyetka E-posta Doğrulama Kodu",
+            `${BRAND_NAME} E-posta Doğrulama Kodu`,
             emailHtml
         );
 
@@ -296,7 +297,7 @@ export default class AuthService {
             const emailHtml = getPasswordResetTemplate(resetLink, 15);
             await sendEmail(
                 email,
-                "Diyetka Parola Sıfırlama",
+                `${BRAND_NAME} Parola Sıfırlama`,
                 emailHtml
             );
 
@@ -586,7 +587,7 @@ export default class AuthService {
         if (!phoneNumber) {
             throw new HttpException(400, "SMS doğrulaması için kayıtlı bir telefon numarası bulunamadı.");
         }
-        await sendSms({ msg: `Diyetka doğrulama kodunuz: ${newCode}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
+        await sendSms({ msg: `${BRAND_NAME} doğrulama kodunuz: ${newCode}. Kod 3 dakika geçerlidir.`, no: phoneNumber });
 
         return { message: "Yeni bir SMS doğrulama kodu gönderildi." };
     }
