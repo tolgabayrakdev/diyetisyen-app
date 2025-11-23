@@ -114,5 +114,19 @@ export default class ActivityLogService {
             }
         };
     }
+
+    async getAllLogs(dietitianId) {
+        const query = `
+            SELECT al.*, 
+                   c.first_name as client_first_name, 
+                   c.last_name as client_last_name
+            FROM activity_logs al
+            LEFT JOIN clients c ON al.client_id = c.id
+            WHERE al.user_id = $1
+            ORDER BY al.created_at DESC
+        `;
+        const result = await pool.query(query, [dietitianId]);
+        return result.rows;
+    }
 }
 

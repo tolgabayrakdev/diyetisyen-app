@@ -51,5 +51,40 @@ export default class ActivityLogController {
             next(error);
         }
     }
+
+    async exportAllLogs(req, res, next) {
+        try {
+            const dietitianId = req.user.id;
+            const logs = await this.activityLogService.getAllLogs(dietitianId);
+            
+            // CSV formatına dönüştür
+            const headers = ['ID', 'Danışan ID', 'Danışan Adı', 'Danışan Soyadı', 'Varlık Tipi', 'Aksiyon Tipi', 'Açıklama', 'Oluşturulma Tarihi'];
+            const rows = logs.map(log => [
+                log.id,
+                log.client_id || '',
+                log.client_first_name || '',
+                log.client_last_name || '',
+                log.entity_type || '',
+                log.action_type || '',
+                (log.description || '').replace(/"/g, '""'), // CSV için tırnak işaretlerini escape et
+                new Date(log.created_at).toLocaleString('tr-TR')
+            ]);
+
+            const csvContent = [
+                headers.join(','),
+                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+
+            // BOM ekle (Türkçe karakterler için)
+            const BOM = '\uFEFF';
+            const csvWithBOM = BOM + csvContent;
+
+            res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+            res.setHeader('Content-Disposition', `attachment; filename="aktivite-kayitlari-${new Date().toISOString().split('T')[0]}.csv"`);
+            res.status(200).send(csvWithBOM);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 

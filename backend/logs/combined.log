@@ -733,3 +733,44 @@ info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T08:57:57.951Z
 info: 📊 Environment: development {"timestamp":"2025-11-23T08:57:57.952Z"}
 info: ✅ Database connected successfully {"timestamp":"2025-11-23T08:57:57.984Z"}
 info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-23T09:00:18.157Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:04:28.864Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:04:28.868Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:04:28.868Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:04:28.887Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-23T09:06:54.615Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-23T09:06:54.617Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-23T09:07:12.429Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-23T09:07:12.431Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=3 - 500 - Error: invalid input syntax for type uuid: "3" {"error":{"code":"22P02","file":"uuid.c","length":133,"line":"138","name":"error","routine":"string_to_uuid","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"stack":"error: invalid input syntax for type uuid: \"3\"\n    at /Users/tolgabayrak/Desktop/diyetisyen-app/backend/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async ActivityLogService.getLogs (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/activity-log-service.js:27:24)\n    at async ActivityLogController.getLogs (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/activity-log-controller.js:14:28)","timestamp":"2025-11-23T09:07:31.574Z"}
+error: GET /api/activity-logs?page=1&limit=50&clientId=5 - 500 - Error: invalid input syntax for type uuid: "5" {"error":{"code":"22P02","file":"uuid.c","length":133,"line":"138","name":"error","routine":"string_to_uuid","severity":"ERROR","where":"unnamed portal parameter $2 = '...'"},"stack":"error: invalid input syntax for type uuid: \"5\"\n    at /Users/tolgabayrak/Desktop/diyetisyen-app/backend/node_modules/pg-pool/index.js:45:11\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async ActivityLogService.getLogs (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/activity-log-service.js:27:24)\n    at async ActivityLogController.getLogs (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/activity-log-controller.js:14:28)","timestamp":"2025-11-23T09:07:33.888Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:10:30.354Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:10:30.365Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:10:30.365Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:10:30.387Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:10:40.094Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:10:40.097Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:10:40.097Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:10:40.139Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:10:42.801Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:10:42.804Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:10:42.804Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:10:42.821Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:11:46.589Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:11:46.598Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:11:46.598Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:11:46.623Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-23T09:25:41.226Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:25:42.339Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:25:42.342Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:25:42.342Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:25:42.361Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-23T09:27:32.636Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:27:33.739Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:27:33.743Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:27:33.743Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:27:33.758Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-23T09:29:13.281Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-23T09:29:14.345Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-23T09:29:14.349Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-23T09:29:14.349Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-23T09:29:14.373Z"}

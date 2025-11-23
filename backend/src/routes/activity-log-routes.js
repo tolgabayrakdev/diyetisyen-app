@@ -6,6 +6,7 @@ const router = express.Router();
 const activityLogController = new ActivityLogController();
 
 router.get("/activity-logs", verifyToken, activityLogController.getLogs.bind(activityLogController));
+router.get("/activity-logs/export", verifyToken, activityLogController.exportAllLogs.bind(activityLogController));
 router.get("/activity-logs/:id", verifyToken, activityLogController.getLogById.bind(activityLogController));
 router.get("/activity-logs/entity/:entityType", verifyToken, activityLogController.getLogsByEntity.bind(activityLogController));
 
