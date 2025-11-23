@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import logger from "../config/logger.js";
 
 export const verifyToken = (req, res, next) => {
     try {
@@ -16,7 +17,7 @@ export const verifyToken = (req, res, next) => {
             res.status(401).json({ message: "Kimlik doğrulaması yapılmadı" });
         }
     } catch (error) {
-        console.error(error);
+        logger.error("Token verification error:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 };

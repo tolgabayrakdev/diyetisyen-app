@@ -1,8 +1,10 @@
 // Request timeout middleware - Backend çökmemesi için
+import logger from "../config/logger.js";
+
 const requestTimeout = (req, res, next) => {
     const timeoutId = setTimeout(() => {
         if (!res.headersSent) {
-            console.warn(`Request timeout for ${req.method} ${req.url}`);
+            logger.warn(`Request timeout for ${req.method} ${req.url}`);
             res.status(408).json({
                 status: 408,
                 message: "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",

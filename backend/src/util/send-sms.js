@@ -1,4 +1,5 @@
 import Netgsm from "@netgsm/sms";
+import logger from "../config/logger.js";
 
 const netgsm = new Netgsm({
     username: process.env.NETGSM_NUMBER,
@@ -16,10 +17,10 @@ export async function sendSms({ msg, no }) {
                 no: no
             }]
         });
-        console.log("SMS sent:", response);
+        logger.info("SMS sent:", response);
         return response.jobid;
     } catch (error) {
-        console.error("❌ Failed to send SMS:", error);
+        logger.error("❌ Failed to send SMS:", error);
         throw error;
     }
 }

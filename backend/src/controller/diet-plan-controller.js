@@ -1,5 +1,6 @@
 import DietPlanService from "../service/diet-plan-service.js";
 import { saveBase64Pdf, deleteFile } from "../util/file-upload.js";
+import logger from "../config/logger.js";
 
 export default class DietPlanController {
     constructor() {
@@ -87,7 +88,7 @@ export default class DietPlanController {
                     planData.pdf_url = null;
                 } catch (error) {
                     // PDF silme hatası kritik değil, devam et
-                    console.error("PDF silme hatası:", error);
+                    logger.warn("PDF silme hatası:", error);
                 }
             }
             

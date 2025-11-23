@@ -5,6 +5,7 @@ import { generateAccessToken, generateRefreshToken, verifyToken } from "../util/
 import { comparePassword, hashPassword } from "../util/password.js";
 import { sendEmail } from "../util/send-email.js";
 import { sendSms } from "../util/send-sms.js";
+import logger from "../config/logger.js";
 import { 
     getEmailVerificationTemplate, 
     getPasswordResetTemplate,
@@ -140,7 +141,7 @@ export default class AuthService {
                 );
             } catch (emailError) {
                 // Log error but don't fail registration
-                console.error("Failed to send welcome email:", emailError);
+                logger.error("Failed to send welcome email:", emailError);
             }
 
             return newUser.rows[0].id;

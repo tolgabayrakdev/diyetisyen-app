@@ -1,5 +1,6 @@
 import pkg from "pg";
 const { Pool } = pkg;
+import logger from "./logger.js";
 
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -19,7 +20,18 @@ const pool = new Pool({
 });
 
 pool.query("SELECT 1")
-    .then(() => console.log("✅ Database connected successfully"))
-    .catch(err => console.error("❌ Database connection error:", err.stack));
+    .then(() => logger.info("✅ Database connected successfully"))
+    .catch(err => {
+        logger.error("❌ Database connection error:", err.stack);
+        // Production'da database bağlantısı olmadan devam etme
+        if (process.env.NODE_ENV === 'production') {
+            process.exit(1);
+        }
+    });
+
+// Database connection error handling
+pool.on('error', (err) => {
+    logger.error('Unexpected database pool error:', err);
+});
 
 export default pool;

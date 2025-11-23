@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { BRAND_NAME } from "./email-templates.js";
+import logger from "../config/logger.js";
 
 dotenv.config();
 
@@ -47,14 +48,14 @@ class EmailService {
 
         try {
             const info = await this.transporter.sendMail(mailOptions);
-            console.log("📩 Email sent successfully:", {
+            logger.info("📩 Email sent successfully:", {
                 to: Array.isArray(to) ? to.join(", ") : to,
                 subject,
                 messageId: info.messageId,
             });
             return info;
         } catch (error) {
-            console.error("❌ Failed to send email:", {
+            logger.error("❌ Failed to send email:", {
                 to: Array.isArray(to) ? to.join(", ") : to,
                 subject,
                 error: error.message,
@@ -69,10 +70,10 @@ class EmailService {
     async verifyConnection() {
         try {
             await this.transporter.verify();
-            console.log("✅ Email server connection verified");
+            logger.info("✅ Email server connection verified");
             return true;
         } catch (error) {
-            console.error("❌ Email server connection failed:", error);
+            logger.error("❌ Email server connection failed:", error);
             return false;
         }
     }

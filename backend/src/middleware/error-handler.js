@@ -7,6 +7,22 @@ export default function errorHandler(err, req, res, _next) {
         return res.status(err.status).json({ message: err.message });
     }
 
-    logger.error(`${req.method} ${req.url} - 500 - ${err.message}`);
-    res.status(500).json({ message: "Internal server error" });
+    // Production'da detaylı hata bilgisi gösterme
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+    
+    // Log full error details
+    logger.error(`${req.method} ${req.url} - 500 - Error:`, {
+        message: err.message,
+        stack: isDevelopment ? err.stack : undefined,
+        ...(isDevelopment && { error: err })
+    });
+
+    // Production'da generic mesaj, development'da detaylı
+    res.status(500).json({
+        message: "Internal server error",
+        ...(isDevelopment && { 
+            error: err.message,
+            stack: err.stack 
+        })
+    });
 }
