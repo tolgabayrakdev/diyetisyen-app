@@ -41,19 +41,20 @@ const benefits = [
 
 export function HealthLifestyleSection() {
   return (
-    <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20 overflow-hidden">
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 overflow-hidden">
+      {/* Mobilde FloatingParticles zaten kapalı, AnimatedSectionBg de optimize edildi */}
       <AnimatedSectionBg />
       <FloatingParticles />
-      <div className="relative z-10 space-y-12">
+      <div className="relative z-10 space-y-8 sm:space-y-12">
         <FadeInUp>
-          <div className="text-center space-y-3">
-            <h2 className="text-3xl md:text-4xl font-bold">Neden DiyetKa Kullanmalısınız?</h2>
-            <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+          <div className="text-center space-y-2 sm:space-y-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">Neden DiyetKa Kullanmalısınız?</h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
               Diyetisyenler için özel olarak tasarlandı. İşinizi kolaylaştırın, zaman kazanın, gelirinizi artırın ve daha fazla danışana ulaşın.
             </p>
           </div>
         </FadeInUp>
-        <StaggerContainer className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <StaggerContainer className="grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((benefit, index) => (
             <StaggerItem key={index}>
               <HealthLifestyleCard

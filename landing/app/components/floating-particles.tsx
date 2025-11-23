@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface Particle {
@@ -14,9 +14,12 @@ interface Particle {
 
 export function FloatingParticles() {
   const [particles, setParticles] = useState<Particle[]>([]);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const particleCount = 20;
+    const isMobile = window.innerWidth < 768;
+    // Mobilde daha az particle veya hiç yok
+    const particleCount = isMobile ? 0 : prefersReducedMotion ? 0 : 20;
     const newParticles: Particle[] = Array.from({ length: particleCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -26,14 +29,18 @@ export function FloatingParticles() {
       delay: Math.random() * 5,
     }));
     setParticles(newParticles);
-  }, []);
+  }, [prefersReducedMotion]);
+
+  if (prefersReducedMotion || particles.length === 0) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((particle) => (
         <motion.div
           key={particle.id}
-          className="absolute rounded-full blur-3xl opacity-20"
+          className="absolute rounded-full blur-3xl opacity-20 will-change-transform"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 interface HealthLifestyleCardProps {
   emoji: string;
@@ -10,18 +11,30 @@ interface HealthLifestyleCardProps {
 }
 
 export function HealthLifestyleCard({ emoji, title, description, index = 0 }: HealthLifestyleCardProps) {
-  // Her kart için sabit ama farklı bir rotation değeri
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Her kart için sabit ama farklı bir rotation değeri - mobilde daha az
   const rotations = [-1.2, 1.0, -0.9, 1.3];
-  const rotation = rotations[index % rotations.length] || 0;
+  const rotation = isMobile ? 0 : (rotations[index % rotations.length] || 0);
   
   return (
     <motion.div
       className="group relative"
-      initial={{ opacity: 0, y: 20, rotate: rotation }}
+      initial={prefersReducedMotion ? { opacity: 1, y: 0, rotate: rotation } : { opacity: 0, y: isMobile ? 10 : 20, rotate: rotation }}
       whileInView={{ opacity: 1, y: 0, rotate: rotation }}
-      viewport={{ once: true }}
-      whileHover={{ y: -5, rotate: rotation + (rotation > 0 ? 2 : -2), scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+      whileHover={prefersReducedMotion || isMobile ? {} : { y: -5, rotate: rotation + (rotation > 0 ? 2 : -2), scale: 1.02 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 20,
+        duration: prefersReducedMotion ? 0 : isMobile ? 0.3 : 0.5
+      }}
     >
       {/* Defter/Kağıt görünümü */}
       <div className="relative bg-linear-to-br from-background via-background to-muted/30 p-6 shadow-lg border-l-4 border-primary/30">
@@ -55,7 +68,7 @@ export function HealthLifestyleCard({ emoji, title, description, index = 0 }: He
         <div className="relative pl-4">
           <motion.div
             className="text-4xl mb-4 inline-block"
-            whileHover={{ scale: 1.15, rotate: 8 }}
+            whileHover={prefersReducedMotion || isMobile ? {} : { scale: 1.15, rotate: 8 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             {emoji}

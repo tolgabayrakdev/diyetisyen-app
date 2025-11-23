@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface Star {
@@ -14,9 +14,12 @@ interface Star {
 
 export function StarsBackground() {
   const [stars, setStars] = useState<Star[]>([]);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const starCount = 50;
+    const isMobile = window.innerWidth < 768;
+    // Mobilde daha az yıldız, masaüstünde daha fazla
+    const starCount = isMobile ? 15 : prefersReducedMotion ? 10 : 50;
     const newStars: Star[] = Array.from({ length: starCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -26,14 +29,18 @@ export function StarsBackground() {
       delay: Math.random() * 2,
     }));
     setStars(newStars);
-  }, []);
+  }, [prefersReducedMotion]);
+
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {stars.map((star) => (
         <motion.div
           key={star.id}
-          className="absolute rounded-full bg-primary/40"
+          className="absolute rounded-full bg-primary/40 will-change-transform"
           style={{
             left: `${star.x}%`,
             top: `${star.y}%`,

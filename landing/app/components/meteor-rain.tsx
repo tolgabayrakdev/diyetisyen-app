@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 interface Meteor {
@@ -12,9 +12,12 @@ interface Meteor {
 
 export function MeteorRain() {
   const [meteors, setMeteors] = useState<Meteor[]>([]);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    const meteorCount = 8;
+    const isMobile = window.innerWidth < 768;
+    // Mobilde daha az meteor
+    const meteorCount = isMobile ? 3 : prefersReducedMotion ? 0 : 8;
     const newMeteors: Meteor[] = Array.from({ length: meteorCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
@@ -22,14 +25,18 @@ export function MeteorRain() {
       duration: Math.random() * 1 + 1.5,
     }));
     setMeteors(newMeteors);
-  }, []);
+  }, [prefersReducedMotion]);
+
+  if (prefersReducedMotion || meteors.length === 0) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {meteors.map((meteor) => (
         <motion.div
           key={meteor.id}
-          className="absolute w-0.5 h-24 bg-gradient-to-b from-primary/80 via-primary/40 to-transparent"
+          className="absolute w-0.5 h-24 bg-gradient-to-b from-primary/80 via-primary/40 to-transparent will-change-transform"
           style={{
             left: `${meteor.x}%`,
             top: "-24px",

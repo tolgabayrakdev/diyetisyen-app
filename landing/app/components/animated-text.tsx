@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const texts = [
@@ -12,6 +12,12 @@ const texts = [
 
 export function AnimatedText() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,10 +32,10 @@ export function AnimatedText() {
       <AnimatePresence mode="wait">
         <motion.span
           key={currentIndex}
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          initial={prefersReducedMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: isMobile ? 10 : 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -20, scale: 0.9 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          exit={prefersReducedMotion ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: isMobile ? -10 : -20, scale: 0.9 }}
+          transition={{ duration: prefersReducedMotion ? 0 : isMobile ? 0.3 : 0.5, ease: "easeInOut" }}
           className="inline-block"
         >
           {texts[currentIndex]}
