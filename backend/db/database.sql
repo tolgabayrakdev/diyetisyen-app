@@ -81,9 +81,6 @@ INSERT INTO plans (name, duration, price, original_price, client_limit) VALUES
     ('pro', 'monthly', 399.00, NULL, NULL),
     ('pro', 'yearly', 3830.40, 4788.00, NULL);
 
-
-
-
 -- 1️⃣ Danışanlar
 CREATE TABLE clients (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
