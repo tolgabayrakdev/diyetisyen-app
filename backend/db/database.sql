@@ -147,3 +147,77 @@ CREATE TABLE activity_logs (
     created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- 7️⃣ Besin Kategorileri
+CREATE TABLE food_categories (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    icon VARCHAR(50), -- Icon adı (örn: "Apple", "Wheat")
+    color VARCHAR(50), -- Renk kodu (örn: "text-green-600")
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE(dietitian_id, name)
+);
+
+-- 8️⃣ Besinler
+CREATE TABLE foods (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    dietitian_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    category_id UUID REFERENCES food_categories(id) ON DELETE SET NULL,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    unit VARCHAR(50) DEFAULT '100g', -- Birim (100g, 1 adet, 1 porsiyon, vb.)
+    image_url TEXT,
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE(dietitian_id, name)
+);
+
+-- 9️⃣ Besin Değerleri (Nutrition Facts)
+CREATE TABLE food_nutrients (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    food_id UUID NOT NULL REFERENCES foods(id) ON DELETE CASCADE,
+    -- Enerji
+    energy_kcal NUMERIC(10, 2),
+    energy_kj NUMERIC(10, 2),
+    -- Makro besinler
+    protein_g NUMERIC(10, 2),
+    carbohydrates_g NUMERIC(10, 2),
+    fat_g NUMERIC(10, 2),
+    saturated_fat_g NUMERIC(10, 2),
+    trans_fat_g NUMERIC(10, 2),
+    fiber_g NUMERIC(10, 2),
+    sugar_g NUMERIC(10, 2),
+    -- Mineraller
+    sodium_mg NUMERIC(10, 2),
+    salt_g NUMERIC(10, 2),
+    potassium_mg NUMERIC(10, 2),
+    calcium_mg NUMERIC(10, 2),
+    iron_mg NUMERIC(10, 2),
+    magnesium_mg NUMERIC(10, 2),
+    phosphorus_mg NUMERIC(10, 2),
+    zinc_mg NUMERIC(10, 2),
+    -- Vitaminler
+    vitamin_a_mcg NUMERIC(10, 2),
+    vitamin_c_mg NUMERIC(10, 2),
+    vitamin_d_mcg NUMERIC(10, 2),
+    vitamin_e_mg NUMERIC(10, 2),
+    vitamin_k_mcg NUMERIC(10, 2),
+    thiamin_mg NUMERIC(10, 2), -- B1
+    riboflavin_mg NUMERIC(10, 2), -- B2
+    niacin_mg NUMERIC(10, 2), -- B3
+    vitamin_b6_mg NUMERIC(10, 2),
+    folate_mcg NUMERIC(10, 2), -- B9
+    vitamin_b12_mcg NUMERIC(10, 2),
+    biotin_mcg NUMERIC(10, 2),
+    pantothenic_acid_mg NUMERIC(10, 2), -- B5
+    -- Diğer
+    cholesterol_mg NUMERIC(10, 2),
+    caffeine_mg NUMERIC(10, 2),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE(food_id)
+);

@@ -284,7 +284,7 @@ export default function AccountSettings() {
     }
 
     return (
-        <div className="space-y-8 p-6">
+        <div className="space-y-6">
             {/* Header */}
             <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tight">Hesap Ayarları</h1>

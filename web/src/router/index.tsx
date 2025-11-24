@@ -11,6 +11,9 @@ import ClientFinancialPage from "@/pages/dashboard/clients/financial"
 import ClientProgressPage from "@/pages/dashboard/clients/progress"
 import ActivityLogsPage from "@/pages/dashboard/activity-logs"
 import FinancialRecordsPage from "@/pages/dashboard/financial/index"
+import CalculatorPage from "@/pages/dashboard/calculator"
+import FoodDatabasePage from "@/pages/dashboard/foods"
+import FeedbackPage from "@/pages/dashboard/feedback"
 
 import SignIn from "@/pages/auth/sign-in"
 import SignUp from "@/pages/auth/sign-up"
@@ -68,6 +71,18 @@ export const router = createBrowserRouter([
             {
                 path: '/financial',
                 element: <FinancialRecordsPage />
+            },
+            {
+                path: '/calculator',
+                element: <CalculatorPage />
+            },
+            {
+                path: '/foods',
+                element: <FoodDatabasePage />
+            },
+            {
+                path: '/feedback',
+                element: <FeedbackPage />
             }
         ]
 

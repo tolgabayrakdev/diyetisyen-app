@@ -18,6 +18,8 @@ const steps = [
                     <li>Danışanlarınızı ekleyebilir ve yönetebilirsiniz</li>
                     <li>Diyet planları oluşturabilirsiniz</li>
                     <li>Notlar tutabilir ve finansal kayıtlarınızı yönetebilirsiniz</li>
+                    <li>Beslenme hesaplayıcıları ile hızlı hesaplamalar yapabilirsiniz</li>
+                    <li>Kendi besin veritabanınızı oluşturabilirsiniz</li>
                 </ul>
             </div>
         ),
@@ -65,6 +67,42 @@ const steps = [
                     <li>Her danışan için ayrı finansal kayıtlar oluşturabilirsiniz</li>
                     <li>Ödemeleri ve faturaları yönetebilirsiniz</li>
                     <li>Toplam gelir, gider ve kâr bilgilerinizi görebilirsiniz</li>
+                </ul>
+            </div>
+        ),
+    },
+    {
+        selector: '[data-tour="sidebar-calculator"]',
+        content: (
+            <div className="space-y-2">
+                <h3 className="text-lg font-semibold">Beslenme Hesaplayıcıları</h3>
+                <p className="text-sm">
+                    Beslenme hesaplayıcıları ile danışanlarınız için hızlı hesaplamalar yapabilirsiniz:
+                </p>
+                <ul className="text-sm space-y-1 list-disc list-inside mt-2">
+                    <li><strong>BMI:</strong> Vücut kitle indeksi hesaplama</li>
+                    <li><strong>BMR/TDEE:</strong> Bazal metabolizma ve günlük kalori ihtiyacı</li>
+                    <li><strong>Makro Besinler:</strong> Protein, karbonhidrat, yağ dağılımı</li>
+                    <li><strong>Su İhtiyacı:</strong> Günlük su tüketim hesaplama</li>
+                    <li><strong>Protein İhtiyacı:</strong> Hedefe göre protein hesaplama</li>
+                    <li><strong>Kalori Açığı/Fazlası:</strong> Kilo verme/alma planı</li>
+                </ul>
+            </div>
+        ),
+    },
+    {
+        selector: '[data-tour="sidebar-foods"]',
+        content: (
+            <div className="space-y-2">
+                <h3 className="text-lg font-semibold">Besin Veritabanı</h3>
+                <p className="text-sm">
+                    Kendi besin veritabanınızı oluşturun ve yönetin:
+                </p>
+                <ul className="text-sm space-y-1 list-disc list-inside mt-2">
+                    <li>Kategorilere göre besinleri organize edin</li>
+                    <li>Her besin için detaylı besin değerlerini kaydedin</li>
+                    <li>Esnek birim sistemi (100g, 1 adet, 100ml, vb.)</li>
+                    <li>Diyet planlarınızda kullanmak için besinleri hazır tutun</li>
                 </ul>
             </div>
         ),
@@ -165,16 +203,24 @@ function OnboardingTourContent() {
         if (currentStep === 3 && location.pathname !== '/financial') {
             navigate('/financial');
         }
-        // Step 4: Activity
-        if (currentStep === 4 && location.pathname !== '/activity-logs') {
+        // Step 4: Calculator
+        if (currentStep === 4 && location.pathname !== '/calculator') {
+            navigate('/calculator');
+        }
+        // Step 5: Foods
+        if (currentStep === 5 && location.pathname !== '/foods') {
+            navigate('/foods');
+        }
+        // Step 6: Activity
+        if (currentStep === 6 && location.pathname !== '/activity-logs') {
             navigate('/activity-logs');
         }
-        // Step 5: User menu (ana sayfaya dön)
-        if (currentStep === 5 && location.pathname !== '/') {
+        // Step 7: User menu (ana sayfaya dön)
+        if (currentStep === 7 && location.pathname !== '/') {
             navigate('/');
         }
-        // Step 6: Complete (ana sayfada)
-        if (currentStep === 6 && location.pathname !== '/') {
+        // Step 8: Complete (ana sayfada)
+        if (currentStep === 8 && location.pathname !== '/') {
             navigate('/');
         }
     }, [currentStep, navigate, location.pathname]);

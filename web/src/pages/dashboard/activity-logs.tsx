@@ -104,6 +104,8 @@ export default function ActivityLogsPage() {
             financial_record: "Finansal Kayıt",
             progress_log: "İlerleme Kaydı",
             document: "Belge",
+            food: "Besin",
+            food_category: "Besin Kategorisi",
         };
         return labels[entityType] || entityType;
     };

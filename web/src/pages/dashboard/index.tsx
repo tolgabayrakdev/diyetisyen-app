@@ -121,11 +121,11 @@ export default function DashboardIndex() {
     }
 
     return (
-        <div className="space-y-8 p-6">
+        <div className="space-y-6">
             {/* Header */}
             <div className="space-y-2" data-tour="welcome">
-                <h1 className="text-3xl font-bold tracking-tight">Hoş Geldiniz</h1>
-                <p className="text-muted-foreground">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Hoş Geldiniz</h1>
+                <p className="text-sm sm:text-base text-muted-foreground">
                     {user.first_name} {user.last_name}, Diyetka sistemine hoş geldiniz.
                 </p>
             </div>
@@ -134,11 +134,11 @@ export default function DashboardIndex() {
             <div className="space-y-6" data-tour="dashboard-stats">
                 <div className="flex items-center gap-3">
                     <div className="rounded-lg bg-primary/10 p-2">
-                        <TrendingUp className="h-5 w-5 text-primary" />
+                        <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-semibold">İstatistikler</h2>
-                        <p className="text-sm text-muted-foreground">
+                        <h2 className="text-lg sm:text-xl font-semibold">İstatistikler</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             Genel bakış ve özet bilgiler
                         </p>
                     </div>
@@ -146,57 +146,58 @@ export default function DashboardIndex() {
                 
                 <Separator />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-muted-foreground" />
-                            <Label className="text-sm font-medium">Toplam Danışan</Label>
+                            <Users className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium">Toplam Danışan</Label>
                         </div>
-                        <div className="text-2xl font-bold">{stats.totalClients}</div>
+                        <div className="text-xl sm:text-2xl font-bold">{stats.totalClients}</div>
                         <p className="text-xs text-muted-foreground">Aktif danışan sayısı</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <FileText className="h-4 w-4 text-muted-foreground" />
-                            <Label className="text-sm font-medium">Diyet Planları</Label>
+                            <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium">Diyet Planları</Label>
                         </div>
-                        <div className="text-2xl font-bold">{stats.totalDietPlans}</div>
+                        <div className="text-xl sm:text-2xl font-bold">{stats.totalDietPlans}</div>
                         <p className="text-xs text-muted-foreground">Oluşturulan planlar</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <FileText className="h-4 w-4 text-muted-foreground" />
-                            <Label className="text-sm font-medium">Notlar</Label>
+                            <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium">Notlar</Label>
                         </div>
-                        <div className="text-2xl font-bold">{stats.totalNotes}</div>
+                        <div className="text-xl sm:text-2xl font-bold">{stats.totalNotes}</div>
                         <p className="text-xs text-muted-foreground">Kaydedilen notlar</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <DollarSign className="h-4 w-4 text-muted-foreground" />
-                            <Label className="text-sm font-medium">Finansal Kayıt</Label>
+                            <DollarSign className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium">Finansal Kayıt</Label>
                         </div>
-                        <div className="text-2xl font-bold">{stats.totalFinancial}</div>
+                        <div className="text-xl sm:text-2xl font-bold">{stats.totalFinancial}</div>
                         <p className="text-xs text-muted-foreground">Toplam kayıt</p>
                     </div>
                 </div>
             </div>
 
             {/* Son Aktiviteler */}
-            <div className="space-y-4 mt-10">
-                <div className="flex items-center justify-between">
+            <div className="space-y-4 mt-6 sm:mt-10">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                         <div className="rounded-lg bg-primary/10 p-2">
                             <Activity className="h-5 w-5 text-primary" />
                         </div>
                         <div>
-                            <h2 className="text-xl font-semibold">Son Aktiviteler</h2>
+                            <h2 className="text-lg sm:text-xl font-semibold">Son Aktiviteler</h2>
                         </div>
                     </div>
                     <Button
                         variant="outline"
                         size="sm"
                         onClick={() => navigate("/activity-logs")}
+                        className="w-full sm:w-auto"
                     >
                         Tümünü Gör
                     </Button>
@@ -231,6 +232,8 @@ export default function DashboardIndex() {
                                     financial_record: "Finansal Kayıt",
                                     progress_log: "İlerleme Kaydı",
                                     document: "Belge",
+                                    food: "Besin",
+                                    food_category: "Besin Kategorisi",
                                 };
                                 return labels[entityType] || entityType;
                             };
@@ -252,16 +255,21 @@ export default function DashboardIndex() {
                             };
 
                             return (
-                                <div key={log.id} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
+                                <div key={log.id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
                                     <div className="flex items-center gap-2 flex-1 min-w-0">
                                         {getActionTypeBadge(log.action_type)}
                                         {log.entity_type && (
-                                            <span className="text-muted-foreground text-xs">
+                                            <span className="text-muted-foreground text-xs hidden sm:inline">
                                                 {getEntityTypeLabel(log.entity_type)}
                                             </span>
                                         )}
-                                        {log.client_first_name && log.client_last_name && (
-                                            <span className="text-muted-foreground truncate">
+                                        {log.description && (
+                                            <span className="text-foreground truncate text-xs sm:text-sm">
+                                                {log.description}
+                                            </span>
+                                        )}
+                                        {!log.description && log.client_first_name && log.client_last_name && (
+                                            <span className="text-muted-foreground truncate text-xs sm:text-sm">
                                                 {log.client_first_name} {log.client_last_name}
                                             </span>
                                         )}
