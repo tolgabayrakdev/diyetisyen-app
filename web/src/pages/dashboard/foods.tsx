@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import {
-    Search, Loader2, Plus, Edit, Trash2, Save, ChevronLeft, ChevronRight, Eye, Info, ChevronDown, ChevronUp
+    Search, Loader2, Plus, Edit, Trash2, Save, ChevronLeft, ChevronRight, Eye, Info, ChevronDown, ChevronUp, Calculator, X
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -27,6 +27,8 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface FoodCategory {
     id: string;
@@ -187,6 +189,56 @@ export default function FoodSearchPage() {
         is_active: true
     });
     const [nutrientsForm, setNutrientsForm] = useState<FoodNutrients>({});
+    
+    // Food selection for calculation
+    const [isSelectionSheetOpen, setIsSelectionSheetOpen] = useState(false);
+    const [selectedFoods, setSelectedFoods] = useState<Map<string, { food: Food; quantity: number }>>(new Map());
+    
+    // Helper function to parse unit and get multiplier
+    const parseQuantity = (unit: string, quantity: number): number => {
+        // Extract number from unit (e.g., "100g" -> 100, "1 adet" -> 1)
+        const unitMatch = unit.match(/(\d+(?:\.\d+)?)/);
+        if (!unitMatch) return 1;
+        const unitValue = parseFloat(unitMatch[1]);
+        if (unitValue === 0) return 1;
+        return quantity / unitValue;
+    };
+    
+    // Calculate totals
+    const calculateTotals = () => {
+        let totalCalories = 0;
+        let totalProtein = 0;
+        let totalCarbs = 0;
+        let totalFat = 0;
+        
+        selectedFoods.forEach(({ food, quantity }) => {
+            if (!food.nutrients) return;
+            
+            const multiplier = parseQuantity(food.unit, quantity);
+            
+            if (food.nutrients.energy_kcal) {
+                totalCalories += food.nutrients.energy_kcal * multiplier;
+            }
+            if (food.nutrients.protein_g) {
+                totalProtein += food.nutrients.protein_g * multiplier;
+            }
+            if (food.nutrients.carbohydrates_g) {
+                totalCarbs += food.nutrients.carbohydrates_g * multiplier;
+            }
+            if (food.nutrients.fat_g) {
+                totalFat += food.nutrients.fat_g * multiplier;
+            }
+        });
+        
+        return {
+            calories: Math.round(totalCalories * 100) / 100,
+            protein: Math.round(totalProtein * 100) / 100,
+            carbs: Math.round(totalCarbs * 100) / 100,
+            fat: Math.round(totalFat * 100) / 100
+        };
+    };
+    
+    const totals = calculateTotals();
 
     // Load categories on mount
     useEffect(() => {
@@ -552,8 +604,8 @@ export default function FoodSearchPage() {
                                                     </div>
                                                 </TableCell>
                                             </TableRow>
-                                        );
-                                    })}
+                                            );
+                                        })}
                                 </TableBody>
                             </Table>
                         </div>
@@ -563,10 +615,181 @@ export default function FoodSearchPage() {
                 <TabsContent value="foods" className="space-y-4">
                     <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
                         <h2 className="text-2xl font-semibold">Besinler</h2>
-                        <Button onClick={() => openFoodDialog()}>
-                            <Plus className="h-4 w-4 mr-2" />
-                            Yeni Besin
-                        </Button>
+                        <div className="flex gap-2">
+                            <Sheet open={isSelectionSheetOpen} onOpenChange={setIsSelectionSheetOpen}>
+                                <SheetTrigger asChild>
+                                    <Button variant="outline">
+                                        <Calculator className="h-4 w-4 mr-2" />
+                                        Besin Seç ve Hesapla
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+                                    <SheetHeader>
+                                        <SheetTitle>Besin Seç ve Toplam Hesapla</SheetTitle>
+                                        <SheetDescription>
+                                            Besinleri seçip miktarlarını girerek toplam kalori, protein, karbonhidrat ve yağ değerlerini hesaplayın
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <div className="mt-6 space-y-4 px-2 sm:px-4">
+                                        {/* Search in Sheet */}
+                                        <div className="relative">
+                                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                            <Input
+                                                placeholder="Besin ara..."
+                                                className="pl-10"
+                                            />
+                                        </div>
+                                        
+                                        {/* Selected Foods List */}
+                                        {selectedFoods.size > 0 && (
+                                            <div className="space-y-3">
+                                                <div className="flex items-center justify-between">
+                                                    <h3 className="font-semibold">Seçilen Besinler ({selectedFoods.size})</h3>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={() => setSelectedFoods(new Map())}
+                                                    >
+                                                        <X className="h-4 w-4 mr-2" />
+                                                        Temizle
+                                                    </Button>
+                                                </div>
+                                                <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                                                    {Array.from(selectedFoods.entries()).map(([foodId, { food, quantity }]) => (
+                                                        <div key={foodId} className="flex items-center gap-3 p-3 border rounded-lg">
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="font-medium truncate">{food.name}</div>
+                                                                <div className="text-xs text-muted-foreground">
+                                                                    Birim: {food.unit}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex items-center gap-2 shrink-0">
+                                                                <Label htmlFor={`sheet-qty-${foodId}`} className="text-xs whitespace-nowrap">Miktar:</Label>
+                                                                <Input
+                                                                    id={`sheet-qty-${foodId}`}
+                                                                    type="number"
+                                                                    step="0.01"
+                                                                    min="0"
+                                                                    value={quantity}
+                                                                    onChange={(e) => {
+                                                                        const newQty = parseFloat(e.target.value) || 0;
+                                                                        const newSelected = new Map(selectedFoods);
+                                                                        newSelected.set(foodId, { food, quantity: newQty });
+                                                                        setSelectedFoods(newSelected);
+                                                                    }}
+                                                                    className="w-20"
+                                                                />
+                                                                <span className="text-xs text-muted-foreground">
+                                                                    {food.unit.includes('g') ? 'g' : food.unit.includes('ml') ? 'ml' : 'adet'}
+                                                                </span>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    onClick={() => {
+                                                                        const newSelected = new Map(selectedFoods);
+                                                                        newSelected.delete(foodId);
+                                                                        setSelectedFoods(newSelected);
+                                                                    }}
+                                                                >
+                                                                    <X className="h-4 w-4" />
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                
+                                                {/* Totals in Sheet */}
+                                                <div className="border-t pt-4">
+                                                    <h4 className="font-semibold mb-3">Toplam Besin Değerleri</h4>
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                            <div className="text-xs text-muted-foreground mb-1">Toplam Kalori</div>
+                                                            <div className="text-xl font-bold">{totals.calories.toFixed(1)}</div>
+                                                            <div className="text-xs text-muted-foreground">kcal</div>
+                                                        </div>
+                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                            <div className="text-xs text-muted-foreground mb-1">Toplam Protein</div>
+                                                            <div className="text-xl font-bold">{totals.protein.toFixed(1)}</div>
+                                                            <div className="text-xs text-muted-foreground">g</div>
+                                                        </div>
+                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                            <div className="text-xs text-muted-foreground mb-1">Toplam Karbonhidrat</div>
+                                                            <div className="text-xl font-bold">{totals.carbs.toFixed(1)}</div>
+                                                            <div className="text-xs text-muted-foreground">g</div>
+                                                        </div>
+                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                            <div className="text-xs text-muted-foreground mb-1">Toplam Yağ</div>
+                                                            <div className="text-xl font-bold">{totals.fat.toFixed(1)}</div>
+                                                            <div className="text-xs text-muted-foreground">g</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {/* Foods List in Sheet */}
+                                        <div className="space-y-2">
+                                            <h3 className="font-semibold">Besinler</h3>
+                                            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+                                                {foods.map((food) => {
+                                                    const isSelected = selectedFoods.has(food.id);
+                                                    return (
+                                                        <div
+                                                            key={food.id}
+                                                            className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer"
+                                                            onClick={() => {
+                                                                const newSelected = new Map(selectedFoods);
+                                                                if (isSelected) {
+                                                                    newSelected.delete(food.id);
+                                                                } else {
+                                                                    const unitMatch = food.unit.match(/(\d+(?:\.\d+)?)/);
+                                                                    const defaultQty = unitMatch ? parseFloat(unitMatch[1]) : 100;
+                                                                    newSelected.set(food.id, { food, quantity: defaultQty });
+                                                                }
+                                                                setSelectedFoods(newSelected);
+                                                            }}
+                                                        >
+                                                            <Checkbox
+                                                                checked={isSelected}
+                                                                onCheckedChange={(checked: boolean) => {
+                                                                    const newSelected = new Map(selectedFoods);
+                                                                    if (checked) {
+                                                                        const unitMatch = food.unit.match(/(\d+(?:\.\d+)?)/);
+                                                                        const defaultQty = unitMatch ? parseFloat(unitMatch[1]) : 100;
+                                                                        newSelected.set(food.id, { food, quantity: defaultQty });
+                                                                    } else {
+                                                                        newSelected.delete(food.id);
+                                                                    }
+                                                                    setSelectedFoods(newSelected);
+                                                                }}
+                                                            />
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="font-medium">{food.name}</div>
+                                                                <div className="text-xs text-muted-foreground">
+                                                                    {food.category_name && (
+                                                                        <Badge
+                                                                            variant="outline"
+                                                                            className={`text-xs mr-2 ${food.category_color ? `${getTextColor(food.category_color)} border-current ${getBackgroundColor(food.category_color)}/10` : ""}`}
+                                                                        >
+                                                                            {food.category_name}
+                                                                        </Badge>
+                                                                    )}
+                                                                    {food.unit} • {food.nutrients?.energy_kcal ? `${food.nutrients.energy_kcal} kcal` : "-"}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
+                            <Button onClick={() => openFoodDialog()}>
+                                <Plus className="h-4 w-4 mr-2" />
+                                Yeni Besin
+                            </Button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-4">
