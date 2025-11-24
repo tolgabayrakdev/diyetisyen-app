@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { apiUrl } from "@/lib/api";
 import { toast } from "sonner";
-import { CreditCard, Lock, ArrowLeft, Save } from "lucide-react";
+import { CreditCard, Lock, ArrowLeft, Loader2 } from "lucide-react";
 
 interface Plan {
     id: string;
@@ -22,16 +20,12 @@ export default function PaymentPage() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const planId = searchParams.get("planId");
-    const [loading, setLoading] = useState(false);
     const [fetchingPlan, setFetchingPlan] = useState(true);
+    const [loadingToken, setLoadingToken] = useState(false);
     const [error, setError] = useState("");
     const [plan, setPlan] = useState<Plan | null>(null);
-    const [paymentData, setPaymentData] = useState({
-        cardNumber: "",
-        cardName: "",
-        expiryDate: "",
-        cvv: "",
-    });
+    const [paytrToken, setPaytrToken] = useState<string | null>(null);
+    const [iframeHeight, setIframeHeight] = useState<number>(600);
 
     useEffect(() => {
         if (!planId) {
@@ -74,88 +68,86 @@ export default function PaymentPage() {
         fetchPlan();
     }, [planId, navigate]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        
-        if (name === "cardNumber") {
-            const digitsOnly = value.replace(/\D/g, "").slice(0, 16);
-            const formatted = digitsOnly.replace(/(.{4})/g, "$1 ").trim();
-            setPaymentData(prev => ({ ...prev, [name]: formatted }));
-        } else if (name === "expiryDate") {
-            const digitsOnly = value.replace(/\D/g, "").slice(0, 4);
-            const formatted = digitsOnly.replace(/(.{2})/, "$1/");
-            setPaymentData(prev => ({ ...prev, [name]: formatted }));
-        } else if (name === "cvv") {
-            const digitsOnly = value.replace(/\D/g, "").slice(0, 3);
-            setPaymentData(prev => ({ ...prev, [name]: digitsOnly }));
-        } else {
-            setPaymentData(prev => ({ ...prev, [name]: value }));
-        }
-    };
+    // PayTR token al
+    const getPaytrToken = async () => {
+        if (!planId) return;
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        setLoadingToken(true);
         setError("");
-        setLoading(true);
-
-        // Validasyon
-        if (paymentData.cardNumber.replace(/\s/g, "").length !== 16) {
-            setError("Kart numarası 16 haneli olmalıdır");
-            toast.error("Kart numarası 16 haneli olmalıdır");
-            setLoading(false);
-            return;
-        }
-
-        if (paymentData.expiryDate.length !== 5) {
-            setError("Son kullanma tarihi geçerli değil");
-            toast.error("Son kullanma tarihi geçerli değil");
-            setLoading(false);
-            return;
-        }
-
-        if (paymentData.cvv.length !== 3) {
-            setError("CVV 3 haneli olmalıdır");
-            toast.error("CVV 3 haneli olmalıdır");
-            setLoading(false);
-            return;
-        }
 
         try {
-            // Simüle edilmiş ödeme işlemi
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            const response = await fetch(apiUrl("api/subscription/create"), {
+            const response = await fetch(apiUrl("api/payment/paytr-token"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({
-                    planId: planId,
-                    paymentMethod: "credit_card"
-                }),
+                body: JSON.stringify({ planId }),
             });
 
             const data = await response.json();
 
-            if (!response.ok) {
-                throw new Error(data.message || "Ödeme işlemi başarısız");
+            if (response.ok && data.success) {
+                setPaytrToken(data.token);
+            } else {
+                throw new Error(data.message || "Ödeme token'ı alınamadı");
             }
-
-            toast.success("Ödeme başarıyla tamamlandı! Yönlendiriliyorsunuz...");
-            // Onboarding'i tetikle
-            localStorage.setItem('show_onboarding', 'true');
-            setTimeout(() => {
-                window.location.href = "/";
-            }, 1500);
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
             setError(errorMessage);
             toast.error(errorMessage);
         } finally {
-            setLoading(false);
+            setLoadingToken(false);
         }
     };
+
+    // Plan yüklendiğinde token al
+    useEffect(() => {
+        if (plan && !paytrToken && !loadingToken) {
+            getPaytrToken();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [plan]);
+
+    // PayTR iframe postMessage dinleyicisi
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            // PayTR iframe'den gelen mesajları dinle
+            if (event.origin !== 'https://www.paytr.com') {
+                return;
+            }
+            
+            console.log('PayTR iframe mesajı:', event.data);
+            
+            // PayTR'den gelen mesajları işle
+            if (event.data && typeof event.data === 'object') {
+                // Iframe yüksekliğini ayarla
+                if (event.data.type === 'setHeight' && event.data.value) {
+                    const heightValue = event.data.value.replace('px', '');
+                    const height = parseInt(heightValue, 10);
+                    if (!isNaN(height) && height > 0) {
+                        setIframeHeight(height);
+                    }
+                }
+                
+                // Ödeme durumu mesajları
+                if (event.data.status === 'success') {
+                    // Ödeme başarılı - PayTR kendi callback'i ile yönlendirecek
+                    console.log('Ödeme başarılı');
+                } else if (event.data.status === 'error') {
+                    // Ödeme hatası
+                    console.error('Ödeme hatası:', event.data.message);
+                    setError(event.data.message || 'Ödeme işlemi sırasında bir hata oluştu');
+                }
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    }, []);
 
     if (fetchingPlan) {
         return (
@@ -213,147 +205,117 @@ export default function PaymentPage() {
                         <CreditCard className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-semibold">Kart Bilgileri</h2>
+                        <h2 className="text-xl font-semibold">Güvenli Ödeme</h2>
                         <p className="text-sm text-muted-foreground">
-                            Ödeme işleminizi tamamlamak için kart bilgilerinizi girin
+                            Ödeme işleminizi PayTR güvenli ödeme altyapısı ile tamamlayın
                         </p>
                     </div>
                 </div>
                 
                 <Separator />
                 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Plan Özeti */}
-                    <div className="p-4 bg-muted rounded-lg">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <div className="flex items-center gap-2">
-                                    <p className="font-medium">{planName} Plan</p>
-                                    {isYearly && (
-                                        <Badge variant="secondary" className="text-xs">
-                                            %20 İndirim
-                                        </Badge>
-                                    )}
-                                </div>
-                                <p className="text-sm text-muted-foreground">
-                                    {isYearly ? 'Yıllık faturalandırma' : 'Aylık faturalandırma'}
-                                </p>
-                                {isYearly && plan.original_price && (
-                                    <p className="text-xs text-muted-foreground line-through mt-1">
-                                        {Number(plan.original_price).toFixed(2)}₺
-                                    </p>
-                                )}
-                            </div>
-                            <div className="text-right">
-                                <p className="text-2xl font-bold">{planPrice.toFixed(2)}₺</p>
-                                <p className="text-xs text-muted-foreground">
-                                    /{isYearly ? 'yıl' : 'ay'}
-                                </p>
+                {/* Plan Özeti */}
+                <div className="p-4 bg-muted rounded-lg">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <div className="flex items-center gap-2">
+                                <p className="font-medium">{planName} Plan</p>
                                 {isYearly && (
-                                    <p className="text-xs text-muted-foreground mt-1">
-                                        Aylık: {monthlyPrice}₺
-                                    </p>
+                                    <Badge variant="secondary" className="text-xs">
+                                        %20 İndirim
+                                    </Badge>
                                 )}
                             </div>
+                            <p className="text-sm text-muted-foreground">
+                                {isYearly ? 'Yıllık faturalandırma' : 'Aylık faturalandırma'}
+                            </p>
+                            {isYearly && plan.original_price && (
+                                <p className="text-xs text-muted-foreground line-through mt-1">
+                                    {Number(plan.original_price).toFixed(2)}₺
+                                </p>
+                            )}
+                        </div>
+                        <div className="text-right">
+                            <p className="text-2xl font-bold">{planPrice.toFixed(2)}₺</p>
+                            <p className="text-xs text-muted-foreground">
+                                /{isYearly ? 'yıl' : 'ay'}
+                            </p>
+                            {isYearly && (
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    Aylık: {monthlyPrice}₺
+                                </p>
+                            )}
                         </div>
                     </div>
+                </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label htmlFor="cardNumber" className="text-sm font-medium flex items-center gap-2">
-                                <CreditCard className="h-4 w-4 text-muted-foreground" />
-                                Kart Numarası
-                            </Label>
-                            <Input
-                                id="cardNumber"
-                                name="cardNumber"
-                                placeholder="1234 5678 9012 3456"
-                                value={paymentData.cardNumber}
-                                onChange={handleInputChange}
-                                required
-                                disabled={loading}
-                                maxLength={19}
-                                className="transition-all"
-                            />
+                {/* PayTR iFrame */}
+                {loadingToken ? (
+                    <div className="flex flex-col items-center justify-center py-12 border rounded-lg">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary mb-4" />
+                        <p className="text-muted-foreground">Ödeme sayfası hazırlanıyor...</p>
+                    </div>
+                ) : paytrToken ? (
+                    <div className="space-y-4">
+                        <div className="border rounded-lg overflow-hidden">
+                            <iframe
+                                src={`https://www.paytr.com/odeme/guvenli/${paytrToken}`}
+                                id="paytriframe"
+                                name="paytriframe"
+                                width="100%"
+                                height={iframeHeight}
+                                scrolling="no"
+                                allow="payment; autoplay; encrypted-media"
+                                allowFullScreen
+                                style={{ border: 'none', transition: 'height 0.3s ease' }}
+                                title="PayTR Ödeme Sayfası"
+                                onLoad={() => {
+                                    console.log('PayTR iframe yüklendi');
+                                }}
+                                onError={(e) => {
+                                    console.error('PayTR iframe yükleme hatası:', e);
+                                    setError('Ödeme sayfası yüklenirken bir hata oluştu');
+                                }}
+                            ></iframe>
                         </div>
-
-                        <div className="space-y-2">
-                            <Label htmlFor="cardName" className="text-sm font-medium">
-                                Kart Üzerindeki İsim
-                            </Label>
-                            <Input
-                                id="cardName"
-                                name="cardName"
-                                placeholder="Ad Soyad"
-                                value={paymentData.cardName}
-                                onChange={handleInputChange}
-                                required
-                                disabled={loading}
-                                className="transition-all"
-                            />
+                        <Alert className="mt-4">
+                            <AlertDescription className="text-sm">
+                                <strong>Not:</strong> Kart bilgileri PayTR tarafından güvenli bir şekilde saklanabilir. 
+                                Eğer kart bilgilerini değiştirmek istiyorsanız, PayTR hesabınızdan kayıtlı kartları silebilir 
+                                veya tarayıcınızın otomatik doldurma ayarlarını kontrol edebilirsiniz.
+                            </AlertDescription>
+                        </Alert>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground p-4 bg-muted/50 rounded-lg">
+                            <Lock className="h-4 w-4 shrink-0" />
+                            <span>Ödeme bilgileriniz PayTR güvenli ödeme altyapısı ile işlenir ve saklanmaz</span>
                         </div>
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label htmlFor="expiryDate" className="text-sm font-medium">
-                                Son Kullanma Tarihi
-                            </Label>
-                            <Input
-                                id="expiryDate"
-                                name="expiryDate"
-                                placeholder="MM/YY"
-                                value={paymentData.expiryDate}
-                                onChange={handleInputChange}
-                                required
-                                disabled={loading}
-                                maxLength={5}
-                                className="transition-all"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="cvv" className="text-sm font-medium">
-                                CVV
-                            </Label>
-                            <Input
-                                id="cvv"
-                                name="cvv"
-                                placeholder="123"
-                                type="password"
-                                value={paymentData.cvv}
-                                onChange={handleInputChange}
-                                required
-                                disabled={loading}
-                                maxLength={3}
-                                className="transition-all"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground p-4 bg-muted/50 rounded-lg">
-                        <Lock className="h-4 w-4 shrink-0" />
-                        <span>Ödeme bilgileriniz güvenli bir şekilde işlenir ve saklanmaz</span>
-                    </div>
-
-                    <div className="flex justify-end gap-2">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => navigate("/subscription")}
-                            disabled={loading}
-                        >
-                            İptal
-                        </Button>
-                        <Button
-                            type="submit"
-                            disabled={loading}
-                            className="gap-2"
-                        >
-                            <Save className="h-4 w-4" />
-                            {loading ? "İşleniyor..." : `${planPrice.toFixed(2)}₺ Öde ve Abone Ol`}
+                ) : (
+                    <div className="flex flex-col items-center justify-center py-12 border rounded-lg">
+                        <p className="text-muted-foreground mb-4">Ödeme sayfası yüklenemedi</p>
+                        <Button onClick={getPaytrToken} disabled={loadingToken}>
+                            {loadingToken ? (
+                                <>
+                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    Yükleniyor...
+                                </>
+                            ) : (
+                                "Tekrar Dene"
+                            )}
                         </Button>
                     </div>
-                </form>
+                )}
+
+                <div className="flex justify-end">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => navigate("/subscription")}
+                    >
+                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        Geri Dön
+                    </Button>
+                </div>
             </div>
         </div>
     );

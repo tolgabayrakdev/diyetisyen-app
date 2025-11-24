@@ -21,6 +21,8 @@ import ForgotPassword from "@/pages/auth/forgot-password"
 import ResetPassword from "@/pages/auth/reset-password"
 import SubscriptionPage from "@/pages/subscription/index"
 import PaymentPage from "@/pages/subscription/payment"
+import PaymentSuccessPage from "@/pages/subscription/payment-success"
+import PaymentFailPage from "@/pages/subscription/payment-fail"
 import NotFound from "@/pages/not-found"
 
 export const router = createBrowserRouter([
@@ -110,6 +112,14 @@ export const router = createBrowserRouter([
     {
         path: '/subscription/payment',
         element: <PaymentPage />
+    },
+    {
+        path: '/payment/success',
+        element: <PaymentSuccessPage />
+    },
+    {
+        path: '/payment/fail',
+        element: <PaymentFailPage />
     },
     {
         path: '*',

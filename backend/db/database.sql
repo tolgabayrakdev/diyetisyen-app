@@ -59,6 +59,21 @@ CREATE TABLE subscriptions (
     updated_at TIMESTAMP DEFAULT now()
 );
 
+-- Ödeme İşlemleri (PayTR için)
+CREATE TABLE payment_transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    plan_id UUID REFERENCES plans(id) ON DELETE RESTRICT,
+    merchant_oid VARCHAR(255) UNIQUE NOT NULL,
+    amount NUMERIC(10, 2) NOT NULL,
+    currency VARCHAR(10) DEFAULT 'TL',
+    status VARCHAR(50) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'cancelled')),
+    payment_method VARCHAR(50) DEFAULT 'paytr',
+    payment_date TIMESTAMP,
+    created_at TIMESTAMP DEFAULT now(),
+    updated_at TIMESTAMP DEFAULT now()
+);
+
 -- Plan verilerini ekle
 INSERT INTO plans (name, duration, price, original_price, client_limit) VALUES
     ('standard', 'monthly', 299.00, NULL, 100),

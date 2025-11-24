@@ -1165,3 +1165,357 @@ info: 📩 Email sent successfully: {"messageId":"<d0c8b511-fff4-95d8-294b-9e1d6
 info: Feedback email sent {"dietitianId":"cbc85d8c-e8ed-4581-bddf-cc9145b789f3","subject":"Yeni bir özellik isteği","timestamp":"2025-11-24T11:47:44.790Z","type":"feature"}
 info: 📩 Email sent successfully: {"messageId":"<8ee98873-2f26-cb81-8b91-c1a09ae89eff@gmail.com>","subject":"[DiyetKa] nnn","timestamp":"2025-11-24T11:51:00.287Z","to":"diyetka@gmail.com"}
 info: Feedback email sent {"dietitianId":"cbc85d8c-e8ed-4581-bddf-cc9145b789f3","subject":"nnn","timestamp":"2025-11-24T11:51:00.288Z","type":"feature"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:43.059Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:43.088Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:44.570Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:44.578Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:58.808Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:44:58.815Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-24T12:45:02.852Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T12:45:03.826Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T12:45:03.830Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T12:45:03.831Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T12:45:03.904Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:45:04.848Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-24T12:45:04.860Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:32:00.687Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:32:00.700Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:32:00.700Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:32:00.729Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:32:03.329Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:32:03.332Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:32:03.333Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:32:03.350Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:32:04.902Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:32:04.906Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:32:04.906Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:32:04.931Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:32:05.997Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:32:06.004Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:32:06.004Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:32:06.021Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:32:07.251Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:32:07.254Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:32:07.254Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:32:07.307Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:34:06.307Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:34:06.315Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:34:06.315Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:34:06.351Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:34:30.957Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:34:30.966Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:34:30.966Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:34:30.986Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:35:29.223Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:35:29.227Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:35:29.227Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:35:29.251Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T14:38:41.704Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T14:38:41.707Z"}
+error: PayTR token service error: plan.price.toFixed is not a function {"stack":"TypeError: plan.price.toFixed is not a function\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:51:102)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:39:04.989Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: plan.price.toFixed is not a function {"timestamp":"2025-11-24T14:39:04.990Z"}
+error: PayTR token service error: plan.price.toFixed is not a function {"stack":"TypeError: plan.price.toFixed is not a function\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:51:102)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:39:04.992Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: plan.price.toFixed is not a function {"timestamp":"2025-11-24T14:39:04.992Z"}
+error: PayTR token service error: plan.price.toFixed is not a function {"stack":"TypeError: plan.price.toFixed is not a function\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:51:102)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:39:08.269Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: plan.price.toFixed is not a function {"timestamp":"2025-11-24T14:39:08.270Z"}
+error: PayTR token service error: plan.price.toFixed is not a function {"stack":"TypeError: plan.price.toFixed is not a function\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:51:102)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:39:08.271Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: plan.price.toFixed is not a function {"timestamp":"2025-11-24T14:39:08.272Z"}
+error: PayTR token service error: plan.price.toFixed is not a function {"stack":"TypeError: plan.price.toFixed is not a function\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:51:102)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:39:23.710Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: plan.price.toFixed is not a function {"timestamp":"2025-11-24T14:39:23.711Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:39:57.008Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:39:57.019Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:39:57.020Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:39:57.052Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:39:59.930Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:39:59.934Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:39:59.934Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:39:59.962Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:11.168Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:11.169Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:11.172Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:11.180Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:11.180Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:11.181Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:40:13.069Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:40:13.073Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:40:13.073Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:40:13.099Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:21.571Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:21.572Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:21.573Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:21.581Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:21.581Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:21.582Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:26.190Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:26.192Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:26.193Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:26.225Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:26.226Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:26.226Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:40.647Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:40.648Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:40.648Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:40.694Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:40.694Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:40.698Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:45.023Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:45.024Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:45.024Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:40:45.101Z"}
+error: PayTR token service error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"stack":"Error: PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:115:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:40:45.102Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: Zorunlu alan degeri gecersiz veya gonderilmedi (get-token): user_address {"timestamp":"2025-11-24T14:40:45.102Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:47:04.282Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:47:04.287Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:47:04.287Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:47:04.327Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:08.609Z"}
+error: PayTR token service error: PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez {"stack":"Error: PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:118:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:08.610Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez {"timestamp":"2025-11-24T14:47:08.611Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:08.692Z"}
+error: PayTR token service error: PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez {"stack":"Error: PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:118:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:08.692Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: merchant_oid alfanumerik olmalidir, ozel karakter iceremez {"timestamp":"2025-11-24T14:47:08.693Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:47:14.430Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:47:14.434Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:47:14.434Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:47:14.452Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:47:50.644Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:47:50.648Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:47:50.649Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:47:50.696Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:54.010Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:54.012Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:54.015Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:54.021Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:54.022Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:54.024Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:56.794Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:56.795Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:56.795Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:56.796Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:56.797Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:56.797Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:58.233Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:58.234Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:58.234Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:47:58.254Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:47:58.254Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:47:58.254Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:48:06.192Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:48:06.194Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:48:06.195Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:48:06.211Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:48:06.211Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:48:06.212Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:48:07.374Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:48:07.377Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:48:07.377Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:48:07.401Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:48:50.449Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:48:50.453Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:48:50.454Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:48:50.474Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:48:50.475Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:48:50.475Z"}
+error: PayTR token error: {"timestamp":"2025-11-24T14:48:53.521Z"}
+error: PayTR token service error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"stack":"Error: PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token)\n    at PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:122:23)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","status":400,"timestamp":"2025-11-24T14:48:53.522Z"}
+warn: POST /api/payment/paytr-token - 400 - PayTR token hatası: paytr_token gonderilmedi veya gecersiz (get-token) {"timestamp":"2025-11-24T14:48:53.522Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:49:58.252Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:49:58.263Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:49:58.264Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:49:58.287Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:50:16.603Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:50:16.607Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:50:16.607Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:50:16.629Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:50:47.790Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:50:47.794Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:50:47.794Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:50:47.824Z"}
+error: PayTR token service error: Unexpected token '<', "<!doctype "... is not valid JSON {"stack":"SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:5731:19)\n    at successSteps (node:internal/deps/undici/undici:5712:27)\n    at fullyReadBody (node:internal/deps/undici/undici:4609:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async consumeBody (node:internal/deps/undici/undici:5721:7)\n    at async PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:113:26)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:56:15.182Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: Unexpected token '<', "<!doctype "... is not valid JSON {"timestamp":"2025-11-24T14:56:15.186Z"}
+error: PayTR token service error: Unexpected token '<', "<!doctype "... is not valid JSON {"stack":"SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:5731:19)\n    at successSteps (node:internal/deps/undici/undici:5712:27)\n    at fullyReadBody (node:internal/deps/undici/undici:4609:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async consumeBody (node:internal/deps/undici/undici:5721:7)\n    at async PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:113:26)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:56:15.202Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: Unexpected token '<', "<!doctype "... is not valid JSON {"timestamp":"2025-11-24T14:56:15.202Z"}
+error: PayTR token service error: Unexpected token '<', "<!doctype "... is not valid JSON {"stack":"SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:5731:19)\n    at successSteps (node:internal/deps/undici/undici:5712:27)\n    at fullyReadBody (node:internal/deps/undici/undici:4609:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async consumeBody (node:internal/deps/undici/undici:5721:7)\n    at async PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:113:26)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:56:18.494Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: Unexpected token '<', "<!doctype "... is not valid JSON {"timestamp":"2025-11-24T14:56:18.495Z"}
+error: PayTR token service error: Unexpected token '<', "<!doctype "... is not valid JSON {"stack":"SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:5731:19)\n    at successSteps (node:internal/deps/undici/undici:5712:27)\n    at fullyReadBody (node:internal/deps/undici/undici:4609:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async consumeBody (node:internal/deps/undici/undici:5721:7)\n    at async PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:113:26)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:56:18.508Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: Unexpected token '<', "<!doctype "... is not valid JSON {"timestamp":"2025-11-24T14:56:18.509Z"}
+error: PayTR token service error: Unexpected token '<', "<!doctype "... is not valid JSON {"stack":"SyntaxError: Unexpected token '<', \"<!doctype \"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at parseJSONFromBytes (node:internal/deps/undici/undici:5731:19)\n    at successSteps (node:internal/deps/undici/undici:5712:27)\n    at fullyReadBody (node:internal/deps/undici/undici:4609:9)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async consumeBody (node:internal/deps/undici/undici:5721:7)\n    at async PayTRService.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/service/paytr-service.js:113:26)\n    at async PayTRController.getToken (file:///Users/tolgabayrak/Desktop/diyetisyen-app/backend/src/controller/paytr-controller.js:26:28)","timestamp":"2025-11-24T14:56:22.993Z"}
+warn: POST /api/payment/paytr-token - 500 - PayTR token oluşturulamadı: Unexpected token '<', "<!doctype "... is not valid JSON {"timestamp":"2025-11-24T14:56:22.993Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:56:41.952Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:56:41.962Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:56:41.962Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:56:41.991Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:56:43.538Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:56:43.542Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:56:43.542Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:56:43.569Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T14:56:57.082Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T14:56:57.086Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T14:56:57.086Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T14:56:57.106Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:46.380Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:46.385Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:46.461Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:46.463Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:55.793Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-24T15:54:55.796Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T15:56:57.880Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T15:56:57.892Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T15:56:57.893Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T15:56:57.919Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T15:57:16.264Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T15:57:16.267Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T15:57:16.267Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T15:57:16.285Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:02:09.674Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:02:09.682Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:02:09.682Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:02:09.705Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:07:22.492Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:07:22.500Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:07:22.501Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:07:22.534Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:07:32.146Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:07:32.150Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:07:32.150Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:07:32.172Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:08:33.267Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:08:33.271Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:08:33.271Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:08:33.291Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:09:24.216Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:09:24.219Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:09:24.219Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:09:24.237Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:09:24.790Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:09:24.794Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:09:24.794Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:09:24.818Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:09:34.239Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:09:34.243Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:09:34.243Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:09:34.267Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:09:49.258Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:09:49.262Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:09:49.262Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:09:49.284Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:09:57.138Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:09:57.142Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:09:57.142Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:09:57.160Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:10:02.241Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:10:02.245Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:10:02.245Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:10:02.271Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:13:50.344Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:13:50.354Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:13:50.354Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:13:50.379Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:01.853Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:01.857Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:01.857Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:01.883Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:04.478Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:04.481Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:04.481Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:04.502Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:06.483Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:06.487Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:06.488Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:06.501Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:15.056Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:15.059Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:15.060Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:15.080Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:49.608Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:49.611Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:49.612Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:49.639Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:53.782Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:53.787Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:53.788Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:53.826Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:54.376Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:54.381Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:54.381Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:54.399Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:14:55.606Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:14:55.612Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:14:55.612Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:14:55.631Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:15:04.089Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:15:04.093Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:15:04.093Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:15:04.128Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:15:09.819Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:15:09.823Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:15:09.823Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:15:09.841Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:16.175Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:16.179Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:16.180Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:16.201Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:24.546Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:24.551Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:24.551Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:24.574Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:25.392Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:25.396Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:25.396Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:25.410Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:27.215Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:27.223Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:27.223Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:27.246Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:56.298Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:56.303Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:56.303Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:56.326Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:16:57.912Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:16:57.915Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:16:57.916Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:16:57.946Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:17:08.663Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:17:08.667Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:17:08.667Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:17:08.683Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:17:16.966Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:17:16.969Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:17:16.969Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:17:16.993Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:20.276Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:20.280Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:20.280Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:20.298Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:42.256Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:42.260Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:42.260Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:42.286Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:46.826Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:46.834Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:46.835Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:46.866Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:47.771Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:47.778Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:47.778Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:47.888Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:49.302Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:49.305Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:49.305Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:49.328Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:18:57.164Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:18:57.167Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:18:57.167Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:18:57.189Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:19:00.349Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:19:00.353Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:19:00.354Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:19:00.389Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:19:19.391Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:19:19.395Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:19:19.395Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:19:19.419Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:19:24.298Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:19:24.301Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-24T16:19:24.302Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:19:24.319Z"}

@@ -16,6 +16,7 @@ import statisticsRoutes from "./routes/statistics-routes.js";
 import calculatorRoutes from "./routes/calculator-routes.js";
 import foodRoutes from "./routes/food-routes.js";
 import feedbackRoutes from "./routes/feedback-routes.js";
+import paymentRoutes from "./routes/payment-routes.js";
 
 import errorHandler from "./middleware/error-handler.js";
 import { apiLimiter } from "./middleware/rate-limiter.js";
@@ -93,6 +94,7 @@ app.use("/api", statisticsRoutes);
 app.use("/api", calculatorRoutes);
 app.use("/api", foodRoutes);
 app.use("/api", feedbackRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.use(errorHandler);
 
