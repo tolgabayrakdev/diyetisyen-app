@@ -278,13 +278,6 @@ export default function PaymentPage() {
                                 }}
                             ></iframe>
                         </div>
-                        <Alert className="mt-4">
-                            <AlertDescription className="text-sm">
-                                <strong>Not:</strong> Kart bilgileri PayTR tarafından güvenli bir şekilde saklanabilir. 
-                                Eğer kart bilgilerini değiştirmek istiyorsanız, PayTR hesabınızdan kayıtlı kartları silebilir 
-                                veya tarayıcınızın otomatik doldurma ayarlarını kontrol edebilirsiniz.
-                            </AlertDescription>
-                        </Alert>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground p-4 bg-muted/50 rounded-lg">
                             <Lock className="h-4 w-4 shrink-0" />
                             <span>Ödeme bilgileriniz PayTR güvenli ödeme altyapısı ile işlenir ve saklanmaz</span>
