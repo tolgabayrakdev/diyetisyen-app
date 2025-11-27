@@ -4,6 +4,7 @@ import { FeatureCard } from "./components/feature-card";
 import { AnimatedText } from "./components/animated-text";
 import { HealthLifestyleSection } from "./components/health-lifestyle-section";
 import { LightStarsBackground } from "./components/light-stars-background";
+import { FeatureShowcase } from "./components/feature-showcase";
 
 export const metadata: Metadata = {
   title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
@@ -260,87 +261,74 @@ export default function Home() {
         </div>
 
         {/* Features Section */}
-        <div className="relative max-w-7xl mx-auto px-6 py-16 md:py-20 overflow-hidden">
-          <div className="relative z-10 space-y-12">
+        <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-16 overflow-hidden">
+          <div className="relative z-10 space-y-8">
             <div>
-              <div className="text-center space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-primary mb-2">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary mb-1">
                   <span>Özellikler</span>
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight">Neden DiyetKa?</h2>
-                <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                  Diyetisyenler için tasarlanmış kapsamlı çözüm. İşinizi kolaylaştırın, zaman kazanın ve profesyonel hizmet sunun.
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight">Neden DiyetKa?</h2>
+                <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                  Diyetisyenler için tasarlanmış kapsamlı çözüm. İşinizi kolaylaştırın, zaman kazanın.
                 </p>
               </div>
             </div>
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <div>
-                <FeatureCard
-                  emoji="👥"
-                  title="Danışan Yönetimi"
-                  description="Tüm danışanlarınızı tek bir yerden yönetin. Detaylı bilgiler, notlar ve dokümanlar."
-                  index={0}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="📋"
-                  title="Diyet Planları"
-                  description="Zengin metin editörü ile detaylı diyet planları oluşturun. PDF yükleyebilir veya sıfırdan plan oluşturabilirsiniz."
-                  index={1}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="📊"
-                  title="İlerleme Takibi"
-                  description="Danışanlarınızın ilerlemelerini görsel grafiklerle takip edin ve raporlar oluşturun."
-                  index={2}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="💰"
-                  title="Finansal Yönetim"
-                  description="Gelir ve giderlerinizi takip edin. Ödeme geçmişi ve faturalandırma."
-                  index={3}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="📝"
-                  title="Notlar & Dokümanlar"
-                  description="Danışanlarınızla ilgili notlar tutun ve dokümanları güvenli bir şekilde saklayın."
-                  index={4}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="📈"
-                  title="İstatistikler"
-                  description="Detaylı istatistikler ve raporlarla işinizi analiz edin ve büyütün."
-                  index={5}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="🍎"
-                  title="Besin Veritabanı"
-                  description="Kapsamlı besin veritabanı ile binlerce besinin besin değerlerine erişin. Özel besinlerinizi ekleyin ve kategorize edin."
-                  index={6}
-                />
-              </div>
-              <div>
-                <FeatureCard
-                  emoji="🧮"
-                  title="Hesaplama Araçları"
-                  description="BMI, BMR, TDEE, makro besin, ideal kilo, vücut yağ yüzdesi ve daha fazlasını hesaplayın. Profesyonel hesaplama araçları."
-                  index={7}
-                />
-              </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <FeatureCard
+                emoji="👥"
+                title="Danışan Yönetimi"
+                description="Tüm danışanlarınızı tek yerden yönetin."
+                index={0}
+              />
+              <FeatureCard
+                emoji="📋"
+                title="Diyet Planları"
+                description="Detaylı diyet planları oluşturun ve paylaşın."
+                index={1}
+              />
+              <FeatureCard
+                emoji="📊"
+                title="İlerleme Takibi"
+                description="Görsel grafiklerle ilerlemeyi takip edin."
+                index={2}
+              />
+              <FeatureCard
+                emoji="💰"
+                title="Finansal Yönetim"
+                description="Gelir ve giderlerinizi kolayca takip edin."
+                index={3}
+              />
+              <FeatureCard
+                emoji="📝"
+                title="Notlar & Dokümanlar"
+                description="Notlar tutun, dokümanları güvenle saklayın."
+                index={4}
+              />
+              <FeatureCard
+                emoji="📈"
+                title="İstatistikler"
+                description="Detaylı raporlarla işinizi analiz edin."
+                index={5}
+              />
+              <FeatureCard
+                emoji="🍎"
+                title="Besin Veritabanı"
+                description="Binlerce besinin değerlerine erişin."
+                index={6}
+              />
+              <FeatureCard
+                emoji="🧮"
+                title="Hesaplayıcılar"
+                description="BMI, BMR, TDEE ve daha fazlasını hesaplayın."
+                index={7}
+              />
             </div>
           </div>
         </div>
+
+        {/* Feature Showcase Section */}
+        <FeatureShowcase />
 
         {/* Health & Lifestyle Section */}
         <HealthLifestyleSection />
