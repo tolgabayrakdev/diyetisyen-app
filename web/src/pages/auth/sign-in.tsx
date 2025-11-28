@@ -434,13 +434,6 @@ export default function SignIn() {
         <div className="min-h-screen flex items-center justify-center bg-background p-4">
             <div className="w-full max-w-md space-y-6">
                 <div className="text-center space-y-4">
-                    <div className="flex justify-center mb-6">
-                        <img 
-                            src="" 
-                            alt="" 
-                            className="h-20 w-auto"
-                        />
-                    </div>
                     <h1 className="text-2xl font-semibold">
                         {step === "login" && "Giriş Yap"}
                         {step === "emailOtp" && "E-posta Doğrulama"}
