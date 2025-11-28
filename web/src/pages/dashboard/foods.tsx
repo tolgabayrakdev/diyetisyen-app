@@ -521,7 +521,6 @@ export default function FoodSearchPage() {
                                 <li>Kendi besin kütüphanenizi oluşturun ve kategorilere göre organize edin</li>
                                 <li>Her besin için detaylı besin değerlerini (kalori, protein, karbonhidrat, yağ, vitaminler, mineraller) kaydedin</li>
                                 <li>Esnek birim sistemi ile besinleri farklı miktarlarda tanımlayın (100g, 1 adet, 100ml, vb.)</li>
-                                <li>Diyet planlarınızda hızlıca besin arayıp ekleyin</li>
                                 <li>Danışanlarınıza özel besin önerileri hazırlayın</li>
                                 <li>Zaman kazanın - tekrar tekrar aynı besin değerlerini aramak zorunda kalmayın</li>
                             </ul>
