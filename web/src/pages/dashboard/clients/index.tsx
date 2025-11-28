@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Plus, Search, User, Phone, Mail, Trash2, Eye } from "lucide-react";
+import { Plus, Search, User, Phone, Mail, Trash2, Eye, Loader2 } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -415,7 +415,11 @@ export default function ClientsPage() {
                                                     disabled={isDeleting === client.id}
                                                     className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                                                 >
-                                                    <Trash2 className="h-4 w-4" />
+                                                    {isDeleting === client.id ? (
+                                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                                    ) : (
+                                                        <Trash2 className="h-4 w-4" />
+                                                    )}
                                                 </Button>
                                             </div>
                                         </TableCell>
