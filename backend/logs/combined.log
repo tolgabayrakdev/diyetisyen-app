@@ -1519,3 +1519,135 @@ info: ✅ Environment variables validated {"timestamp":"2025-11-24T16:19:24.298Z
 info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-24T16:19:24.301Z"}
 info: 📊 Environment: development {"timestamp":"2025-11-24T16:19:24.302Z"}
 info: ✅ Database connected successfully {"timestamp":"2025-11-24T16:19:24.319Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T07:00:10.113Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T07:00:10.117Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T07:00:10.117Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T07:00:16.822Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T07:00:19.492Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T07:00:19.500Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T07:00:19.738Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T07:00:19.743Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T16:39:37.636Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T16:39:37.639Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T16:39:37.640Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T16:39:38.731Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:25.391Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:25.398Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:25.595Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:25.598Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:57.593Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:41:57.597Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:42:15.621Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:42:15.625Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:07.735Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:07.740Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:12.571Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:12.574Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:17.345Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:22.233Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:22.237Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:23.615Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:23.619Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:26.068Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:43:36.820Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T16:44:09.609Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T16:44:09.613Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T16:44:09.613Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T16:44:10.309Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T16:44:15.965Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T16:44:15.973Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T16:44:15.974Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T16:44:16.762Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T16:44:24.718Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T16:44:24.721Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T16:44:24.721Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T16:44:25.362Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:44:33.419Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:44:33.430Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:45:26.763Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:45:26.769Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:45:28.664Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:45:28.667Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T16:47:54.624Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T16:47:55.556Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T16:47:55.560Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T16:47:55.560Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T16:47:57.127Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:48:04.964Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:48:04.972Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:48:06.170Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T16:48:06.176Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T17:23:16.836Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T17:23:16.862Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T17:23:16.885Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T17:23:18.490Z"}
+info: HTTP server closed {"timestamp":"2025-11-28T17:23:19.266Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T17:23:29.008Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T17:23:29.015Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T17:23:29.015Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T17:23:31.793Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:11:43.948Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:11:43.952Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:11:43.952Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:11:45.249Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:11:50.850Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:11:50.858Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:11:51.053Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:11:51.059Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:25:27.096Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:25:28.393Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:25:28.400Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:25:28.400Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:25:29.444Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:32:14.885Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:32:15.808Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:32:15.811Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:32:15.811Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:32:16.584Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:34:02.282Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:34:03.173Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:34:03.177Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:34:03.177Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:34:04.220Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:13.065Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:13.069Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:15.961Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:15.966Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:18.339Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-28T18:39:18.343Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:42:46.469Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:42:47.331Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:42:47.335Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:42:47.335Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:42:48.247Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:44:19.337Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:44:20.687Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:44:20.691Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:44:20.691Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:44:20.716Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:23.993Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:24.027Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:24.375Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:24.387Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:25.845Z"}
+warn: GET /api/auth/me - 500 - relation "users" does not exist {"timestamp":"2025-11-28T18:44:25.868Z"}
+error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:44:41.289Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:45:02.970Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:45:04.148Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:45:04.152Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:45:04.152Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:45:04.166Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:45:12.266Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:45:13.286Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:45:13.289Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:45:13.289Z"}
+error: ❌ Database connection error: {"timestamp":"2025-11-28T18:45:13.305Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:45:17.178Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:45:18.037Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:45:18.040Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:45:18.040Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:45:18.053Z"}
+error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:45:42.405Z"}
+error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:46:35.604Z"}
+error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:46:36.591Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:46:54.683Z"}
