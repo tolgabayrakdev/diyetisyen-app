@@ -151,7 +151,7 @@ CREATE TABLE progress_logs (
 -- 6️⃣ Aktivite / Audit Logları
 CREATE TABLE activity_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    client_id UUID REFERENCES clients(id) ON DELETE SET NULL,
+    client_id UUID REFERENCES clients(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES users(id),
     entity_type VARCHAR(50),
     action_type VARCHAR(50),

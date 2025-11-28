@@ -1651,3 +1651,20 @@ error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"
 error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:46:35.604Z"}
 error: POST /api/auth/register - 500 - Error: relation "users" does not exist {"error":{"code":"42P01","file":"parse_relation.c","length":104,"line":"1466","name":"error","position":"15","routine":"parserOpenTable","severity":"ERROR"},"stack":"error: relation \"users\" does not exist\n    at /home/tolga/Desktop/diyetisyen-app/backend/node_modules/pg/lib/client.js:545:17\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async AuthService.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/auth-service.js:95:34)\n    at async AuthController.register (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/auth-controller.js:45:28)","timestamp":"2025-11-28T18:46:36.591Z"}
 info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:46:54.683Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:48:36.034Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:48:36.037Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:48:36.037Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:48:36.056Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T18:48:57.034Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T18:49:01.021Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T18:49:01.024Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T18:49:01.024Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T18:49:01.043Z"}
+info: 📩 Email sent successfully: {"messageId":"<17637020-4d05-add9-5e76-aed0d8b8c298@gmail.com>","subject":"DiyetKa'ya Hoş Geldiniz! 🎉","timestamp":"2025-11-28T18:49:06.152Z","to":"tolgabayrakj@gmail.com"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-28T18:49:08.209Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-28T18:49:08.221Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-28T18:49:10.036Z"}
+warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-28T18:49:10.047Z"}
+info: 📩 Email sent successfully: {"messageId":"<d0edf59e-e27b-a615-bf53-1eb12e209580@gmail.com>","subject":"DiyetKa E-posta Doğrulama Kodu","timestamp":"2025-11-28T18:49:43.415Z","to":"tolgabayrakj@gmail.com"}
+info: SMS sent: {"code":"00","description":"queued","jobid":"17643557988598410257770239","timestamp":"2025-11-28T18:49:58.973Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T19:05:06.390Z"}
