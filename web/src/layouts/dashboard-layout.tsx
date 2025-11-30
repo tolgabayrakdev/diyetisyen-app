@@ -8,7 +8,7 @@ export default function DashboardLayout() {
         <AuthProvider>
             <div className="flex min-h-screen bg-background">
                 <CompactNavigation />
-                <main className="flex-1 overflow-y-auto">
+                <main className="flex-1 overflow-y-auto md:ml-64">
                     <div className="p-4 pt-16 md:pt-6 md:p-6 lg:p-8">
                         <div className="max-w-5xl mx-auto">
                             <Outlet />

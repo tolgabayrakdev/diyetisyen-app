@@ -6,6 +6,7 @@ import ClientsPage from "@/pages/dashboard/clients/index"
 import ClientDetailPage from "@/pages/dashboard/clients/detail"
 import ClientDietPlansPage from "@/pages/dashboard/clients/diet-plans"
 import DietPlanDetailPage from "@/pages/dashboard/clients/diet-plan-detail"
+import DietPlanBuilderPage from "@/pages/dashboard/diet-plan-builder"
 import ClientNotesPage from "@/pages/dashboard/clients/notes"
 import ClientFinancialPage from "@/pages/dashboard/clients/financial"
 import ClientProgressPage from "@/pages/dashboard/clients/progress"
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 path: '/clients/:id/diet-plans/:planId',
                 element: <DietPlanDetailPage />
+            },
+            {
+                path: '/diet-plan-builder',
+                element: <DietPlanBuilderPage />
             },
             {
                 path: '/clients/:id/notes',

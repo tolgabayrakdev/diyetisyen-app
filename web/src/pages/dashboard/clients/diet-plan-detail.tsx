@@ -32,6 +32,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { DietPlanPDFReport } from "@/components/diet-plan-pdf-report";
+import { DietPlanTemplateView } from "@/components/diet-plan-template-view";
 
 interface DietPlan {
     id: string;
@@ -485,45 +486,66 @@ export default function DietPlanDetailPage() {
                 </div>
             )}
 
-            {/* Plan Content - Text Editor */}
+            {/* Plan Content - Template View or Text Editor */}
             {plan.content && (
             <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
-                        <FileText className="h-5 w-5 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                        <h2 className="text-xl font-semibold">Diyet Planı İçeriği (Metin)</h2>
-                        <p className="text-sm text-muted-foreground">
-                            Planın metin editörü ile oluşturulmuş içeriği
-                        </p>
-                    </div>
-                    <Button onClick={() => handleSelectCreateMethod("text")} variant="outline" size="sm" className="gap-2">
-                        <Edit className="h-4 w-4" />
-                        İçeriği Düzenle
-                    </Button>
-                </div>
-                
-                <Separator />
+                {/* Try to render as template first */}
+                {(() => {
+                    const templateView = <DietPlanTemplateView content={plan.content} startDate={plan.start_date} endDate={plan.end_date} />;
+                    if (templateView) {
+                        // Check if it's a valid JSON template
+                        try {
+                            const parsed = JSON.parse(plan.content);
+                            if (parsed.templateId) {
+                                return templateView;
+                            }
+                        } catch {
+                            // Not JSON, show legacy view
+                        }
+                    }
+                    
+                    // Legacy text content view
+                    return (
+                        <>
+                            <div className="flex items-center gap-3">
+                                <div className="rounded-lg bg-primary/10 p-2">
+                                    <FileText className="h-5 w-5 text-primary" />
+                                </div>
+                                <div className="flex-1">
+                                    <h2 className="text-xl font-semibold">Diyet Planı İçeriği</h2>
+                                    <p className="text-sm text-muted-foreground">
+                                        Planın metin editörü ile oluşturulmuş içeriği
+                                    </p>
+                                </div>
+                                <Button onClick={() => handleSelectCreateMethod("text")} variant="outline" size="sm" className="gap-2">
+                                    <Edit className="h-4 w-4" />
+                                    İçeriği Düzenle
+                                </Button>
+                            </div>
+                            
+                            <Separator />
 
-                <div className="border rounded-lg p-6 space-y-4">
-                    <div 
-                        className="prose prose-sm sm:prose-base max-w-none line-clamp-6 overflow-hidden"
-                        dangerouslySetInnerHTML={{ __html: plan.content }}
-                    />
-                    <div className="flex justify-end">
-                        <button
-                            onClick={() => {
-                                setContentData(plan.content || "");
-                                setIsContentDialogOpen(true);
-                            }}
-                            className="text-sm hover:underline flex items-center gap-1"
-                        >
-                            <FileText className="h-4 w-4" />
-                            Tamamını Gör
-                        </button>
-                    </div>
-                </div>
+                            <div className="border rounded-lg p-6 space-y-4">
+                                <div 
+                                    className="prose prose-sm sm:prose-base max-w-none line-clamp-6 overflow-hidden"
+                                    dangerouslySetInnerHTML={{ __html: plan.content }}
+                                />
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={() => {
+                                            setContentData(plan.content || "");
+                                            setIsContentDialogOpen(true);
+                                        }}
+                                        className="text-sm hover:underline flex items-center gap-1"
+                                    >
+                                        <FileText className="h-4 w-4" />
+                                        Tamamını Gör
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    );
+                })()}
             </div>
             )}
 
