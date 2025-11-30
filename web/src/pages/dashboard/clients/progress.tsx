@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, TrendingUp, TrendingDown, Weight, Activity, Minus, BarChart3, ChevronRight } from "lucide-react";
+import { Plus, TrendingUp, TrendingDown, Weight, Activity, Minus, BarChart3, ChevronRight, Sparkles, Loader2, AlertTriangle } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -62,6 +62,18 @@ export default function ClientProgressPage() {
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
     const [isAllLogsSheetOpen, setIsAllLogsSheetOpen] = useState(false);
+    const [isLoadingSummary, setIsLoadingSummary] = useState(false);
+    const [isLoadingComment, setIsLoadingComment] = useState(false);
+    const [isWeightSummaryModalOpen, setIsWeightSummaryModalOpen] = useState(false);
+    const [isWeeklyCommentModalOpen, setIsWeeklyCommentModalOpen] = useState(false);
+    const [weightSummaryResult, setWeightSummaryResult] = useState<string | null>(null);
+    const [weeklyCommentResult, setWeeklyCommentResult] = useState<string | null>(null);
+    const [weightSummaryProgress, setWeightSummaryProgress] = useState(0);
+    const [weeklyCommentProgress, setWeeklyCommentProgress] = useState(0);
+    const [weightSummaryError, setWeightSummaryError] = useState<string | null>(null);
+    const [weeklyCommentErrorModal, setWeeklyCommentErrorModal] = useState<string | null>(null);
+    const [isWeightSummaryConfirmOpen, setIsWeightSummaryConfirmOpen] = useState(false);
+    const [isWeeklyCommentConfirmOpen, setIsWeeklyCommentConfirmOpen] = useState(false);
     const [formData, setFormData] = useState({
         log_date: new Date().toISOString().split("T")[0],
         weight_kg: "",
@@ -77,6 +89,127 @@ export default function ClientProgressPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
+
+    const fetchWeightSummary = async () => {
+        if (!id || progressLogs.length < 2) return;
+        
+        // Önce API çağrısını yap, hata varsa modal açma
+        try {
+            const response = await fetch(apiUrl(`api/clients/${id}/ai/weight-summary`), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: "Bir hata oluştu" }));
+                const errorMessage = errorData.message || `Hata: ${response.status} ${response.statusText}`;
+                alert(errorMessage);
+                return; // Modal açma, hata mesajını göster ve çık
+            }
+
+            const data = await response.json();
+            if (!data.success) {
+                alert(data.message || "Özet oluşturulamadı");
+                return; // Modal açma, hata mesajını göster ve çık
+            }
+
+            // Başarılıysa modal aç ve progress göster
+            setIsWeightSummaryModalOpen(true);
+            setIsLoadingSummary(true);
+            setWeightSummaryResult(null);
+            setWeightSummaryError(null);
+            setWeightSummaryProgress(0);
+            
+            // Progress bar'ı her saniyede bir artır (5 saniye = 5 adım)
+            const progressInterval = setInterval(() => {
+                setWeightSummaryProgress((prev) => {
+                    if (prev >= 100) {
+                        clearInterval(progressInterval);
+                        return 100;
+                    }
+                    return prev + 20; // Her saniyede %20 artır
+                });
+            }, 1000);
+            
+            // Minimum 5 saniye loading gösterimi için
+            const startTime = Date.now();
+            const minLoadingTime = 5000;
+            
+            // Kalan süreyi bekle
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            
+            clearInterval(progressInterval);
+            setWeightSummaryProgress(100);
+            setWeightSummaryResult(data.summary);
+            setIsLoadingSummary(false);
+        } catch (error) {
+            alert("Özet oluşturulurken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+            // Modal açma, hata mesajını göster ve çık
+        }
+    };
+
+    const fetchWeeklyComment = async () => {
+        if (!id || progressLogs.length === 0) return;
+        
+        // Önce API çağrısını yap, hata varsa modal açma
+        try {
+            const response = await fetch(apiUrl(`api/clients/${id}/ai/weekly-comment`), {
+                method: "GET",
+                credentials: "include",
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({ message: "Bir hata oluştu" }));
+                const errorMessage = errorData.message || `Hata: ${response.status} ${response.statusText}`;
+                alert(errorMessage);
+                return; // Modal açma, hata mesajını göster ve çık
+            }
+
+            const data = await response.json();
+            if (!data.success) {
+                alert(data.message || "Yorum oluşturulamadı");
+                return; // Modal açma, hata mesajını göster ve çık
+            }
+
+            // Başarılıysa modal aç ve progress göster
+            setIsWeeklyCommentModalOpen(true);
+            setIsLoadingComment(true);
+            setWeeklyCommentErrorModal(null);
+            setWeeklyCommentResult(null);
+            setWeeklyCommentProgress(0);
+            
+            // Progress bar'ı her saniyede bir artır (5 saniye = 5 adım)
+            const progressInterval = setInterval(() => {
+                setWeeklyCommentProgress((prev) => {
+                    if (prev >= 100) {
+                        clearInterval(progressInterval);
+                        return 100;
+                    }
+                    return prev + 20; // Her saniyede %20 artır
+                });
+            }, 1000);
+            
+            // Minimum 5 saniye loading gösterimi için
+            const startTime = Date.now();
+            const minLoadingTime = 5000;
+            
+            // Kalan süreyi bekle
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+            await new Promise(resolve => setTimeout(resolve, remainingTime));
+            
+            clearInterval(progressInterval);
+            setWeeklyCommentProgress(100);
+            setWeeklyCommentResult(data.comment);
+            setWeeklyCommentErrorModal(null);
+            setIsLoadingComment(false);
+        } catch (error) {
+            alert("Yorum oluşturulurken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+            // Modal açma, hata mesajını göster ve çık
+        }
+    };
 
     const fetchClient = async () => {
         try {
@@ -329,6 +462,53 @@ export default function ClientProgressPage() {
                     </Button>
                 </div>
             </div>
+
+            {/* AI Özetleri */}
+            {progressLogs.length >= 2 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {/* Kilo Değişimi Özeti */}
+                    <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-border">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                            <div className="min-w-0">
+                                <h3 className="font-medium text-sm text-gray-900 dark:text-gray-100">Kilo Değişimi Özeti</h3>
+                                <p className="text-xs text-muted-foreground truncate">AI analiz ile özet oluştur</p>
+                            </div>
+                        </div>
+                        <Button
+                            onClick={() => setIsWeightSummaryConfirmOpen(true)}
+                            size="sm"
+                            variant="outline"
+                            disabled={isLoadingSummary}
+                            className="gap-1.5 h-8 px-3 shrink-0"
+                        >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            <span className="text-xs">Oluştur</span>
+                        </Button>
+                    </div>
+
+                    {/* Haftalık İlerleme Yorumu */}
+                    <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-border">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                            <Sparkles className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                            <div className="min-w-0">
+                                <h3 className="font-medium text-sm text-gray-900 dark:text-gray-100">Haftalık İlerleme</h3>
+                                <p className="text-xs text-muted-foreground truncate">AI ile haftalık yorum</p>
+                            </div>
+                        </div>
+                        <Button
+                            onClick={() => setIsWeeklyCommentConfirmOpen(true)}
+                            size="sm"
+                            variant="outline"
+                            disabled={isLoadingComment}
+                            className="gap-1.5 h-8 px-3 shrink-0"
+                        >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            <span className="text-xs">Oluştur</span>
+                        </Button>
+                    </div>
+                </div>
+            )}
 
             {/* İstatistik Kartları */}
             {progressLogs.length > 0 && (
@@ -780,6 +960,334 @@ export default function ClientProgressPage() {
                     </div>
                 </SheetContent>
             </Sheet>
+
+            {/* AI Kilo Değişimi Özeti Onay Dialog */}
+            <Dialog open={isWeightSummaryConfirmOpen} onOpenChange={setIsWeightSummaryConfirmOpen}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
+                                <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                            </div>
+                            <DialogTitle>Önemli Uyarı</DialogTitle>
+                        </div>
+                        <DialogDescription className="space-y-3 pt-2">
+                            <p className="text-sm text-foreground">
+                                Bu veri <strong>yapay zeka tarafından analiz edilmektedir</strong>. 
+                                Oluşturulan özetin doğruluğu ve yanlışı kanıtlanmış bir veri değildir.
+                            </p>
+                            <div className="bg-muted/50 rounded-lg p-3 space-y-2">
+                                <p className="text-xs text-muted-foreground font-medium">Lütfen dikkat:</p>
+                                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                                    <li>AI analizi yalnızca bilgilendirme amaçlıdır</li>
+                                    <li>Kesin tıbbi veya beslenme tavsiyesi değildir</li>
+                                    <li>Sonuçları profesyonel görüş ile değerlendirin</li>
+                                </ul>
+                            </div>
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="flex-col sm:flex-row gap-2">
+                        <Button
+                            variant="outline"
+                            onClick={() => setIsWeightSummaryConfirmOpen(false)}
+                            className="w-full sm:w-auto"
+                        >
+                            İptal
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setIsWeightSummaryConfirmOpen(false);
+                                fetchWeightSummary();
+                            }}
+                            className="w-full sm:w-auto"
+                        >
+                            Anladım, Devam Et
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* AI Haftalık İlerleme Yorumu Onay Dialog */}
+            <Dialog open={isWeeklyCommentConfirmOpen} onOpenChange={setIsWeeklyCommentConfirmOpen}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
+                                <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+                            </div>
+                            <DialogTitle>Önemli Uyarı</DialogTitle>
+                        </div>
+                        <DialogDescription className="space-y-3 pt-2">
+                            <p className="text-sm text-foreground">
+                                Bu veri <strong>yapay zeka tarafından analiz edilmektedir</strong>. 
+                                Oluşturulan yorumun doğruluğu ve yanlışı kanıtlanmış bir veri değildir.
+                            </p>
+                            <div className="bg-muted/50 rounded-lg p-3 space-y-2">
+                                <p className="text-xs text-muted-foreground font-medium">Lütfen dikkat:</p>
+                                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                                    <li>AI analizi yalnızca bilgilendirme amaçlıdır</li>
+                                    <li>Kesin tıbbi veya beslenme tavsiyesi değildir</li>
+                                    <li>Sonuçları profesyonel görüş ile değerlendirin</li>
+                                </ul>
+                            </div>
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="flex-col sm:flex-row gap-2">
+                        <Button
+                            variant="outline"
+                            onClick={() => setIsWeeklyCommentConfirmOpen(false)}
+                            className="w-full sm:w-auto"
+                        >
+                            İptal
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setIsWeeklyCommentConfirmOpen(false);
+                                fetchWeeklyComment();
+                            }}
+                            className="w-full sm:w-auto"
+                        >
+                            Anladım, Devam Et
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* AI Kilo Değişimi Özeti Modal */}
+            <Dialog 
+                open={isWeightSummaryModalOpen} 
+                onOpenChange={(open) => {
+                    setIsWeightSummaryModalOpen(open);
+                    if (!open) {
+                        setWeightSummaryProgress(0);
+                        setWeightSummaryResult(null);
+                        setWeightSummaryError(null);
+                    }
+                }}
+            >
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            AI Kilo Değişimi Özeti
+                        </DialogTitle>
+                        <DialogDescription>
+                            AI tarafından oluşturulan kilo değişimi analizi
+                        </DialogDescription>
+                    </DialogHeader>
+                    {isLoadingSummary ? (
+                        <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                            <div className="relative">
+                                <Loader2 className="h-12 w-12 animate-spin text-blue-600 dark:text-blue-400" />
+                                <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                            </div>
+                            <div className="text-center space-y-2">
+                                <p className="text-lg font-semibold">Özetiniz oluşturuluyor...</p>
+                                <p className="text-sm text-muted-foreground">
+                                    AI, kilo değişim verilerinizi analiz ediyor
+                                </p>
+                            </div>
+                            <div className="w-full max-w-xs">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-muted-foreground">İlerleme</span>
+                                    <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">{weightSummaryProgress}%</span>
+                                </div>
+                                <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+                                    <div 
+                                        className="h-full bg-blue-600 dark:bg-blue-400 transition-all duration-500 ease-out rounded-full" 
+                                        style={{ width: `${weightSummaryProgress}%` }}
+                                    ></div>
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                    {[0, 20, 40, 60, 80, 100].map((value) => (
+                                        <div 
+                                            key={value}
+                                            className={`h-1 w-1 rounded-full ${
+                                                weightSummaryProgress >= value 
+                                                    ? 'bg-blue-600 dark:bg-blue-400' 
+                                                    : 'bg-muted'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : weightSummaryError ? (
+                        <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/20">
+                                <svg className="h-8 w-8 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div className="text-center space-y-2">
+                                <p className="text-lg font-semibold text-red-600 dark:text-red-400">Hata Oluştu</p>
+                                <p className="text-sm text-muted-foreground max-w-md">
+                                    {weightSummaryError}
+                                </p>
+                            </div>
+                            <div className="w-full max-w-xs">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-muted-foreground">İlerleme</span>
+                                    <span className="text-xs font-semibold text-red-600 dark:text-red-400">{weightSummaryProgress}%</span>
+                                </div>
+                                <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+                                    <div 
+                                        className="h-full bg-red-600 dark:bg-red-400 transition-all duration-500 ease-out rounded-full" 
+                                        style={{ width: `${weightSummaryProgress}%` }}
+                                    ></div>
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                    {[0, 20, 40, 60, 80, 100].map((value) => (
+                                        <div 
+                                            key={value}
+                                            className={`h-1 w-1 rounded-full ${
+                                                weightSummaryProgress >= value 
+                                                    ? 'bg-red-600 dark:bg-red-400' 
+                                                    : 'bg-muted'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : weightSummaryResult ? (
+                        <div className="space-y-4">
+                            <div className="border rounded-lg p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20">
+                                <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                    {weightSummaryResult}
+                                </p>
+                            </div>
+                        </div>
+                    ) : null}
+                    <DialogFooter>
+                        <Button
+                            onClick={() => {
+                                setIsWeightSummaryModalOpen(false);
+                            }}
+                        >
+                            Kapat
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* AI Haftalık İlerleme Yorumu Modal */}
+            <Dialog 
+                open={isWeeklyCommentModalOpen} 
+                onOpenChange={(open) => {
+                    setIsWeeklyCommentModalOpen(open);
+                    if (!open) {
+                        setWeeklyCommentProgress(0);
+                        setWeeklyCommentResult(null);
+                        setWeeklyCommentErrorModal(null);
+                    }
+                }}
+            >
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                            AI Haftalık İlerleme Yorumu
+                        </DialogTitle>
+                        <DialogDescription>
+                            AI tarafından oluşturulan haftalık ilerleme analizi
+                        </DialogDescription>
+                    </DialogHeader>
+                    {isLoadingComment ? (
+                        <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                            <div className="relative">
+                                <Loader2 className="h-12 w-12 animate-spin text-purple-600 dark:text-purple-400" />
+                                <Sparkles className="h-6 w-6 text-purple-600 dark:text-purple-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                            </div>
+                            <div className="text-center space-y-2">
+                                <p className="text-lg font-semibold">Yorumunuz oluşturuluyor...</p>
+                                <p className="text-sm text-muted-foreground">
+                                    AI, haftalık ilerleme verilerinizi analiz ediyor
+                                </p>
+                            </div>
+                            <div className="w-full max-w-xs">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-muted-foreground">İlerleme</span>
+                                    <span className="text-xs font-semibold text-purple-600 dark:text-purple-400">{weeklyCommentProgress}%</span>
+                                </div>
+                                <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+                                    <div 
+                                        className="h-full bg-purple-600 dark:bg-purple-400 transition-all duration-500 ease-out rounded-full" 
+                                        style={{ width: `${weeklyCommentProgress}%` }}
+                                    ></div>
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                    {[0, 20, 40, 60, 80, 100].map((value) => (
+                                        <div 
+                                            key={value}
+                                            className={`h-1 w-1 rounded-full ${
+                                                weeklyCommentProgress >= value 
+                                                    ? 'bg-purple-600 dark:bg-purple-400' 
+                                                    : 'bg-muted'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : weeklyCommentErrorModal ? (
+                        <div className="flex flex-col items-center justify-center py-12 space-y-4">
+                            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-100 dark:bg-red-900/20">
+                                <svg className="h-8 w-8 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div className="text-center space-y-2">
+                                <p className="text-lg font-semibold text-red-600 dark:text-red-400">Hata Oluştu</p>
+                                <p className="text-sm text-muted-foreground max-w-md">
+                                    {weeklyCommentErrorModal}
+                                </p>
+                            </div>
+                            <div className="w-full max-w-xs">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-muted-foreground">İlerleme</span>
+                                    <span className="text-xs font-semibold text-red-600 dark:text-red-400">{weeklyCommentProgress}%</span>
+                                </div>
+                                <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+                                    <div 
+                                        className="h-full bg-red-600 dark:bg-red-400 transition-all duration-500 ease-out rounded-full" 
+                                        style={{ width: `${weeklyCommentProgress}%` }}
+                                    ></div>
+                                </div>
+                                <div className="flex justify-between mt-1">
+                                    {[0, 20, 40, 60, 80, 100].map((value) => (
+                                        <div 
+                                            key={value}
+                                            className={`h-1 w-1 rounded-full ${
+                                                weeklyCommentProgress >= value 
+                                                    ? 'bg-red-600 dark:bg-red-400' 
+                                                    : 'bg-muted'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    ) : weeklyCommentResult ? (
+                        <div className="space-y-4">
+                            <div className="border rounded-lg p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20">
+                                <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                                    {weeklyCommentResult}
+                                </p>
+                            </div>
+                        </div>
+                    ) : null}
+                    <DialogFooter>
+                        <Button
+                            onClick={() => {
+                                setIsWeeklyCommentModalOpen(false);
+                            }}
+                        >
+                            Kapat
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>

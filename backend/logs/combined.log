@@ -1668,3 +1668,199 @@ warn: GET /api/auth/me - 404 - Kullanıcı bulunamadı {"timestamp":"2025-11-28T
 info: 📩 Email sent successfully: {"messageId":"<d0edf59e-e27b-a615-bf53-1eb12e209580@gmail.com>","subject":"DiyetKa E-posta Doğrulama Kodu","timestamp":"2025-11-28T18:49:43.415Z","to":"tolgabayrakj@gmail.com"}
 info: SMS sent: {"code":"00","description":"queued","jobid":"17643557988598410257770239","timestamp":"2025-11-28T18:49:58.973Z"}
 info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T19:05:06.390Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T19:05:21.675Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T19:05:21.679Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T19:05:21.679Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T19:05:21.698Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-28T19:57:24.597Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-28T19:57:28.374Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-28T19:57:28.380Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-28T19:57:28.380Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-28T19:57:28.414Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-29T06:30:03.540Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-29T06:30:03.544Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-29T06:30:03.544Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-29T06:30:03.566Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T06:30:10.339Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T06:30:10.348Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T06:30:10.602Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T06:30:10.608Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:22:09.782Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:22:09.785Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:22:09.914Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:22:09.916Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:25:56.802Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:25:56.805Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:25:56.958Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:25:56.960Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:37:02.052Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:37:02.055Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:37:02.219Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-29T10:37:02.224Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-29T12:59:51.580Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T07:24:12.483Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T07:24:12.491Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T07:24:12.492Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T07:24:12.541Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T07:24:21.746Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T07:24:21.753Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T07:24:21.925Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T07:24:21.928Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T11:33:42.375Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T11:33:42.380Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T11:33:42.381Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T11:33:42.402Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:27:03.900Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:27:03.912Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:27:03.913Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:27:03.941Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:27:19.638Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:27:19.642Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:27:19.642Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:27:19.654Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:27:22.206Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:27:22.210Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:27:22.210Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:27:22.222Z"}
+warn: ⚠️  GROQ_API_KEY not found. AI features will be disabled. {"timestamp":"2025-11-30T12:31:59.864Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:31:59.872Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:31:59.879Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:31:59.880Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:31:59.926Z"}
+warn: ⚠️  GROQ_API_KEY not found. AI features will be disabled. {"timestamp":"2025-11-30T12:32:02.649Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:32:02.657Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:32:02.666Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:32:02.666Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:32:02.699Z"}
+warn: ⚠️  GROQ_API_KEY not found. AI features will be disabled. {"timestamp":"2025-11-30T12:32:09.894Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:32:09.897Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:32:09.900Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:32:09.900Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:32:09.922Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:32:12.395Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:32:12.399Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:32:12.400Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:32:12.416Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:32:19.947Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:32:19.953Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:32:19.953Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:32:19.973Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:32:48.107Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:32:48.111Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:32:48.112Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:32:48.125Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:36:44.589Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:36:44.591Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:36:49.490Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:36:49.490Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:36:56.637Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:36:56.638Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:37:27.485Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:37:27.485Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:38:32.374Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:38:32.374Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:38:33.745Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:38:33.745Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:38:37.161Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:38:37.162Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:38:39.068Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:38:39.068Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:38:40.783Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:38:40.784Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:39:07.060Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:39:07.060Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-30T12:40:51.888Z"}
+warn: ⚠️  GROQ_API_KEY not found. AI features will be disabled. {"timestamp":"2025-11-30T12:40:53.253Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:40:53.257Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:40:53.260Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:40:53.260Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:40:53.275Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:40:56.822Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:41:07.741Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:41:39.614Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:41:40.546Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:41:42.687Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:42:32.395Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:42:32.407Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:42:32.407Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:42:32.436Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:43:23.623Z"}
+warn: GET /api/clients/8d00c50f-ede7-4681-9853-523f6df3e226/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:43:23.624Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:43:31.887Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:43:31.891Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:43:31.891Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:43:31.908Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T12:53:02.435Z"}
+warn: GET /api/clients/8d00c50f-ede7-4681-9853-523f6df3e226/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T12:53:02.436Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-30T12:58:38.091Z"}
+warn: ⚠️  GROQ_API_KEY not found. AI features will be disabled. {"timestamp":"2025-11-30T12:58:39.151Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T12:58:39.155Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T12:58:39.158Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T12:58:39.158Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T12:58:39.171Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:58:51.872Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T12:59:01.290Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:00:03.683Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:01:48.078Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:01:50.560Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:03:24.242Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:03:35.841Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:03:43.356Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:03:45.461Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:05:51.208Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:05:53.569Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:05:54.513Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:05:57.250Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:05:58.168Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:06:12.557Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:06:13.325Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:08:08.891Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weekly-comment - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:08:10.787Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:11:31.959Z"}
+warn: GET /api/clients/3d36c165-95db-4435-bfb2-b8e8471ed10d/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:11:41.244Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:17.690Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:17.695Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:17.945Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:17.947Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:23.578Z"}
+warn: GET /api/auth/me - 403 - Oturum süresi dolmuş {"timestamp":"2025-11-30T13:45:23.581Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weight-summary - 503 - AI servisi şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin. {"timestamp":"2025-11-30T13:48:55.306Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-11-30T13:49:03.189Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T13:49:08.000Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T13:49:08.003Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T13:49:08.004Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T13:49:08.016Z"}
+error: AI weekly progress comment error: Son hafta için ilerleme kaydı bulunamadı. {"stack":"Error: Son hafta için ilerleme kaydı bulunamadı.\n    at AIService.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/service/ai-service.js:138:23)\n    at AIController.commentWeeklyProgress (file:///home/tolga/Desktop/diyetisyen-app/backend/src/controller/ai-controller.js:81:50)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","status":400,"timestamp":"2025-11-30T13:49:39.867Z"}
+warn: GET /api/clients/b65005f2-eac7-4f70-b733-76a079ea4332/ai/weekly-comment - 400 - Son hafta için ilerleme kaydı bulunamadı. {"timestamp":"2025-11-30T13:49:39.867Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T13:53:35.108Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T13:53:35.111Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T13:53:35.112Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T13:53:35.129Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T13:53:51.183Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T13:53:51.186Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T13:53:51.186Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T13:53:51.198Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T13:53:56.958Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T13:53:56.962Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T13:53:56.962Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T13:53:56.982Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T13:54:00.649Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T13:54:00.652Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T13:54:00.653Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T13:54:00.671Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T15:04:50.652Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T15:04:50.656Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T15:04:50.656Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T15:04:50.674Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T15:04:54.845Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T15:04:54.848Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T15:04:54.849Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T15:04:54.865Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T15:05:08.809Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T15:05:08.815Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T15:05:08.815Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T15:05:08.834Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T15:06:05.154Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T15:06:05.157Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T15:06:05.158Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T15:06:05.175Z"}
