@@ -121,7 +121,7 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         
         @page {
             size: A4;
-            margin: 1cm;
+            margin: 0.8cm;
         }
         
         @media print {
@@ -142,68 +142,68 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: #1f2937;
-            line-height: 1.6;
+            line-height: 1.5;
             background: #ffffff;
         }
         
         .container {
             max-width: 100%;
-            padding: 10px;
+            padding: 5px;
         }
         
         .header {
             border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 12px;
-            margin-bottom: 15px;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
         
         .header h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #111827;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         .header .subtitle {
             color: #6b7280;
-            font-size: 12px;
+            font-size: 11px;
             margin-bottom: 0;
         }
         
         .info-section {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-            padding: 10px;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding: 8px;
             background: #f9fafb;
-            border-radius: 6px;
-            font-size: 11px;
+            border-radius: 4px;
+            font-size: 10px;
         }
         
         .client-details-section {
-            margin-bottom: 15px;
-            padding: 12px;
+            margin-bottom: 10px;
+            padding: 8px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
+            border-radius: 4px;
         }
         
         .client-details-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
             border-bottom: 1px solid #e5e7eb;
         }
         
         .client-details-compact {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            font-size: 11px;
-            line-height: 1.6;
+            gap: 4px;
+            font-size: 10px;
+            line-height: 1.5;
         }
         
         .client-details-compact-item {
@@ -214,8 +214,8 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         .client-details-compact-label {
             font-weight: 600;
             color: #6b7280;
-            margin-right: 8px;
-            min-width: 120px;
+            margin-right: 6px;
+            min-width: 110px;
         }
         
         .client-details-compact-value {
@@ -223,37 +223,37 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         }
         
         .health-info-section {
-            margin-bottom: 15px;
-            padding: 12px;
+            margin-bottom: 10px;
+            padding: 8px;
             background: #fef3c7;
             border: 1px solid #fcd34d;
-            border-radius: 6px;
+            border-radius: 4px;
         }
         
         .health-info-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #92400e;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
             border-bottom: 1px solid #fcd34d;
         }
         
         .health-info-item {
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
         
         .health-info-label {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             color: #78350f;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         
         .health-info-value {
-            font-size: 11px;
+            font-size: 10px;
             color: #92400e;
-            line-height: 1.5;
+            line-height: 1.4;
         }
         
         .info-item {
@@ -262,100 +262,100 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         }
         
         .info-label {
-            font-size: 10px;
+            font-size: 9px;
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
             font-weight: 600;
         }
         
         .info-value {
-            font-size: 11px;
+            font-size: 10px;
             color: #111827;
             font-weight: 500;
         }
         
         .plan-info {
-            margin-bottom: 15px;
-            padding: 12px;
+            margin-bottom: 10px;
+            padding: 8px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
+            border-radius: 4px;
         }
         
         .plan-info-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
+            margin-bottom: 6px;
+            padding-bottom: 4px;
             border-bottom: 1px solid #e5e7eb;
         }
         
         .plan-description {
             color: #6b7280;
-            font-size: 11px;
-            line-height: 1.6;
+            font-size: 10px;
+            line-height: 1.5;
             margin-bottom: 0;
         }
         
         .content-section {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 10px;
+            padding: 10px;
             background: #ffffff;
             border: 1px solid #e5e7eb;
-            border-radius: 6px;
+            border-radius: 4px;
         }
         
         .content-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #111827;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 2px solid #e5e7eb;
         }
         
         .content-body {
-            font-size: 12px;
-            line-height: 1.8;
+            font-size: 11px;
+            line-height: 1.6;
             color: #1f2937;
         }
         
         .content-body h1 {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 16px 0 12px 0;
-            color: #111827;
-        }
-        
-        .content-body h2 {
             font-size: 18px;
-            font-weight: 600;
-            margin: 14px 0 10px 0;
-            color: #111827;
-        }
-        
-        .content-body h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             margin: 12px 0 8px 0;
             color: #111827;
         }
         
+        .content-body h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 0 6px 0;
+            color: #111827;
+        }
+        
+        .content-body h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 8px 0 5px 0;
+            color: #111827;
+        }
+        
         .content-body p {
-            margin: 8px 0;
+            margin: 6px 0;
         }
         
         .content-body ul,
         .content-body ol {
-            margin: 8px 0;
-            padding-left: 24px;
+            margin: 6px 0;
+            padding-left: 20px;
         }
         
         .content-body li {
-            margin: 4px 0;
+            margin: 3px 0;
         }
         
         .content-body strong {
@@ -367,17 +367,17 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         }
         
         .footer {
-            margin-top: 20px;
-            padding-top: 12px;
+            margin-top: 12px;
+            padding-top: 8px;
             border-top: 1px solid #e5e7eb;
             text-align: center;
             color: #9ca3af;
-            font-size: 10px;
+            font-size: 9px;
         }
         
         .dietitian-signature {
-            margin-top: 20px;
-            padding-top: 12px;
+            margin-top: 12px;
+            padding-top: 8px;
             border-top: 1px solid #e5e7eb;
             text-align: right;
         }
@@ -522,7 +522,7 @@ export function DietPlanPDFReport({ plan, client, dietitian }: DietPlanPDFReport
         
         <div class="footer">
             <p>Bu diyet planı ${dateStr} tarihinde oluşturulmuştur.</p>
-            <p style="margin-top: 12px; font-weight: 500; color: #6b7280;">diyetka.com tarafından oluşturulmuştur</p>
+            <p style="margin-top: 6px; font-weight: 500; color: #6b7280;">diyetka.com tarafından oluşturulmuştur</p>
         </div>
     </div>
 </body>
