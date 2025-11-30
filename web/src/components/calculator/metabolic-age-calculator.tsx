@@ -131,6 +131,18 @@ export function MetabolicAgeCalculator({ open, onOpenChange, bmrResult }: Metabo
                                 </SelectContent>
                             </Select>
                         </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="formula-metabolic">BMR Formülü</Label>
+                            <Select value={formula} onValueChange={setFormula}>
+                                <SelectTrigger id="formula-metabolic">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="mifflin">Mifflin-St Jeor (Önerilen)</SelectItem>
+                                    <SelectItem value="harris">Harris-Benedict</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                     <Button onClick={calculate} disabled={loading || !bmrResult} className="w-full">
                         {loading ? "Hesaplanıyor..." : "Metabolik Yaş Hesapla"}
