@@ -259,5 +259,167 @@ export default class CalculatorController {
             next(error);
         }
     }
+
+    async calculateWHR(req, res, next) {
+        try {
+            const { waistCm, hipCm, gender } = req.body;
+
+            if (!waistCm || !hipCm || !gender) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Bel çevresi, kalça çevresi ve cinsiyet gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateWHR(
+                parseFloat(waistCm),
+                parseFloat(hipCm),
+                gender
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async calculateWHtR(req, res, next) {
+        try {
+            const { waistCm, heightCm } = req.body;
+
+            if (!waistCm || !heightCm) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Bel çevresi ve boy gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateWHtR(
+                parseFloat(waistCm),
+                parseFloat(heightCm)
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async calculateLBM(req, res, next) {
+        try {
+            const { weightKg, heightCm, age, gender, bodyFatPercent } = req.body;
+
+            if (!weightKg || !heightCm || !age || !gender) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Kilo, boy, yaş ve cinsiyet gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateLBM(
+                parseFloat(weightKg),
+                parseFloat(heightCm),
+                parseInt(age),
+                gender,
+                bodyFatPercent ? parseFloat(bodyFatPercent) : null
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async calculateFFMI(req, res, next) {
+        try {
+            const { weightKg, heightCm, age, gender, bodyFatPercent } = req.body;
+
+            if (!weightKg || !heightCm || !age || !gender) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Kilo, boy, yaş ve cinsiyet gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateFFMI(
+                parseFloat(weightKg),
+                parseFloat(heightCm),
+                parseInt(age),
+                gender,
+                bodyFatPercent ? parseFloat(bodyFatPercent) : null
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async calculateMetabolicAge(req, res, next) {
+        try {
+            const { weightKg, heightCm, age, gender, bmr, formula } = req.body;
+
+            if (!weightKg || !heightCm || !age || !gender || !bmr) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Kilo, boy, yaş, cinsiyet ve BMR gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateMetabolicAge(
+                parseFloat(weightKg),
+                parseFloat(heightCm),
+                parseInt(age),
+                gender,
+                parseFloat(bmr),
+                formula || 'mifflin'
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async calculateBSA(req, res, next) {
+        try {
+            const { weightKg, heightCm, formula } = req.body;
+
+            if (!weightKg || !heightCm) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Kilo ve boy gereklidir"
+                });
+            }
+
+            const result = this.calculatorService.calculateBSA(
+                parseFloat(weightKg),
+                parseFloat(heightCm),
+                formula || 'dubois'
+            );
+
+            res.status(200).json({
+                success: true,
+                ...result
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 

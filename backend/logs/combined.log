@@ -1864,3 +1864,33 @@ info: ✅ Environment variables validated {"timestamp":"2025-11-30T15:06:05.154Z
 info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T15:06:05.157Z"}
 info: 📊 Environment: development {"timestamp":"2025-11-30T15:06:05.158Z"}
 info: ✅ Database connected successfully {"timestamp":"2025-11-30T15:06:05.175Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T15:25:00.924Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T15:25:00.927Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T15:25:01.109Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T15:25:01.111Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:33:00.196Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:33:00.199Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:33:00.370Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:33:00.372Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:21.802Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:21.806Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:22.054Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:22.057Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:54.949Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-11-30T16:40:54.952Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T18:30:30.076Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T18:30:30.079Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T18:30:30.079Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T18:30:30.092Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T18:30:48.041Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T18:30:48.045Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T18:30:48.045Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T18:30:48.060Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T18:30:56.141Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T18:30:56.145Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T18:30:56.145Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T18:30:56.158Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-11-30T18:33:42.190Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T18:33:42.194Z"}
+info: 📊 Environment: development {"timestamp":"2025-11-30T18:33:42.194Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-11-30T18:33:42.206Z"}

@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { toast } from "sonner";
-import { TrendingUp, Activity, Target, Scale, Droplets, ArrowRight, GlassWater, Beef, TrendingDown } from "lucide-react";
+import { TrendingUp, Activity, Target, Scale, Droplets, ArrowRight, GlassWater, Beef, TrendingDown, Heart, Ruler, Users, Calendar, Square } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 
@@ -91,7 +91,63 @@ interface CalorieDeficitSurplusResult {
     unit: string;
 }
 
-type CalculatorType = "bmi" | "bmr" | "tdee" | "macros" | "ideal" | "bodyfat" | "water" | "protein" | "caloriedeficit" | null;
+interface WHRResult {
+    whr: number;
+    waistCm: number;
+    hipCm: number;
+    riskCategory: string;
+    riskLevel: string;
+    description: string;
+    unit: string;
+}
+
+interface WHtRResult {
+    whtr: number;
+    waistCm: number;
+    heightCm: number;
+    category: string;
+    riskLevel: string;
+    description: string;
+    unit: string;
+}
+
+interface LBMResult {
+    lbm: number;
+    bodyFatMass: number;
+    bodyFatPercent: number;
+    totalWeight: number;
+    method: string;
+    unit: string;
+}
+
+interface FFMIResult {
+    ffmi: number;
+    normalizedFFMI: number;
+    lbm: number;
+    category: string;
+    description: string;
+    unit: string;
+}
+
+interface MetabolicAgeResult {
+    metabolicAge: number;
+    chronologicalAge: number;
+    ageDifference: number;
+    category: string;
+    description: string;
+    bmr: number;
+    unit: string;
+}
+
+interface BSAResult {
+    bsa: number;
+    formula: string;
+    weightKg: number;
+    heightCm: number;
+    unit: string;
+}
+
+type CalculatorType = "bmi" | "bmr" | "tdee" | "macros" | "ideal" | "bodyfat" | "water" | "protein" | "caloriedeficit" | "whr" | "whtr" | "lbm" | "ffmi" | "metabolicage" | "bsa" | null;
 
 export default function CalculatorPage() {
     const [openSheet, setOpenSheet] = useState<CalculatorType>(null);
@@ -116,6 +172,8 @@ export default function CalculatorPage() {
     const [currentWeightKg, setCurrentWeightKg] = useState("");
     const [targetWeightKg, setTargetWeightKg] = useState("");
     const [durationWeeks, setDurationWeeks] = useState("");
+    const [bodyFatPercent, setBodyFatPercent] = useState("");
+    const [bsaFormula, setBsaFormula] = useState("dubois");
 
     // Results
     const [bmiResult, setBmiResult] = useState<BMIResult | null>(null);
@@ -127,6 +185,12 @@ export default function CalculatorPage() {
     const [waterIntakeResult, setWaterIntakeResult] = useState<WaterIntakeResult | null>(null);
     const [proteinNeedsResult, setProteinNeedsResult] = useState<ProteinNeedsResult | null>(null);
     const [calorieDeficitSurplusResult, setCalorieDeficitSurplusResult] = useState<CalorieDeficitSurplusResult | null>(null);
+    const [whrResult, setWhrResult] = useState<WHRResult | null>(null);
+    const [whtrResult, setWhtrResult] = useState<WHtRResult | null>(null);
+    const [lbmResult, setLbmResult] = useState<LBMResult | null>(null);
+    const [ffmiResult, setFfmiResult] = useState<FFMIResult | null>(null);
+    const [metabolicAgeResult, setMetabolicAgeResult] = useState<MetabolicAgeResult | null>(null);
+    const [bsaResult, setBsaResult] = useState<BSAResult | null>(null);
     const [loading, setLoading] = useState(false);
 
     const calculateBMI = async () => {
@@ -447,11 +511,253 @@ export default function CalculatorPage() {
         }
     };
 
+    const calculateWHR = async () => {
+        if (!waistCm || !hipCm || !gender) {
+            toast.error("Bel çevresi, kalça çevresi ve cinsiyet gereklidir");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/whr"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    waistCm: parseFloat(waistCm),
+                    hipCm: parseFloat(hipCm),
+                    gender,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setWhrResult(data);
+                toast.success("Bel-Kalça oranı hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const calculateWHtR = async () => {
+        if (!waistCm || !heightCm) {
+            toast.error("Bel çevresi ve boy gereklidir");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/whtr"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    waistCm: parseFloat(waistCm),
+                    heightCm: parseFloat(heightCm),
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setWhtrResult(data);
+                toast.success("Bel-Boy oranı hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const calculateLBM = async () => {
+        if (!weightKg || !heightCm || !age || !gender) {
+            toast.error("Kilo, boy, yaş ve cinsiyet gereklidir");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/lbm"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    weightKg: parseFloat(weightKg),
+                    heightCm: parseFloat(heightCm),
+                    age: parseInt(age),
+                    gender,
+                    bodyFatPercent: bodyFatPercent ? parseFloat(bodyFatPercent) : null,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setLbmResult(data);
+                toast.success("Yağsız vücut kütlesi hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const calculateFFMI = async () => {
+        if (!weightKg || !heightCm || !age || !gender) {
+            toast.error("Kilo, boy, yaş ve cinsiyet gereklidir");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/ffmi"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    weightKg: parseFloat(weightKg),
+                    heightCm: parseFloat(heightCm),
+                    age: parseInt(age),
+                    gender,
+                    bodyFatPercent: bodyFatPercent ? parseFloat(bodyFatPercent) : null,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setFfmiResult(data);
+                toast.success("Yağsız kütle indeksi hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const calculateMetabolicAge = async () => {
+        if (!weightKg || !heightCm || !age || !gender || !bmrResult?.bmr) {
+            toast.error("Önce BMR hesaplamanız gerekiyor");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/metabolic-age"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    weightKg: parseFloat(weightKg),
+                    heightCm: parseFloat(heightCm),
+                    age: parseInt(age),
+                    gender,
+                    bmr: bmrResult.bmr,
+                    formula: bmrFormula,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setMetabolicAgeResult(data);
+                toast.success("Metabolik yaş hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const calculateBSA = async () => {
+        if (!weightKg || !heightCm) {
+            toast.error("Kilo ve boy gereklidir");
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await fetch(apiUrl("api/calculator/bsa"), {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({
+                    weightKg: parseFloat(weightKg),
+                    heightCm: parseFloat(heightCm),
+                    formula: bsaFormula,
+                }),
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                setBsaResult(data);
+                toast.success("Vücut yüzey alanı hesaplandı");
+            } else {
+                toast.error(data.message || "Hesaplama başarısız");
+            }
+        } catch (error) {
+            toast.error("Bir hata oluştu");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const getBMIColor = (bmi: number) => {
         if (bmi < 18.5) return "text-blue-600";
         if (bmi < 25) return "text-green-600";
         if (bmi < 30) return "text-yellow-600";
         return "text-red-600";
+    };
+
+    const getRiskColor = (riskLevel: string) => {
+        switch (riskLevel) {
+            case "very_low":
+            case "low":
+                return "text-green-600";
+            case "medium":
+                return "text-yellow-600";
+            case "high":
+                return "text-orange-600";
+            case "very_high":
+                return "text-red-600";
+            default:
+                return "text-primary";
+        }
+    };
+
+    const getRiskBadgeVariant = (riskLevel: string) => {
+        switch (riskLevel) {
+            case "very_low":
+            case "low":
+                return "default";
+            case "medium":
+                return "secondary";
+            case "high":
+                return "outline";
+            case "very_high":
+                return "destructive";
+            default:
+                return "outline";
+        }
     };
 
     const calculators = [
@@ -517,6 +823,48 @@ export default function CalculatorPage() {
             description: "Hedef kiloya ulaşma planı",
             icon: TrendingDown,
             color: "text-indigo-600",
+        },
+        {
+            id: "whr",
+            title: "Bel-Kalça Oranı",
+            description: "Kardiyovasküler risk değerlendirmesi",
+            icon: Heart,
+            color: "text-rose-600",
+        },
+        {
+            id: "whtr",
+            title: "Bel-Boy Oranı",
+            description: "Vücut kompozisyonu analizi",
+            icon: Ruler,
+            color: "text-teal-600",
+        },
+        {
+            id: "lbm",
+            title: "Yağsız Vücut Kütlesi",
+            description: "Kas ve yağsız doku analizi",
+            icon: Users,
+            color: "text-amber-600",
+        },
+        {
+            id: "ffmi",
+            title: "Yağsız Kütle İndeksi",
+            description: "Sporcu performans değerlendirmesi",
+            icon: Target,
+            color: "text-violet-600",
+        },
+        {
+            id: "metabolicage",
+            title: "Metabolik Yaş",
+            description: "Metabolizma sağlığı analizi",
+            icon: Calendar,
+            color: "text-emerald-600",
+        },
+        {
+            id: "bsa",
+            title: "Vücut Yüzey Alanı",
+            description: "Tıbbi hesaplamalar için",
+            icon: Square,
+            color: "text-slate-600",
         },
     ];
 
@@ -1370,6 +1718,507 @@ export default function CalculatorPage() {
                                     </p>
                                     <p className="text-xs text-muted-foreground">{calorieDeficitSurplusResult.safetyMessage}</p>
                                 </div>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* WHR Sheet */}
+            <Sheet open={openSheet === "whr"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Heart className="h-5 w-5 text-rose-600" />
+                            Bel-Kalça Oranı (WHR) Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            Kardiyovasküler risk değerlendirmesi için bel-kalça oranınızı hesaplayın
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="waist-whr">Bel Çevresi (cm)</Label>
+                                <Input
+                                    id="waist-whr"
+                                    type="number"
+                                    placeholder="85"
+                                    value={waistCm}
+                                    onChange={(e) => setWaistCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="hip-whr">Kalça Çevresi (cm)</Label>
+                                <Input
+                                    id="hip-whr"
+                                    type="number"
+                                    placeholder="95"
+                                    value={hipCm}
+                                    onChange={(e) => setHipCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="gender-whr">Cinsiyet</Label>
+                                <Select value={gender} onValueChange={setGender}>
+                                    <SelectTrigger id="gender-whr">
+                                        <SelectValue placeholder="Seçiniz" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="erkek">Erkek</SelectItem>
+                                        <SelectItem value="kadın">Kadın</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <Button onClick={calculateWHR} disabled={loading} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "WHR Hesapla"}
+                        </Button>
+
+                        {whrResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Bel-Kalça Oranı</span>
+                                    <span className={`text-2xl font-bold ${getRiskColor(whrResult.riskLevel)}`}>
+                                        {whrResult.whr}
+                                    </span>
+                                </div>
+                                <Badge variant={getRiskBadgeVariant(whrResult.riskLevel) as any} className="mb-2">
+                                    {whrResult.riskCategory}
+                                </Badge>
+                                <p className="text-sm mt-3">{whrResult.description}</p>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* WHtR Sheet */}
+            <Sheet open={openSheet === "whtr"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Ruler className="h-5 w-5 text-teal-600" />
+                            Bel-Boy Oranı (WHtR) Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            BMI'den daha iyi bir sağlık göstergesi olan bel-boy oranınızı hesaplayın
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="waist-whtr">Bel Çevresi (cm)</Label>
+                                <Input
+                                    id="waist-whtr"
+                                    type="number"
+                                    placeholder="85"
+                                    value={waistCm}
+                                    onChange={(e) => setWaistCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="height-whtr">Boy (cm)</Label>
+                                <Input
+                                    id="height-whtr"
+                                    type="number"
+                                    placeholder="175"
+                                    value={heightCm}
+                                    onChange={(e) => setHeightCm(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <Button onClick={calculateWHtR} disabled={loading} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "WHtR Hesapla"}
+                        </Button>
+
+                        {whtrResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Bel-Boy Oranı</span>
+                                    <span className={`text-2xl font-bold ${getRiskColor(whtrResult.riskLevel)}`}>
+                                        {whtrResult.whtr}
+                                    </span>
+                                </div>
+                                <Badge variant={getRiskBadgeVariant(whtrResult.riskLevel) as any} className="mb-2">
+                                    {whtrResult.category}
+                                </Badge>
+                                <p className="text-sm mt-3">{whtrResult.description}</p>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* LBM Sheet */}
+            <Sheet open={openSheet === "lbm"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Users className="h-5 w-5 text-amber-600" />
+                            Yağsız Vücut Kütlesi (LBM) Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            Kas ve yağsız doku kütlenizi hesaplayın
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="weight-lbm">Kilo (kg)</Label>
+                                <Input
+                                    id="weight-lbm"
+                                    type="number"
+                                    placeholder="70"
+                                    value={weightKg}
+                                    onChange={(e) => setWeightKg(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="height-lbm">Boy (cm)</Label>
+                                <Input
+                                    id="height-lbm"
+                                    type="number"
+                                    placeholder="175"
+                                    value={heightCm}
+                                    onChange={(e) => setHeightCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="age-lbm">Yaş</Label>
+                                <Input
+                                    id="age-lbm"
+                                    type="number"
+                                    placeholder="30"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="gender-lbm">Cinsiyet</Label>
+                                <Select value={gender} onValueChange={setGender}>
+                                    <SelectTrigger id="gender-lbm">
+                                        <SelectValue placeholder="Seçiniz" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="erkek">Erkek</SelectItem>
+                                        <SelectItem value="kadın">Kadın</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="bodyfat-lbm">Vücut Yağ Yüzdesi (%) (Opsiyonel)</Label>
+                                <Input
+                                    id="bodyfat-lbm"
+                                    type="number"
+                                    placeholder="20"
+                                    value={bodyFatPercent}
+                                    onChange={(e) => setBodyFatPercent(e.target.value)}
+                                />
+                                <p className="text-xs text-muted-foreground">Boş bırakılırsa Boer formülü kullanılır</p>
+                            </div>
+                        </div>
+                        <Button onClick={calculateLBM} disabled={loading} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "LBM Hesapla"}
+                        </Button>
+
+                        {lbmResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Yağsız Vücut Kütlesi</span>
+                                    <span className="text-2xl font-bold text-primary">
+                                        {lbmResult.lbm} {lbmResult.unit}
+                                    </span>
+                                </div>
+                                <Separator className="my-3" />
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Vücut Yağ Kütlesi</span>
+                                        <span className="text-sm font-medium">{lbmResult.bodyFatMass} kg</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Vücut Yağ Yüzdesi</span>
+                                        <span className="text-sm font-medium">{lbmResult.bodyFatPercent}%</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Toplam Ağırlık</span>
+                                        <span className="text-sm font-medium">{lbmResult.totalWeight} kg</span>
+                                    </div>
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-3">Yöntem: {lbmResult.method}</p>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* FFMI Sheet */}
+            <Sheet open={openSheet === "ffmi"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Target className="h-5 w-5 text-violet-600" />
+                            Yağsız Kütle İndeksi (FFMI) Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            Sporcu performans değerlendirmesi için yağsız kütle indeksinizi hesaplayın
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="weight-ffmi">Kilo (kg)</Label>
+                                <Input
+                                    id="weight-ffmi"
+                                    type="number"
+                                    placeholder="70"
+                                    value={weightKg}
+                                    onChange={(e) => setWeightKg(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="height-ffmi">Boy (cm)</Label>
+                                <Input
+                                    id="height-ffmi"
+                                    type="number"
+                                    placeholder="175"
+                                    value={heightCm}
+                                    onChange={(e) => setHeightCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="age-ffmi">Yaş</Label>
+                                <Input
+                                    id="age-ffmi"
+                                    type="number"
+                                    placeholder="30"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="gender-ffmi">Cinsiyet</Label>
+                                <Select value={gender} onValueChange={setGender}>
+                                    <SelectTrigger id="gender-ffmi">
+                                        <SelectValue placeholder="Seçiniz" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="erkek">Erkek</SelectItem>
+                                        <SelectItem value="kadın">Kadın</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="bodyfat-ffmi">Vücut Yağ Yüzdesi (%) (Opsiyonel)</Label>
+                                <Input
+                                    id="bodyfat-ffmi"
+                                    type="number"
+                                    placeholder="20"
+                                    value={bodyFatPercent}
+                                    onChange={(e) => setBodyFatPercent(e.target.value)}
+                                />
+                                <p className="text-xs text-muted-foreground">Boş bırakılırsa Boer formülü kullanılır</p>
+                            </div>
+                        </div>
+                        <Button onClick={calculateFFMI} disabled={loading} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "FFMI Hesapla"}
+                        </Button>
+
+                        {ffmiResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Normalize FFMI</span>
+                                    <span className="text-2xl font-bold text-primary">
+                                        {ffmiResult.normalizedFFMI}
+                                    </span>
+                                </div>
+                                <div className="mt-3 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">FFMI</span>
+                                        <span className="text-sm font-medium">{ffmiResult.ffmi}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Yağsız Vücut Kütlesi</span>
+                                        <span className="text-sm font-medium">{ffmiResult.lbm} kg</span>
+                                    </div>
+                                </div>
+                                <Separator className="my-3" />
+                                <Badge variant="outline" className="mb-2">
+                                    {ffmiResult.category}
+                                </Badge>
+                                <p className="text-sm mt-3">{ffmiResult.description}</p>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* Metabolic Age Sheet */}
+            <Sheet open={openSheet === "metabolicage"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Calendar className="h-5 w-5 text-emerald-600" />
+                            Metabolik Yaş Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            BMR'nize göre metabolik yaşınızı hesaplayın ve metabolizma sağlığınızı değerlendirin
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        {!bmrResult && (
+                            <div className="p-4 rounded-lg border border-yellow-500/50">
+                                <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                                    Önce BMR hesaplamanız gerekiyor.
+                                </p>
+                            </div>
+                        )}
+                        {bmrResult && (
+                            <div className="p-4 rounded-lg border mb-4">
+                                <p className="text-sm font-medium">BMR: {bmrResult.bmr} kcal/gün</p>
+                            </div>
+                        )}
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="weight-metabolic">Kilo (kg)</Label>
+                                <Input
+                                    id="weight-metabolic"
+                                    type="number"
+                                    placeholder="70"
+                                    value={weightKg}
+                                    onChange={(e) => setWeightKg(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="height-metabolic">Boy (cm)</Label>
+                                <Input
+                                    id="height-metabolic"
+                                    type="number"
+                                    placeholder="175"
+                                    value={heightCm}
+                                    onChange={(e) => setHeightCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="age-metabolic">Yaş</Label>
+                                <Input
+                                    id="age-metabolic"
+                                    type="number"
+                                    placeholder="30"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="gender-metabolic">Cinsiyet</Label>
+                                <Select value={gender} onValueChange={setGender}>
+                                    <SelectTrigger id="gender-metabolic">
+                                        <SelectValue placeholder="Seçiniz" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="erkek">Erkek</SelectItem>
+                                        <SelectItem value="kadın">Kadın</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <Button onClick={calculateMetabolicAge} disabled={loading || !bmrResult} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "Metabolik Yaş Hesapla"}
+                        </Button>
+
+                        {metabolicAgeResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Metabolik Yaş</span>
+                                    <span className={`text-2xl font-bold ${metabolicAgeResult.ageDifference < 0 ? 'text-green-600' : metabolicAgeResult.ageDifference > 5 ? 'text-red-600' : 'text-primary'}`}>
+                                        {metabolicAgeResult.metabolicAge} {metabolicAgeResult.unit}
+                                    </span>
+                                </div>
+                                <div className="mt-3 space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Kronolojik Yaş</span>
+                                        <span className="text-sm font-medium">{metabolicAgeResult.chronologicalAge} yaş</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-muted-foreground">Fark</span>
+                                        <span className={`text-sm font-bold ${metabolicAgeResult.ageDifference < 0 ? 'text-green-600' : metabolicAgeResult.ageDifference > 5 ? 'text-red-600' : 'text-primary'}`}>
+                                            {metabolicAgeResult.ageDifference > 0 ? '+' : ''}{metabolicAgeResult.ageDifference} yaş
+                                        </span>
+                                    </div>
+                                </div>
+                                <Separator className="my-3" />
+                                <Badge variant="outline" className="mb-2">
+                                    {metabolicAgeResult.category}
+                                </Badge>
+                                <p className="text-sm mt-3">{metabolicAgeResult.description}</p>
+                            </div>
+                        )}
+                    </div>
+                </SheetContent>
+            </Sheet>
+
+            {/* BSA Sheet */}
+            <Sheet open={openSheet === "bsa"} onOpenChange={(open) => !open && setOpenSheet(null)}>
+                <SheetContent className="overflow-y-auto w-full sm:max-w-xl px-6">
+                    <SheetHeader>
+                        <SheetTitle className="flex items-center gap-2">
+                            <Square className="h-5 w-5 text-slate-600" />
+                            Vücut Yüzey Alanı (BSA) Hesaplayıcı
+                        </SheetTitle>
+                        <SheetDescription>
+                            Tıbbi hesaplamalar ve ilaç dozajı için vücut yüzey alanınızı hesaplayın
+                        </SheetDescription>
+                    </SheetHeader>
+                    <div className="mt-6 space-y-4">
+                        <div className="grid grid-cols-1 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="weight-bsa">Kilo (kg)</Label>
+                                <Input
+                                    id="weight-bsa"
+                                    type="number"
+                                    placeholder="70"
+                                    value={weightKg}
+                                    onChange={(e) => setWeightKg(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="height-bsa">Boy (cm)</Label>
+                                <Input
+                                    id="height-bsa"
+                                    type="number"
+                                    placeholder="175"
+                                    value={heightCm}
+                                    onChange={(e) => setHeightCm(e.target.value)}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="formula-bsa">Formül</Label>
+                                <Select value={bsaFormula} onValueChange={setBsaFormula}>
+                                    <SelectTrigger id="formula-bsa">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="dubois">Du Bois (1916) - Önerilen</SelectItem>
+                                        <SelectItem value="mosteller">Mosteller (1987)</SelectItem>
+                                        <SelectItem value="haycock">Haycock (1978)</SelectItem>
+                                        <SelectItem value="gehan">Gehan & George (1970)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                        <Button onClick={calculateBSA} disabled={loading} className="w-full">
+                            {loading ? "Hesaplanıyor..." : "BSA Hesapla"}
+                        </Button>
+
+                        {bsaResult && (
+                            <div className="mt-4 p-4 rounded-lg border">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium">Vücut Yüzey Alanı</span>
+                                    <span className="text-2xl font-bold text-primary">
+                                        {bsaResult.bsa} {bsaResult.unit}
+                                    </span>
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-2">Formül: {bsaResult.formula}</p>
                             </div>
                         )}
                     </div>

@@ -565,5 +565,347 @@ export default class CalculatorService {
             unit: 'kcal/gün'
         };
     }
+
+    /**
+     * Waist-to-Hip Ratio (WHR) - Bel-Kalça Oranı
+     * Kardiyovasküler risk değerlendirmesi için kullanılır
+     * WHR = Bel Çevresi (cm) / Kalça Çevresi (cm)
+     */
+    calculateWHR(waistCm, hipCm, gender) {
+        if (!waistCm || !hipCm || waistCm <= 0 || hipCm <= 0) {
+            throw new HttpException(400, "Bel ve kalça çevresi pozitif olmalıdır");
+        }
+
+        const whr = waistCm / hipCm;
+
+        let riskCategory = "";
+        let riskLevel = "";
+        let description = "";
+
+        if (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
+            if (whr < 0.85) {
+                riskCategory = "Düşük Risk";
+                riskLevel = "low";
+                description = "Kardiyovasküler risk düşük. Sağlıklı vücut yağ dağılımı.";
+            } else if (whr < 0.90) {
+                riskCategory = "Orta Risk";
+                riskLevel = "medium";
+                description = "Orta seviye risk. Bel çevresini azaltmayı hedefleyin.";
+            } else if (whr < 0.95) {
+                riskCategory = "Yüksek Risk";
+                riskLevel = "high";
+                description = "Yüksek kardiyovasküler risk. Mutlaka bir uzmana danışın.";
+            } else {
+                riskCategory = "Çok Yüksek Risk";
+                riskLevel = "very_high";
+                description = "Çok yüksek risk. Acil müdahale gereklidir.";
+            }
+        } else {
+            if (whr < 0.75) {
+                riskCategory = "Düşük Risk";
+                riskLevel = "low";
+                description = "Kardiyovasküler risk düşük. Sağlıklı vücut yağ dağılımı.";
+            } else if (whr < 0.85) {
+                riskCategory = "Orta Risk";
+                riskLevel = "medium";
+                description = "Orta seviye risk. Bel çevresini azaltmayı hedefleyin.";
+            } else if (whr < 0.90) {
+                riskCategory = "Yüksek Risk";
+                riskLevel = "high";
+                description = "Yüksek kardiyovasküler risk. Mutlaka bir uzmana danışın.";
+            } else {
+                riskCategory = "Çok Yüksek Risk";
+                riskLevel = "very_high";
+                description = "Çok yüksek risk. Acil müdahale gereklidir.";
+            }
+        }
+
+        return {
+            whr: Math.round(whr * 100) / 100,
+            waistCm: waistCm,
+            hipCm: hipCm,
+            riskCategory,
+            riskLevel,
+            description,
+            unit: 'oran'
+        };
+    }
+
+    /**
+     * Waist-to-Height Ratio (WHtR) - Bel-Boy Oranı
+     * BMI'den daha iyi bir sağlık göstergesi
+     * WHtR = Bel Çevresi (cm) / Boy (cm)
+     */
+    calculateWHtR(waistCm, heightCm) {
+        if (!waistCm || !heightCm || waistCm <= 0 || heightCm <= 0) {
+            throw new HttpException(400, "Bel çevresi ve boy pozitif olmalıdır");
+        }
+
+        const whtr = waistCm / heightCm;
+
+        let category = "";
+        let riskLevel = "";
+        let description = "";
+
+        if (whtr < 0.40) {
+            category = "Çok Düşük";
+            riskLevel = "very_low";
+            description = "Çok düşük risk. İdeal vücut kompozisyonu.";
+        } else if (whtr < 0.50) {
+            category = "Düşük Risk";
+            riskLevel = "low";
+            description = "Düşük risk. Sağlıklı bel çevresi.";
+        } else if (whtr < 0.57) {
+            category = "Orta Risk";
+            riskLevel = "medium";
+            description = "Orta seviye risk. Bel çevresini azaltmayı hedefleyin.";
+        } else if (whtr < 0.63) {
+            category = "Yüksek Risk";
+            riskLevel = "high";
+            description = "Yüksek risk. Mutlaka bir uzmana danışın.";
+        } else {
+            category = "Çok Yüksek Risk";
+            riskLevel = "very_high";
+            description = "Çok yüksek risk. Acil müdahale gereklidir.";
+        }
+
+        return {
+            whtr: Math.round(whtr * 1000) / 1000,
+            waistCm: waistCm,
+            heightCm: heightCm,
+            category,
+            riskLevel,
+            description,
+            unit: 'oran'
+        };
+    }
+
+    /**
+     * Lean Body Mass (LBM) - Yağsız Vücut Kütlesi
+     * LBM = Toplam Ağırlık - Vücut Yağ Kütlesi
+     * Vücut yağ yüzdesi bilinmiyorsa Boer formülü kullanılır
+     */
+    calculateLBM(weightKg, heightCm, age, gender, bodyFatPercent = null) {
+        if (!weightKg || !heightCm || !age || !gender || weightKg <= 0 || heightCm <= 0 || age <= 0) {
+            throw new HttpException(400, "Tüm değerler pozitif olmalıdır");
+        }
+
+        let lbm = 0;
+        let method = "";
+
+        if (bodyFatPercent !== null && bodyFatPercent > 0 && bodyFatPercent < 100) {
+            // Vücut yağ yüzdesi biliniyorsa direkt hesapla
+            const bodyFatMass = (weightKg * bodyFatPercent) / 100;
+            lbm = weightKg - bodyFatMass;
+            method = "Vücut Yağ Yüzdesi";
+        } else {
+            // Boer formülü (1984) - Vücut yağ yüzdesi bilinmiyorsa
+            if (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
+                lbm = (0.407 * weightKg) + (0.267 * heightCm) - 19.2;
+            } else {
+                lbm = (0.252 * weightKg) + (0.473 * heightCm) - 48.3;
+            }
+            method = "Boer Formülü (1984)";
+        }
+
+        // Vücut yağ kütlesi
+        const bodyFatMass = weightKg - lbm;
+        const bodyFatPercentCalculated = (bodyFatMass / weightKg) * 100;
+
+        return {
+            lbm: Math.round(lbm * 10) / 10,
+            bodyFatMass: Math.round(bodyFatMass * 10) / 10,
+            bodyFatPercent: bodyFatPercent !== null ? bodyFatPercent : Math.round(bodyFatPercentCalculated * 10) / 10,
+            totalWeight: weightKg,
+            method,
+            unit: 'kg'
+        };
+    }
+
+    /**
+     * Fat-Free Mass Index (FFMI) - Yağsız Kütle İndeksi
+     * Sporcular ve kas gelişimi için önemli
+     * FFMI = (LBM / 2.2) / ((heightCm / 100)^2)
+     * Normalize FFMI = FFMI + 6.1 × (1.8 - heightCm / 100)
+     */
+    calculateFFMI(weightKg, heightCm, age, gender, bodyFatPercent = null) {
+        if (!weightKg || !heightCm || !age || !gender || weightKg <= 0 || heightCm <= 0 || age <= 0) {
+            throw new HttpException(400, "Tüm değerler pozitif olmalıdır");
+        }
+
+        // Önce LBM hesapla
+        const lbmData = this.calculateLBM(weightKg, heightCm, age, gender, bodyFatPercent);
+        const lbm = lbmData.lbm;
+
+        const heightM = heightCm / 100;
+        const ffmi = (lbm / 2.2) / (heightM * heightM);
+        
+        // Normalize FFMI (1.8m referans boy için)
+        const normalizedFFMI = ffmi + (6.1 * (1.8 - heightM));
+
+        let category = "";
+        let description = "";
+
+        if (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
+            if (normalizedFFMI < 16) {
+                category = "Çok Düşük";
+                description = "Kas kütlesi çok düşük. Protein alımını ve direnç antrenmanını artırın.";
+            } else if (normalizedFFMI < 18) {
+                category = "Düşük";
+                description = "Kas kütlesi düşük. Düzenli antrenman ve yeterli protein önemli.";
+            } else if (normalizedFFMI < 20) {
+                category = "Normal";
+                description = "Normal kas kütlesi. Mevcut programınızı sürdürebilirsiniz.";
+            } else if (normalizedFFMI < 22) {
+                category = "İyi";
+                description = "İyi kas kütlesi. Sporcu seviyesinde.";
+            } else if (normalizedFFMI < 25) {
+                category = "Çok İyi";
+                description = "Çok iyi kas kütlesi. İleri seviye sporcu.";
+            } else {
+                category = "Mükemmel";
+                description = "Mükemmel kas kütlesi. Profesyonel sporcu seviyesi.";
+            }
+        } else {
+            if (normalizedFFMI < 14) {
+                category = "Çok Düşük";
+                description = "Kas kütlesi çok düşük. Protein alımını ve direnç antrenmanını artırın.";
+            } else if (normalizedFFMI < 16) {
+                category = "Düşük";
+                description = "Kas kütlesi düşük. Düzenli antrenman ve yeterli protein önemli.";
+            } else if (normalizedFFMI < 18) {
+                category = "Normal";
+                description = "Normal kas kütlesi. Mevcut programınızı sürdürebilirsiniz.";
+            } else if (normalizedFFMI < 20) {
+                category = "İyi";
+                description = "İyi kas kütlesi. Sporcu seviyesinde.";
+            } else if (normalizedFFMI < 22) {
+                category = "Çok İyi";
+                description = "Çok iyi kas kütlesi. İleri seviye sporcu.";
+            } else {
+                category = "Mükemmel";
+                description = "Mükemmel kas kütlesi. Profesyonel sporcu seviyesi.";
+            }
+        }
+
+        return {
+            ffmi: Math.round(ffmi * 10) / 10,
+            normalizedFFMI: Math.round(normalizedFFMI * 10) / 10,
+            lbm: lbm,
+            category,
+            description,
+            unit: 'indeks'
+        };
+    }
+
+    /**
+     * Metabolic Age - Metabolik Yaş
+     * BMR'yi referans değerlerle karşılaştırarak metabolik yaşı hesaplar
+     */
+    calculateMetabolicAge(weightKg, heightCm, age, gender, bmr, formula = 'mifflin') {
+        if (!weightKg || !heightCm || !age || !gender || !bmr || weightKg <= 0 || heightCm <= 0 || age <= 0 || bmr <= 0) {
+            throw new HttpException(400, "Tüm değerler pozitif olmalıdır");
+        }
+
+        // Referans BMR hesapla (aynı kilo, boy, cinsiyet için farklı yaşlarda)
+        let referenceBMR = 0;
+        let metabolicAge = age;
+        const ageRange = 80; // 0-80 yaş arası kontrol et
+
+        for (let testAge = 0; testAge <= ageRange; testAge++) {
+            if (formula === 'mifflin') {
+                if (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
+                    referenceBMR = (10 * weightKg) + (6.25 * heightCm) - (5 * testAge) + 5;
+                } else {
+                    referenceBMR = (10 * weightKg) + (6.25 * heightCm) - (5 * testAge) - 161;
+                }
+            } else {
+                if (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm') {
+                    referenceBMR = 88.362 + (13.397 * weightKg) + (4.799 * heightCm) - (5.677 * testAge);
+                } else {
+                    referenceBMR = 447.593 + (9.247 * weightKg) + (3.098 * heightCm) - (4.330 * testAge);
+                }
+            }
+
+            // Gerçek BMR'ye en yakın referans BMR'yi bul
+            if (Math.abs(bmr - referenceBMR) < Math.abs(bmr - ((10 * weightKg) + (6.25 * heightCm) - (5 * metabolicAge) + (gender.toLowerCase() === 'erkek' || gender.toLowerCase() === 'male' || gender.toLowerCase() === 'm' ? 5 : -161)))) {
+                metabolicAge = testAge;
+            }
+        }
+
+        const ageDifference = metabolicAge - age;
+        let category = "";
+        let description = "";
+
+        if (ageDifference < -5) {
+            category = "Çok Genç";
+            description = "Metabolik yaşınız kronolojik yaşınızdan çok daha genç. Mükemmel metabolik sağlık!";
+        } else if (ageDifference < 0) {
+            category = "Genç";
+            description = "Metabolik yaşınız kronolojik yaşınızdan genç. İyi metabolik sağlık.";
+        } else if (ageDifference === 0) {
+            category = "Normal";
+            description = "Metabolik yaşınız kronolojik yaşınıza eşit. Normal metabolik sağlık.";
+        } else if (ageDifference < 5) {
+            category = "Yaşlı";
+            description = "Metabolik yaşınız kronolojik yaşınızdan biraz yüksek. Metabolizmanızı hızlandırmayı hedefleyin.";
+        } else {
+            category = "Çok Yaşlı";
+            description = "Metabolik yaşınız kronolojik yaşınızdan çok yüksek. Mutlaka bir uzmana danışın.";
+        }
+
+        return {
+            metabolicAge: Math.round(metabolicAge),
+            chronologicalAge: age,
+            ageDifference: Math.round(ageDifference),
+            category,
+            description,
+            bmr: bmr,
+            unit: 'yaş'
+        };
+    }
+
+    /**
+     * Body Surface Area (BSA) - Vücut Yüzey Alanı
+     * Tıbbi hesaplamalar ve ilaç dozajı için kullanılır
+     * Du Bois formülü: BSA = 0.007184 × weight^0.425 × height^0.725
+     * Mosteller formülü: BSA = sqrt((height × weight) / 3600)
+     */
+    calculateBSA(weightKg, heightCm, formula = 'dubois') {
+        if (!weightKg || !heightCm || weightKg <= 0 || heightCm <= 0) {
+            throw new HttpException(400, "Kilo ve boy pozitif olmalıdır");
+        }
+
+        let bsa = 0;
+        let formulaName = "";
+
+        if (formula === 'dubois') {
+            // Du Bois formülü (1916) - En yaygın kullanılan
+            bsa = 0.007184 * Math.pow(weightKg, 0.425) * Math.pow(heightCm, 0.725);
+            formulaName = "Du Bois (1916)";
+        } else if (formula === 'mosteller') {
+            // Mosteller formülü (1987) - Daha basit
+            bsa = Math.sqrt((heightCm * weightKg) / 3600);
+            formulaName = "Mosteller (1987)";
+        } else if (formula === 'haycock') {
+            // Haycock formülü (1978)
+            bsa = 0.024265 * Math.pow(weightKg, 0.5378) * Math.pow(heightCm, 0.3964);
+            formulaName = "Haycock (1978)";
+        } else if (formula === 'gehan') {
+            // Gehan & George formülü (1970)
+            bsa = 0.0235 * Math.pow(weightKg, 0.51456) * Math.pow(heightCm, 0.42246);
+            formulaName = "Gehan & George (1970)";
+        } else {
+            throw new HttpException(400, "Geçersiz formül. 'dubois', 'mosteller', 'haycock', 'gehan' olmalıdır");
+        }
+
+        return {
+            bsa: Math.round(bsa * 10000) / 10000,
+            formula: formulaName,
+            weightKg: weightKg,
+            heightCm: heightCm,
+            unit: 'm²'
+        };
+    }
 }
 

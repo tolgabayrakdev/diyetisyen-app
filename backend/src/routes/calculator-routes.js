@@ -35,5 +35,23 @@ router.post("/calculator/protein-needs", verifyToken, calculatorController.calcu
 // Kalori açığı/fazlası hesaplama
 router.post("/calculator/calorie-deficit-surplus", verifyToken, calculatorController.calculateCalorieDeficitSurplus.bind(calculatorController));
 
+// Bel-Kalça Oranı (WHR) hesaplama
+router.post("/calculator/whr", verifyToken, calculatorController.calculateWHR.bind(calculatorController));
+
+// Bel-Boy Oranı (WHtR) hesaplama
+router.post("/calculator/whtr", verifyToken, calculatorController.calculateWHtR.bind(calculatorController));
+
+// Yağsız Vücut Kütlesi (LBM) hesaplama
+router.post("/calculator/lbm", verifyToken, calculatorController.calculateLBM.bind(calculatorController));
+
+// Yağsız Kütle İndeksi (FFMI) hesaplama
+router.post("/calculator/ffmi", verifyToken, calculatorController.calculateFFMI.bind(calculatorController));
+
+// Metabolik Yaş hesaplama
+router.post("/calculator/metabolic-age", verifyToken, calculatorController.calculateMetabolicAge.bind(calculatorController));
+
+// Vücut Yüzey Alanı (BSA) hesaplama
+router.post("/calculator/bsa", verifyToken, calculatorController.calculateBSA.bind(calculatorController));
+
 export default router;
 
