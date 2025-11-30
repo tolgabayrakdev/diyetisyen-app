@@ -124,6 +124,7 @@ export default function Home() {
                     <Link
                       href="https://app.diyetka.com/sign-in"
                       className="w-full sm:w-auto inline-flex h-14 items-center justify-center rounded-xl bg-primary px-8 text-lg font-semibold text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5"
+                      target="_blank"
                     >
                       Ücretsiz Başla
                     </Link>
