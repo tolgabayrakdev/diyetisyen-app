@@ -43,7 +43,6 @@ export default function NotFound() {
                     </Button>
                 </div>
 
-                {/* Additional help text */}
                 <div className="text-sm text-muted-foreground space-y-1">
                     <p>
                         Eğer bu bir hata olduğunu düşünüyorsanız, lütfen{" "}
