@@ -15,19 +15,21 @@ import { Save } from "lucide-react";
 import { NutrientForm } from "./nutrient-form";
 import type { Food, FoodCategory, FoodNutrients } from "@/types/food-types";
 
+type FoodForm = {
+    category_id: string;
+    name: string;
+    description: string;
+    unit: string;
+    image_url: string;
+    is_active: boolean;
+};
+
 interface FoodDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     editingFood: Food | null;
-    foodForm: {
-        category_id: string;
-        name: string;
-        description: string;
-        unit: string;
-        image_url: string;
-        is_active: boolean;
-    };
-    onFoodFormChange: (form: typeof foodForm) => void;
+    foodForm: FoodForm;
+    onFoodFormChange: (form: FoodForm) => void;
     nutrientsForm: FoodNutrients;
     onNutrientsChange: (nutrients: FoodNutrients) => void;
     categories: FoodCategory[];

@@ -15,18 +15,20 @@ import { Save } from "lucide-react";
 import { AVAILABLE_COLORS, getBackgroundColor } from "@/lib/food-utils";
 import type { FoodCategory } from "@/types/food-types";
 
+type CategoryForm = {
+    name: string;
+    description: string;
+    icon: string;
+    color: string;
+    sort_order: number;
+};
+
 interface CategoryDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     editingCategory: FoodCategory | null;
-    categoryForm: {
-        name: string;
-        description: string;
-        icon: string;
-        color: string;
-        sort_order: number;
-    };
-    onFormChange: (form: typeof categoryForm) => void;
+    categoryForm: CategoryForm;
+    onFormChange: (form: CategoryForm) => void;
     onSave: () => void;
 }
 
