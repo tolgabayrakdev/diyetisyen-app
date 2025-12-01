@@ -1894,3 +1894,17 @@ info: ✅ Environment variables validated {"timestamp":"2025-11-30T18:33:42.190Z
 info: 🚀 Server is running on port 1234 {"timestamp":"2025-11-30T18:33:42.194Z"}
 info: 📊 Environment: development {"timestamp":"2025-11-30T18:33:42.194Z"}
 info: ✅ Database connected successfully {"timestamp":"2025-11-30T18:33:42.206Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-01T06:00:21.922Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-01T06:00:21.930Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-01T06:00:21.931Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-01T06:00:21.965Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T06:00:38.553Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T06:00:38.558Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T06:00:38.798Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T06:00:38.802Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:45.962Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:45.967Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:46.193Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:46.196Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:48.634Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:48.639Z"}

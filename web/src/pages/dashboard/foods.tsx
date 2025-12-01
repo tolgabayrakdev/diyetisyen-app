@@ -3,21 +3,12 @@ import { apiUrl } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import {
-    Search, Loader2, Plus, Edit, Trash2, Save, ChevronLeft, ChevronRight, Eye, Info, ChevronDown, ChevronUp, Calculator, X
+    Search, Loader2, Plus, Edit, Trash2, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Eye, Info, Calculator, X
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from "@/components/ui/dialog";
 import {
     Table,
     TableBody,
@@ -29,124 +20,13 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
-
-interface FoodCategory {
-    id: string;
-    name: string;
-    description: string | null;
-    icon: string | null;
-    color: string | null;
-    sort_order: number;
-    food_count: number;
-}
-
-interface FoodNutrients {
-    energy_kcal?: number | null;
-    energy_kj?: number | null;
-    protein_g?: number | null;
-    carbohydrates_g?: number | null;
-    fat_g?: number | null;
-    saturated_fat_g?: number | null;
-    trans_fat_g?: number | null;
-    fiber_g?: number | null;
-    sugar_g?: number | null;
-    sodium_mg?: number | null;
-    salt_g?: number | null;
-    potassium_mg?: number | null;
-    calcium_mg?: number | null;
-    iron_mg?: number | null;
-    magnesium_mg?: number | null;
-    phosphorus_mg?: number | null;
-    zinc_mg?: number | null;
-    vitamin_a_mcg?: number | null;
-    vitamin_c_mg?: number | null;
-    vitamin_d_mcg?: number | null;
-    vitamin_e_mg?: number | null;
-    vitamin_k_mcg?: number | null;
-    thiamin_mg?: number | null;
-    riboflavin_mg?: number | null;
-    niacin_mg?: number | null;
-    vitamin_b6_mg?: number | null;
-    folate_mcg?: number | null;
-    vitamin_b12_mcg?: number | null;
-    biotin_mcg?: number | null;
-    pantothenic_acid_mg?: number | null;
-    cholesterol_mg?: number | null;
-    caffeine_mg?: number | null;
-}
-
-interface Food {
-    id: string;
-    category_id: string | null;
-    name: string;
-    description: string | null;
-    unit: string;
-    image_url: string | null;
-    is_active: boolean;
-    category_name?: string | null;
-    category_icon?: string | null;
-    category_color?: string | null;
-    nutrients?: FoodNutrients | null;
-}
-
-interface Pagination {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-}
-
-// Renk seçenekleri
-const AVAILABLE_COLORS = [
-    { name: "Mavi", value: "text-blue-600", bg: "bg-blue-600" },
-    { name: "Yeşil", value: "text-green-600", bg: "bg-green-600" },
-    { name: "Kırmızı", value: "text-red-600", bg: "bg-red-600" },
-    { name: "Turuncu", value: "text-orange-600", bg: "bg-orange-600" },
-    { name: "Mor", value: "text-purple-600", bg: "bg-purple-600" },
-    { name: "Pembe", value: "text-pink-600", bg: "bg-pink-600" },
-    { name: "Cyan", value: "text-cyan-600", bg: "bg-cyan-600" },
-    { name: "Sarı", value: "text-yellow-600", bg: "bg-yellow-600" },
-    { name: "İndigo", value: "text-indigo-600", bg: "bg-indigo-600" },
-    { name: "Gri", value: "text-gray-600", bg: "bg-gray-600" },
-];
-
-// Renk değerini text- formatından bg- formatına çevir
-const getBackgroundColor = (colorValue: string | null): string => {
-    if (!colorValue) return "bg-primary";
-
-    // Eğer zaten bg- formatındaysa direkt döndür
-    if (colorValue.startsWith("bg-")) {
-        return colorValue;
-    }
-
-    // text- formatındaysa bg- formatına çevir
-    if (colorValue.startsWith("text-")) {
-        return colorValue.replace("text-", "bg-");
-    }
-
-    // AVAILABLE_COLORS'dan bul
-    const color = AVAILABLE_COLORS.find(c => c.value === colorValue);
-    return color ? color.bg : "bg-primary";
-};
-
-// Renk değerini text- formatına çevir (Badge için)
-const getTextColor = (colorValue: string | null): string => {
-    if (!colorValue) return "text-primary";
-
-    // Eğer zaten text- formatındaysa direkt döndür
-    if (colorValue.startsWith("text-")) {
-        return colorValue;
-    }
-
-    // bg- formatındaysa text- formatına çevir
-    if (colorValue.startsWith("bg-")) {
-        return colorValue.replace("bg-", "text-");
-    }
-
-    // AVAILABLE_COLORS'dan bul
-    const color = AVAILABLE_COLORS.find(c => c.bg === colorValue || c.value === colorValue);
-    return color ? color.value : "text-primary";
-};
+import { 
+    CategoryDialog, 
+    FoodDialog, 
+    FoodDetailDialog,
+} from "@/components/foods";
+import type { FoodCategory, Food, FoodNutrients, Pagination } from "@/types/food-types";
+import { getBackgroundColor, getTextColor } from "@/lib/food-utils";
 
 export default function FoodSearchPage() {
     const [activeTab, setActiveTab] = useState<"categories" | "foods">("foods");
@@ -952,439 +832,35 @@ export default function FoodSearchPage() {
             </Tabs>
 
             {/* Category Dialog */}
-            <Dialog open={isCategoryDialogOpen} onOpenChange={setIsCategoryDialogOpen}>
-                <DialogContent className="max-w-md">
-                    <DialogHeader>
-                        <DialogTitle>
-                            {editingCategory ? "Kategori Düzenle" : "Yeni Kategori"}
-                        </DialogTitle>
-                        <DialogDescription>
-                            Besin kategorisi bilgilerini girin
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="category-name">Kategori Adı *</Label>
-                            <Input
-                                id="category-name"
-                                value={categoryForm.name}
-                                onChange={(e) => setCategoryForm({ ...categoryForm, name: e.target.value })}
-                                placeholder="Örn: Sebze ve Meyveler"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="category-description">Açıklama</Label>
-                            <Textarea
-                                id="category-description"
-                                value={categoryForm.description}
-                                onChange={(e) => setCategoryForm({ ...categoryForm, description: e.target.value })}
-                                placeholder="Kategori açıklaması"
-                                rows={3}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="category-color">Renk *</Label>
-                            <Select
-                                value={categoryForm.color || ""}
-                                onValueChange={(v) => setCategoryForm({ ...categoryForm, color: v })}
-                            >
-                                <SelectTrigger id="category-color">
-                                    <SelectValue placeholder="Renk seç" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {AVAILABLE_COLORS.map((color) => (
-                                        <SelectItem key={color.value} value={color.value}>
-                                            <div className="flex items-center gap-2">
-                                                <div className={`w-4 h-4 rounded-full ${color.bg}`} />
-                                                <span>{color.name}</span>
-                                            </div>
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {categoryForm.color && (
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <div className={`w-4 h-4 rounded-full ${getBackgroundColor(categoryForm.color)}`} />
-                                    <span>Seçili renk: {AVAILABLE_COLORS.find(c => c.value === categoryForm.color)?.name || categoryForm.color}</span>
-                                </div>
-                            )}
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="category-sort">Sıralama</Label>
-                            <Input
-                                id="category-sort"
-                                type="number"
-                                value={categoryForm.sort_order}
-                                onChange={(e) => setCategoryForm({ ...categoryForm, sort_order: parseInt(e.target.value) || 0 })}
-                            />
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsCategoryDialogOpen(false)}>
-                            İptal
-                        </Button>
-                        <Button onClick={saveCategory}>
-                            <Save className="h-4 w-4 mr-2" />
-                            Kaydet
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-
+            {/* Category Dialog */}
+            <CategoryDialog
+                open={isCategoryDialogOpen}
+                onOpenChange={setIsCategoryDialogOpen}
+                editingCategory={editingCategory}
+                categoryForm={categoryForm}
+                onFormChange={setCategoryForm}
+                onSave={saveCategory}
+            />
 
             {/* Food Dialog */}
-            <Dialog open={isFoodDialogOpen} onOpenChange={setIsFoodDialogOpen}>
-                <DialogContent className="w-[95vw] sm:w-full min-w-0 sm:min-w-[600px] md:min-w-[800px] max-w-5xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle>
-                            {editingFood ? "Besin Düzenle" : "Yeni Besin"}
-                        </DialogTitle>
-                        <DialogDescription>
-                            Besin bilgilerini ve besin değerlerini girin
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-6 py-4">
-                        {/* Basic Info */}
-                        <div className="space-y-4">
-                            <h3 className="font-semibold">Temel Bilgiler</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="food-name">Besin Adı *</Label>
-                                    <Input
-                                        id="food-name"
-                                        value={foodForm.name}
-                                        onChange={(e) => setFoodForm({ ...foodForm, name: e.target.value })}
-                                        placeholder="Örn: Elma"
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="food-category">Kategori</Label>
-                                    <Select
-                                        value={foodForm.category_id || "none"}
-                                        onValueChange={(v) => setFoodForm({ ...foodForm, category_id: v === "none" ? "" : v })}
-                                    >
-                                        <SelectTrigger id="food-category">
-                                            <SelectValue placeholder="Kategori seç" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="none">Kategori Yok</SelectItem>
-                                            {categories.map((cat) => (
-                                                <SelectItem key={cat.id} value={cat.id}>
-                                                    {cat.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="food-unit">Birim *</Label>
-                                    <Input
-                                        id="food-unit"
-                                        value={foodForm.unit}
-                                        onChange={(e) => setFoodForm({ ...foodForm, unit: e.target.value })}
-                                        placeholder="Örn: 100g, 1 adet, 100ml, 1 adet büyük nohut"
-                                    />
-                                    <p className="text-xs text-muted-foreground">
-                                        Besin değerlerinin hangi miktar için olduğunu belirtin (örn: 100g, 1 adet, 100ml, 1 porsiyon)
-                                    </p>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="food-image">Görsel URL</Label>
-                                    <Input
-                                        id="food-image"
-                                        value={foodForm.image_url}
-                                        onChange={(e) => setFoodForm({ ...foodForm, image_url: e.target.value })}
-                                        placeholder="https://..."
-                                    />
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="food-description">Açıklama</Label>
-                                <Textarea
-                                    id="food-description"
-                                    value={foodForm.description}
-                                    onChange={(e) => setFoodForm({ ...foodForm, description: e.target.value })}
-                                    placeholder="Besin açıklaması"
-                                    rows={2}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Nutrients */}
-                        <div className="space-y-4">
-                            <h3 className="font-semibold">
-                                Besin Değerleri ({foodForm.unit || "birim"} için)
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                                Yukarıda belirttiğiniz birim için besin değerlerini girin
-                            </p>
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                <div className="space-y-2">
-                                    <Label htmlFor="energy-kcal">Enerji (kcal)</Label>
-                                    <Input
-                                        id="energy-kcal"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.energy_kcal || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, energy_kcal: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="protein">Protein (g)</Label>
-                                    <Input
-                                        id="protein"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.protein_g || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, protein_g: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="carbs">Karbonhidrat (g)</Label>
-                                    <Input
-                                        id="carbs"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.carbohydrates_g || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, carbohydrates_g: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="fat">Yağ (g)</Label>
-                                    <Input
-                                        id="fat"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.fat_g || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, fat_g: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="fiber">Lif (g)</Label>
-                                    <Input
-                                        id="fiber"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.fiber_g || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, fiber_g: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="sugar">Şeker (g)</Label>
-                                    <Input
-                                        id="sugar"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.sugar_g || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, sugar_g: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="sodium">Sodyum (mg)</Label>
-                                    <Input
-                                        id="sodium"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.sodium_mg || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, sodium_mg: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="calcium">Kalsiyum (mg)</Label>
-                                    <Input
-                                        id="calcium"
-                                        type="number"
-                                        step="0.01"
-                                        value={nutrientsForm.calcium_mg || ""}
-                                        onChange={(e) => setNutrientsForm({ ...nutrientsForm, calcium_mg: e.target.value ? parseFloat(e.target.value) : null })}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsFoodDialogOpen(false)}>
-                            İptal
-                        </Button>
-                        <Button onClick={saveFood}>
-                            <Save className="h-4 w-4 mr-2" />
-                            Kaydet
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <FoodDialog
+                open={isFoodDialogOpen}
+                onOpenChange={setIsFoodDialogOpen}
+                editingFood={editingFood}
+                foodForm={foodForm}
+                onFoodFormChange={setFoodForm}
+                nutrientsForm={nutrientsForm}
+                onNutrientsChange={setNutrientsForm}
+                categories={categories}
+                onSave={saveFood}
+            />
 
             {/* Food Detail Dialog */}
-            <Dialog open={isFoodDetailOpen} onOpenChange={setIsFoodDetailOpen}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                    <DialogHeader>
-                        <DialogTitle>Besin Detayları</DialogTitle>
-                    </DialogHeader>
-                    {viewingFood && (
-                        <div className="space-y-6 py-4">
-                            {/* Basic Info */}
-                            <div className="space-y-3">
-                                <h3 className="text-xl font-semibold">{viewingFood.name}</h3>
-                                <div className="flex flex-wrap gap-2 items-center">
-                                    {viewingFood.category_name && (
-                                        <Badge
-                                            variant="outline"
-                                            className={viewingFood.category_color ? `${getTextColor(viewingFood.category_color)} border-current ${getBackgroundColor(viewingFood.category_color)}/10` : ""}
-                                        >
-                                            {viewingFood.category_name}
-                                        </Badge>
-                                    )}
-                                    <span className="text-sm text-muted-foreground">Birim: {viewingFood.unit}</span>
-                                </div>
-                                {viewingFood.description && (
-                                    <p className="text-sm text-muted-foreground">{viewingFood.description}</p>
-                                )}
-                            </div>
-
-                            {/* Nutrients */}
-                            {viewingFood.nutrients && (
-                                <div className="space-y-3">
-                                    <h4 className="font-semibold text-sm text-muted-foreground uppercase">Besin Değerleri ({viewingFood.unit} için)</h4>
-                                    <div className="space-y-2">
-                                        {viewingFood.nutrients.energy_kcal && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Enerji</span>
-                                                <span className="font-medium">{viewingFood.nutrients.energy_kcal} kcal</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.protein_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Protein</span>
-                                                <span className="font-medium">{viewingFood.nutrients.protein_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.carbohydrates_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Karbonhidrat</span>
-                                                <span className="font-medium">{viewingFood.nutrients.carbohydrates_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.fat_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Yağ</span>
-                                                <span className="font-medium">{viewingFood.nutrients.fat_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.saturated_fat_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Doymuş Yağ</span>
-                                                <span className="font-medium">{viewingFood.nutrients.saturated_fat_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.fiber_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Lif</span>
-                                                <span className="font-medium">{viewingFood.nutrients.fiber_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.sugar_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Şeker</span>
-                                                <span className="font-medium">{viewingFood.nutrients.sugar_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.sodium_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Sodyum</span>
-                                                <span className="font-medium">{viewingFood.nutrients.sodium_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.salt_g && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Tuz</span>
-                                                <span className="font-medium">{viewingFood.nutrients.salt_g} g</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.potassium_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Potasyum</span>
-                                                <span className="font-medium">{viewingFood.nutrients.potassium_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.calcium_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Kalsiyum</span>
-                                                <span className="font-medium">{viewingFood.nutrients.calcium_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.iron_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Demir</span>
-                                                <span className="font-medium">{viewingFood.nutrients.iron_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.magnesium_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Magnezyum</span>
-                                                <span className="font-medium">{viewingFood.nutrients.magnesium_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.phosphorus_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Fosfor</span>
-                                                <span className="font-medium">{viewingFood.nutrients.phosphorus_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.zinc_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Çinko</span>
-                                                <span className="font-medium">{viewingFood.nutrients.zinc_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.vitamin_a_mcg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">A Vitamini</span>
-                                                <span className="font-medium">{viewingFood.nutrients.vitamin_a_mcg} mcg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.vitamin_c_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">C Vitamini</span>
-                                                <span className="font-medium">{viewingFood.nutrients.vitamin_c_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.vitamin_d_mcg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">D Vitamini</span>
-                                                <span className="font-medium">{viewingFood.nutrients.vitamin_d_mcg} mcg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.vitamin_e_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">E Vitamini</span>
-                                                <span className="font-medium">{viewingFood.nutrients.vitamin_e_mg} mg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.vitamin_k_mcg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">K Vitamini</span>
-                                                <span className="font-medium">{viewingFood.nutrients.vitamin_k_mcg} mcg</span>
-                                            </div>
-                                        )}
-                                        {viewingFood.nutrients.cholesterol_mg && (
-                                            <div className="flex justify-between items-center py-2 border-b">
-                                                <span className="text-sm">Kolesterol</span>
-                                                <span className="font-medium">{viewingFood.nutrients.cholesterol_mg} mg</span>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-
-                            {!viewingFood.nutrients && (
-                                <div className="p-8 text-center text-muted-foreground">
-                                    Bu besin için henüz besin değerleri eklenmemiş.
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </DialogContent>
-            </Dialog>
+            <FoodDetailDialog
+                open={isFoodDetailOpen}
+                onOpenChange={setIsFoodDetailOpen}
+                food={viewingFood}
+            />
         </div>
     );
 }
