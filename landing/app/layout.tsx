@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   },
   description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme ile başlayın.",
   keywords: [
+    "diyetisyen",
     "diyetisyen yazılımı",
     "diyetisyen yönetim sistemi",
     "diyet planı yazılımı",

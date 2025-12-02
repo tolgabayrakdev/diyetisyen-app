@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
   description: "Diyetisyenler için profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme ile başlayın. Zamandan tasarruf edin, gelirinizi artırın.",
   keywords: [
+    "diyetisyen",
     "diyetisyen yazılımı",
     "diyetisyen yönetim sistemi",
     "danışan yönetimi",
