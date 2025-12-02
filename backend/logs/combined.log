@@ -1908,3 +1908,210 @@ warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:46.196Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:48.634Z"}
 warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T08:46:48.639Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-01T19:04:13.023Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-01T19:04:13.027Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-01T19:04:13.027Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-01T19:04:13.043Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T19:19:20.561Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T19:19:20.567Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T19:19:20.760Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-01T19:19:20.763Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:52:41.651Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:52:41.663Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:52:41.664Z"}
+error: ❌ Database connection error: {"timestamp":"2025-12-02T09:52:41.676Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T09:53:33.480Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T09:53:33.502Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T09:53:33.504Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T09:53:33.534Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T09:53:33.564Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T09:53:34.282Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T09:53:35.969Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:53:39.295Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:53:39.306Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:53:39.307Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T09:53:39.362Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:54:28.041Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:54:28.051Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:54:28.051Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T09:54:28.072Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:56:41.639Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:56:41.643Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:56:41.643Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T09:56:41.664Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:56:52.033Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:56:52.037Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:56:52.037Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T09:56:52.050Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T09:58:03.310Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T09:58:03.314Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T09:58:03.314Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T09:58:03.327Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T10:12:08.017Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T10:12:08.051Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T10:12:08.075Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T10:12:11.011Z"}
+info: HTTP server closed {"timestamp":"2025-12-02T10:12:11.375Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:12:13.788Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:12:13.792Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:12:13.792Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:12:13.813Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:12:48.742Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:12:48.745Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:12:49.333Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:12:49.334Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:12:49.528Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:12:49.529Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:12:49.691Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:12:49.691Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:14:34.412Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:14:34.413Z"}
+warn: Client token verification failed: Invalid token {"timestamp":"2025-12-02T10:14:39.257Z","tokenLength":109,"tokenPrefix":"http://loc"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:39:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:14:39.258Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:15:57.204Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:15:57.208Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:15:57.208Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:15:57.225Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:16:07.125Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:16:07.133Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:16:07.133Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:16:07.161Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:16:10.252Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:16:10.256Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:16:10.256Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:16:10.269Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:18:55.807Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:18:55.815Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:18:55.816Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:18:55.837Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:18:56.782Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:18:56.786Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:18:56.786Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:18:56.798Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:20:56.307Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:20:56.310Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:20:56.311Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:20:56.329Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:21:18.916Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:21:18.924Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:21:18.924Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:21:18.943Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:28:34.191Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:28:34.195Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:28:34.195Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:28:34.214Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:28:42.847Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:28:42.850Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:28:42.850Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:28:42.863Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:21.252Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:21.822Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:22.003Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:22.173Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:22.347Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:22.503Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:22.644Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:29:26.900Z"}
+error: GET /api/client-app/diet-plans - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:41.564Z"}
+error: GET /api/client-app/diet-plans - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:41.578Z"}
+error: GET /api/client-app/progress - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:43.284Z"}
+error: GET /api/client-app/progress - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:43.294Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:45.142Z"}
+error: GET /api/client-app/me - 500 - Error: Invalid status code: undefined. Status code must be an integer. {"error":{},"stack":"TypeError: Invalid status code: undefined. Status code must be an integer.\n    at ServerResponse.status (/home/tolga/Desktop/diyetisyen-app/backend/node_modules/express/lib/response.js:65:11)\n    at verifyClientToken (file:///home/tolga/Desktop/diyetisyen-app/backend/src/middleware/verify-client-token.js:49:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)","timestamp":"2025-12-02T10:30:45.152Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:31:19.811Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:31:19.818Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:31:19.819Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:31:19.851Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:13.136Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:13.139Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:13.384Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:13.386Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:58.025Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:58.027Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:58.495Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:32:58.499Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:08.443Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:08.445Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:08.641Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:08.644Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:11.117Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:11.120Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:11.407Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:33:11.409Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T10:44:52.687Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T10:44:52.691Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T10:44:52.691Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T10:44:52.704Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:45:04.975Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:45:04.980Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:45:05.211Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T10:45:05.214Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T13:01:11.688Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T13:01:11.695Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T13:01:11.695Z"}
+error: ❌ Database connection error: {"timestamp":"2025-12-02T13:01:11.699Z"}
+info: SIGINT received. Starting graceful shutdown... {"timestamp":"2025-12-02T13:52:13.087Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T13:52:14.201Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T13:52:14.204Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T13:52:14.205Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T13:52:14.234Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:00:11.266Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:00:11.270Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:00:11.271Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:00:11.287Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:31:27.055Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:31:27.059Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:31:27.059Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:31:27.089Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:31:32.543Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:31:32.547Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:31:32.547Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:31:32.559Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:32:26.908Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:32:26.912Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:32:26.912Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:32:26.928Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:32:28.685Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:32:28.692Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:32:28.693Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:32:28.718Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T14:36:39.986Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T14:36:39.998Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T14:36:40.280Z"}
+warn: GET /api/auth/me - 401 - Oturum açılmamış {"timestamp":"2025-12-02T14:36:40.284Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:38:53.499Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:38:53.503Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:38:53.503Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:38:53.519Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:39:12.048Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:39:12.056Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:39:12.057Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:39:12.076Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:39:44.860Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:39:44.864Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:39:44.864Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:39:44.877Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:41:03.787Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:41:03.792Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:41:03.792Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:41:03.816Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:41:28.055Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:41:28.059Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:41:28.059Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:41:28.072Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:47:16.831Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:47:16.836Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:47:16.837Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:47:16.874Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:47:39.442Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:47:39.448Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:47:39.449Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:47:39.480Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:47:58.391Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:47:58.395Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:47:58.395Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:47:58.408Z"}
+info: ✅ Environment variables validated {"timestamp":"2025-12-02T14:48:36.087Z"}
+info: 🚀 Server is running on port 1234 {"timestamp":"2025-12-02T14:48:36.091Z"}
+info: 📊 Environment: development {"timestamp":"2025-12-02T14:48:36.091Z"}
+info: ✅ Database connected successfully {"timestamp":"2025-12-02T14:48:36.109Z"}

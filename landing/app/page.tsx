@@ -7,7 +7,7 @@ import { LightStarsBackground } from "./components/light-stars-background";
 import { FeatureShowcase } from "./components/feature-showcase";
 
 export const metadata: Metadata = {
-  title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+  title: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
   description: "Diyetisyenler için profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme ile başlayın. Zamandan tasarruf edin, gelirinizi artırın.",
   keywords: [
     "diyetisyen yazılımı",
@@ -23,20 +23,20 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "https://diyetka.com",
     siteName: "DiyetKa",
-    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+    title: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme.",
     images: [
       {
         url: "https://diyetka.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+        alt: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+    title: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. 7 gün ücretsiz deneme.",
     images: ["https://diyetka.com/og-image.png"],
   },
