@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu.",
-    images: ["/og-image.jpg"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
