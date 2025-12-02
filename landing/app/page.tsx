@@ -19,9 +19,26 @@ export const metadata: Metadata = {
     "ücretsiz deneme",
   ],
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com",
+    siteName: "DiyetKa",
+    title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+    description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. Danışan yönetimi, diyet planları, ilerleme takibi ve finansal yönetim. 7 gün ücretsiz deneme.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "DiyetKa - Diyetisyenler için akıllı danışan yönetimi",
     description: "Diyetisyenler için özel tasarlanmış profesyonel yönetim platformu. 7 gün ücretsiz deneme.",
-    url: "https://diyetka.com",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com",

@@ -15,9 +15,26 @@ export const metadata: Metadata = {
     "diyetisyen platformu özellikleri",
   ],
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com/faq",
+    siteName: "DiyetKa",
+    title: "Sık Sorulan Sorular - DiyetKa",
+    description: "DiyetKa hakkında sık sorulan sorular ve cevapları. Diyetisyen yazılımı, fiyatlandırma, güvenlik, özellikler ve daha fazlası hakkında bilgi edinin.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa Sık Sorulan Sorular",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Sık Sorulan Sorular - DiyetKa",
     description: "DiyetKa hakkında sık sorulan sorular ve cevapları.",
-    url: "https://diyetka.com/faq",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com/faq",

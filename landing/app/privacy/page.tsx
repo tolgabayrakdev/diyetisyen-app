@@ -15,9 +15,26 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com/privacy",
+    siteName: "DiyetKa",
+    title: "Gizlilik Politikası - DiyetKa",
+    description: "DiyetKa gizlilik politikası ve kişisel verilerin korunması. KVKK uyumlu veri güvenliği ve gizlilik politikamız hakkında detaylı bilgi.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa Gizlilik Politikası",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Gizlilik Politikası - DiyetKa",
     description: "DiyetKa gizlilik politikası ve kişisel verilerin korunması.",
-    url: "https://diyetka.com/privacy",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com/privacy",

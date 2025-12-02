@@ -14,9 +14,26 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com/delivery-return",
+    siteName: "DiyetKa",
+    title: "Teslimat & İade - DiyetKa",
+    description: "DiyetKa teslimat ve iade politikası. Dijital hizmet teslimatı, 14 gün iade garantisi ve iptal politikası hakkında bilgi.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa Teslimat & İade",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Teslimat & İade - DiyetKa",
     description: "DiyetKa teslimat ve iade politikası.",
-    url: "https://diyetka.com/delivery-return",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com/delivery-return",

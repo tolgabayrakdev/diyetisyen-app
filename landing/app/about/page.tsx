@@ -11,9 +11,26 @@ export const metadata: Metadata = {
     "sağlık teknolojisi",
   ],
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com/about",
+    siteName: "DiyetKa",
+    title: "Hakkımızda - DiyetKa",
+    description: "DiyetKa hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimiz. Diyetisyenler için profesyonel yönetim platformu geliştiren ekibimiz hakkında.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa Hakkımızda",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Hakkımızda - DiyetKa",
     description: "DiyetKa hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimiz.",
-    url: "https://diyetka.com/about",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com/about",

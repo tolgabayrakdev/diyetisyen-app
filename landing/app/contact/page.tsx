@@ -13,9 +13,26 @@ export const metadata: Metadata = {
     "diyetisyen platformu iletişim",
   ],
   openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://diyetka.com/contact",
+    siteName: "DiyetKa",
+    title: "İletişim - DiyetKa",
+    description: "DiyetKa ile iletişime geçin. Sorularınız, önerileriniz veya destek talepleriniz için bizimle iletişime geçin. 7 gün ücretsiz deneme için başvurun.",
+    images: [
+      {
+        url: "https://diyetka.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "DiyetKa İletişim",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "İletişim - DiyetKa",
     description: "DiyetKa ile iletişime geçin. Sorularınız, önerileriniz veya destek talepleriniz için bizimle iletişime geçin.",
-    url: "https://diyetka.com/contact",
+    images: ["https://diyetka.com/og-image.png"],
   },
   alternates: {
     canonical: "https://diyetka.com/contact",
