@@ -12,9 +12,10 @@ import type { BMRResult } from "@/types/calculator-types";
 interface BMRCalculatorProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    onResultChange?: (result: BMRResult | null) => void;
 }
 
-export function BMRCalculator({ open, onOpenChange }: BMRCalculatorProps) {
+export function BMRCalculator({ open, onOpenChange, onResultChange }: BMRCalculatorProps) {
     const [weightKg, setWeightKg] = useState("");
     const [heightCm, setHeightCm] = useState("");
     const [age, setAge] = useState("");
@@ -47,6 +48,7 @@ export function BMRCalculator({ open, onOpenChange }: BMRCalculatorProps) {
             const data = await response.json();
             if (data.success) {
                 setResult(data);
+                onResultChange?.(data);
                 toast.success("BMR hesaplandı");
             } else {
                 toast.error(data.message || "Hesaplama başarısız");

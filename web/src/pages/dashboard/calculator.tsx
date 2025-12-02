@@ -15,7 +15,7 @@ import {
     Calendar, 
     Square 
 } from "lucide-react";
-import type { CalculatorType } from "@/types/calculator-types";
+import type { CalculatorType, BMRResult } from "@/types/calculator-types";
 import {
     BMICalculator,
     BMRCalculator,
@@ -144,6 +144,7 @@ const calculators = [
 
 export default function CalculatorPage() {
     const [openSheet, setOpenSheet] = useState<CalculatorType>(null);
+    const [bmrResult, setBmrResult] = useState<BMRResult | null>(null);
 
     return (
         <div className="space-y-6">
@@ -188,11 +189,13 @@ export default function CalculatorPage() {
             />
             <BMRCalculator 
                 open={openSheet === "bmr"} 
-                onOpenChange={(open) => !open && setOpenSheet(null)} 
+                onOpenChange={(open) => !open && setOpenSheet(null)}
+                onResultChange={setBmrResult}
             />
             <TDEECalculator 
                 open={openSheet === "tdee"} 
                 onOpenChange={(open) => !open && setOpenSheet(null)}
+                bmrResult={bmrResult}
             />
             <MacrosCalculator 
                 open={openSheet === "macros"} 
@@ -237,6 +240,7 @@ export default function CalculatorPage() {
             <MetabolicAgeCalculator 
                 open={openSheet === "metabolicage"} 
                 onOpenChange={(open) => !open && setOpenSheet(null)}
+                bmrResult={bmrResult}
             />
             <BSACalculator 
                 open={openSheet === "bsa"} 
