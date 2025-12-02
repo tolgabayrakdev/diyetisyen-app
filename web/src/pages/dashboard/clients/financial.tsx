@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Plus, DollarSign } from "lucide-react";
+import { Plus, DollarSign, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
     Dialog,
@@ -48,7 +48,18 @@ export default function ClientFinancialPage() {
     const [financialRecords, setFinancialRecords] = useState<FinancialRecord[]>([]);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const [editingRecord, setEditingRecord] = useState<FinancialRecord | null>(null);
     const [formData, setFormData] = useState({
+        amount: "",
+        currency: "TRY",
+        payment_date: "",
+        status: "pending",
+        payment_method: "",
+        description: "",
+    });
+    const [editFormData, setEditFormData] = useState({
         amount: "",
         currency: "TRY",
         payment_date: "",
@@ -154,6 +165,60 @@ export default function ClientFinancialPage() {
         }
     };
 
+    const handleEditClick = (record: FinancialRecord) => {
+        setEditingRecord(record);
+        setEditFormData({
+            amount: record.amount.toString(),
+            currency: record.currency,
+            payment_date: record.payment_date ? new Date(record.payment_date).toISOString().split('T')[0] : "",
+            status: record.status,
+            payment_method: record.payment_method || "",
+            description: record.description || "",
+        });
+        setIsEditDialogOpen(true);
+    };
+
+    const handleUpdateFinancialRecord = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!editingRecord) return;
+
+        setIsUpdating(true);
+
+        try {
+            const response = await fetch(apiUrl(`api/financial-records/${editingRecord.id}`), {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    amount: parseFloat(editFormData.amount),
+                    currency: editFormData.currency,
+                    payment_date: editFormData.payment_date || null,
+                    status: editFormData.status,
+                    payment_method: editFormData.payment_method || null,
+                    description: editFormData.description || null,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Finansal kayıt güncellenemedi");
+            }
+
+            toast.success("Finansal kayıt başarıyla güncellendi");
+            setIsEditDialogOpen(false);
+            setEditingRecord(null);
+            fetchFinancialRecords();
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
+            toast.error(errorMessage);
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
@@ -171,6 +236,9 @@ export default function ClientFinancialPage() {
         .reduce((sum, record) => sum + Number(record.amount), 0);
     const pendingAmount = financialRecords
         .filter((r) => r.status === "pending")
+        .reduce((sum, record) => sum + Number(record.amount), 0);
+    const overdueAmount = financialRecords
+        .filter((r) => r.status === "overdue")
         .reduce((sum, record) => sum + Number(record.amount), 0);
 
     return (
@@ -213,7 +281,7 @@ export default function ClientFinancialPage() {
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Toplam</p>
                     <p className="text-lg font-semibold">{totalAmount.toFixed(2)} ₺</p>
@@ -225,6 +293,10 @@ export default function ClientFinancialPage() {
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Bekleyen</p>
                     <p className="text-lg font-semibold text-orange-600">{pendingAmount.toFixed(2)} ₺</p>
+                </div>
+                <div className="border rounded-lg p-3">
+                    <p className="text-xs text-muted-foreground mb-1">Gecikmiş</p>
+                    <p className="text-lg font-semibold text-red-600">{overdueAmount.toFixed(2)} ₺</p>
                 </div>
             </div>
 
@@ -276,15 +348,26 @@ export default function ClientFinancialPage() {
                                         </p>
                                     )}
                                 </div>
-                                <div className="text-right shrink-0">
-                                    {record.payment_date && (
-                                        <p className="text-xs text-muted-foreground">
-                                            {new Date(record.payment_date).toLocaleDateString("tr-TR")}
+                                <div className="flex items-center gap-3 shrink-0">
+                                    <div className="text-right">
+                                        {record.payment_date && (
+                                            <p className="text-xs text-muted-foreground">
+                                                {new Date(record.payment_date).toLocaleDateString("tr-TR")}
+                                            </p>
+                                        )}
+                                        <p className="text-xs text-muted-foreground mt-1">
+                                            {new Date(record.created_at).toLocaleDateString("tr-TR")}
                                         </p>
-                                    )}
-                                    <p className="text-xs text-muted-foreground mt-1">
-                                        {new Date(record.created_at).toLocaleDateString("tr-TR")}
-                                    </p>
+                                    </div>
+                                    <Button
+                                        onClick={() => handleEditClick(record)}
+                                        variant="outline"
+                                        size="sm"
+                                        className="gap-2"
+                                    >
+                                        <Pencil className="h-3 w-3" />
+                                        Düzenle
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -395,6 +478,118 @@ export default function ClientFinancialPage() {
                             </Button>
                             <Button type="submit" disabled={isCreating}>
                                 {isCreating ? "Oluşturuluyor..." : "Oluştur"}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Edit Dialog */}
+            <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Finansal Kayıt Düzenle</DialogTitle>
+                        <DialogDescription>
+                            Finansal kayıt bilgilerini güncelleyin. Özellikle beklemede olan ödemeleri ödendi veya gecikmiş olarak işaretleyebilirsiniz.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={handleUpdateFinancialRecord} className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-amount">Tutar *</Label>
+                                <Input
+                                    id="edit-amount"
+                                    type="number"
+                                    step="0.01"
+                                    value={editFormData.amount}
+                                    onChange={(e) =>
+                                        setEditFormData({ ...editFormData, amount: e.target.value })
+                                    }
+                                    required
+                                    placeholder="0.00"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-currency">Para Birimi</Label>
+                                <select
+                                    id="edit-currency"
+                                    value={editFormData.currency}
+                                    onChange={(e) =>
+                                        setEditFormData({ ...editFormData, currency: e.target.value })
+                                    }
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                >
+                                    <option value="TRY">TRY</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-status">Durum *</Label>
+                                <select
+                                    id="edit-status"
+                                    value={editFormData.status}
+                                    onChange={(e) =>
+                                        setEditFormData({ ...editFormData, status: e.target.value })
+                                    }
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                >
+                                    <option value="pending">Beklemede</option>
+                                    <option value="paid">Ödendi</option>
+                                    <option value="overdue">Gecikmiş</option>
+                                </select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="edit-payment_date">Ödeme Tarihi</Label>
+                                <Input
+                                    id="edit-payment_date"
+                                    type="date"
+                                    value={editFormData.payment_date}
+                                    onChange={(e) =>
+                                        setEditFormData({ ...editFormData, payment_date: e.target.value })
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="edit-payment_method">Ödeme Yöntemi</Label>
+                            <Input
+                                id="edit-payment_method"
+                                value={editFormData.payment_method}
+                                onChange={(e) =>
+                                    setEditFormData({ ...editFormData, payment_method: e.target.value })
+                                }
+                                placeholder="Örn: Nakit, Kredi Kartı, Havale"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="edit-description">Açıklama</Label>
+                            <textarea
+                                id="edit-description"
+                                value={editFormData.description}
+                                onChange={(e) =>
+                                    setEditFormData({ ...editFormData, description: e.target.value })
+                                }
+                                className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Açıklama..."
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => {
+                                    setIsEditDialogOpen(false);
+                                    setEditingRecord(null);
+                                }}
+                                disabled={isUpdating}
+                            >
+                                İptal
+                            </Button>
+                            <Button type="submit" disabled={isUpdating}>
+                                {isUpdating ? "Güncelleniyor..." : "Güncelle"}
                             </Button>
                         </DialogFooter>
                     </form>
