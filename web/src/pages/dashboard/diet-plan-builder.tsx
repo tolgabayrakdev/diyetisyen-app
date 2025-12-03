@@ -87,17 +87,17 @@ export default function DietPlanBuilderPage() {
     });
 
     const [clientInfo, setClientInfo] = useState({
-        age: 30,
+        age: "30",
         gender: "female" as "male" | "female",
-        weight: 70,
-        height: 165,
+        weight: "70",
+        height: "165",
         activityLevel: "moderate",
     });
 
     const [calorieSettings, setCalorieSettings] = useState({
         dailyCalories: 2000,
         useAutoCalculation: true,
-        calorieDeficit: 0, // -500 for weight loss, +500 for weight gain
+        calorieDeficit: "", // -500 for weight loss, +500 for weight gain
     });
 
     const [macroGrams, setMacroGrams] = useState({
@@ -113,7 +113,11 @@ export default function DietPlanBuilderPage() {
     useEffect(() => {
         if (!calorieSettings.useAutoCalculation) return;
 
-        const { age, gender, weight, height, activityLevel } = clientInfo;
+        const age = parseInt(clientInfo.age) || 30;
+        const weight = parseInt(clientInfo.weight) || 70;
+        const height = parseInt(clientInfo.height) || 165;
+        const { gender, activityLevel } = clientInfo;
+        const calorieDeficit = parseInt(String(calorieSettings.calorieDeficit)) || 0;
         
         // Mifflin-St Jeor Equation
         let bmr: number;
@@ -125,7 +129,7 @@ export default function DietPlanBuilderPage() {
         
         const activity = activityLevels.find(a => a.id === activityLevel);
         const tdee = bmr * (activity?.multiplier || 1.55);
-        const targetCalories = Math.round(tdee + calorieSettings.calorieDeficit);
+        const targetCalories = Math.round(tdee + calorieDeficit);
         
         setCalorieSettings(prev => ({ ...prev, dailyCalories: targetCalories }));
     }, [clientInfo, calorieSettings.useAutoCalculation, calorieSettings.calorieDeficit]);
@@ -536,7 +540,7 @@ export default function DietPlanBuilderPage() {
                                     <Input
                                         type="number"
                                         value={clientInfo.age}
-                                        onChange={(e) => setClientInfo({ ...clientInfo, age: parseInt(e.target.value) || 30 })}
+                                        onChange={(e) => setClientInfo({ ...clientInfo, age: e.target.value })}
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -555,7 +559,7 @@ export default function DietPlanBuilderPage() {
                                     <Input
                                         type="number"
                                         value={clientInfo.height}
-                                        onChange={(e) => setClientInfo({ ...clientInfo, height: parseInt(e.target.value) || 165 })}
+                                        onChange={(e) => setClientInfo({ ...clientInfo, height: e.target.value })}
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -563,7 +567,7 @@ export default function DietPlanBuilderPage() {
                                     <Input
                                         type="number"
                                         value={clientInfo.weight}
-                                        onChange={(e) => setClientInfo({ ...clientInfo, weight: parseInt(e.target.value) || 70 })}
+                                        onChange={(e) => setClientInfo({ ...clientInfo, weight: e.target.value })}
                                     />
                                 </div>
                             </div>
@@ -638,7 +642,7 @@ export default function DietPlanBuilderPage() {
                                                     <Input
                                                         type="number"
                                                         value={calorieSettings.calorieDeficit}
-                                                        onChange={(e) => setCalorieSettings({ ...calorieSettings, calorieDeficit: parseInt(e.target.value) || 0 })}
+                                                        onChange={(e) => setCalorieSettings({ ...calorieSettings, calorieDeficit: e.target.value })}
                                                         placeholder="0"
                                                         className="flex-1"
                                                     />
