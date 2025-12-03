@@ -148,7 +148,7 @@ export default function ClientNotesPage() {
         <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
-                <BreadcrumbList>
+                <BreadcrumbList className="flex-wrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link to="/clients">Danışanlar</Link>
@@ -157,7 +157,7 @@ export default function ClientNotesPage() {
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to={`/clients/${id}`}>
+                            <Link to={`/clients/${id}`} className="truncate max-w-[150px] sm:max-w-none">
                                 {client ? `${client.first_name} ${client.last_name}` : "Danışan"}
                             </Link>
                         </BreadcrumbLink>
@@ -170,14 +170,14 @@ export default function ClientNotesPage() {
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Notlar</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Notlar</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
                         {client && `${client.first_name} ${client.last_name} - `}Notları yönetin
                     </p>
                 </div>
-                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
+                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2 w-full sm:w-auto shrink-0">
                     <Plus className="h-4 w-4" />
                     Yeni Not
                 </Button>
@@ -194,15 +194,15 @@ export default function ClientNotesPage() {
                     </Button>
                 </div>
             ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                     {notes.map((note) => (
-                        <div key={note.id} className="border rounded-lg p-3">
+                        <div key={note.id} className="border rounded-lg p-2.5 sm:p-3">
                             <div className="flex items-start justify-between mb-2">
-                                <div className="flex items-center gap-2 flex-wrap">
+                                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap min-w-0 flex-1">
                                     {note.note_type && (
-                                        <Badge variant="outline" className="text-xs">{note.note_type}</Badge>
+                                        <Badge variant="outline" className="text-xs shrink-0">{note.note_type}</Badge>
                                     )}
-                                    <span className="text-xs text-muted-foreground">
+                                    <span className="text-xs text-muted-foreground truncate">
                                         {new Date(note.created_at).toLocaleDateString("tr-TR", {
                                             year: "numeric",
                                             month: "short",
@@ -213,7 +213,7 @@ export default function ClientNotesPage() {
                                     </span>
                                 </div>
                             </div>
-                            <p className="whitespace-pre-wrap text-xs leading-relaxed">{note.content}</p>
+                            <p className="whitespace-pre-wrap text-xs leading-relaxed break-words">{note.content}</p>
                         </div>
                     ))}
                 </div>
@@ -221,7 +221,7 @@ export default function ClientNotesPage() {
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogContent>
+                <DialogContent className="w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Yeni Not</DialogTitle>
                         <DialogDescription>

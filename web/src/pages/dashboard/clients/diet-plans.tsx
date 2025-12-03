@@ -215,7 +215,7 @@ export default function ClientDietPlansPage() {
         <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
-                <BreadcrumbList>
+                <BreadcrumbList className="flex-wrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link to="/clients">Danışanlar</Link>
@@ -224,7 +224,7 @@ export default function ClientDietPlansPage() {
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to={`/clients/${id}`}>
+                            <Link to={`/clients/${id}`} className="truncate max-w-[150px] sm:max-w-none">
                                 {client ? `${client.first_name} ${client.last_name}` : "Danışan"}
                             </Link>
                         </BreadcrumbLink>
@@ -237,14 +237,14 @@ export default function ClientDietPlansPage() {
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Diyet Planları</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Diyet Planları</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
                         {client && `${client.first_name} ${client.last_name} - `}Diyet planlarını yönetin
                     </p>
                 </div>
-                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
+                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2 w-full sm:w-auto shrink-0">
                     <Plus className="h-4 w-4" />
                     Yeni Plan
                 </Button>
@@ -261,20 +261,20 @@ export default function ClientDietPlansPage() {
                     </Button>
                 </div>
             ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                     {dietPlans.map((plan) => (
                         <div
                             key={plan.id}
-                            className="border rounded-lg p-3 hover:bg-muted/50 transition-colors"
+                            className="border rounded-lg p-2.5 sm:p-3 hover:bg-muted/50 transition-colors"
                         >
-                            <div className="flex items-center justify-between">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
                                 <div 
                                     className="flex-1 min-w-0 cursor-pointer"
                                     onClick={() => navigate(`/clients/${id}/diet-plans/${plan.id}`)}
                                 >
-                                    <h3 className="font-semibold text-sm mb-1 truncate">{plan.title}</h3>
+                                    <h3 className="font-semibold text-xs sm:text-sm mb-1 truncate">{plan.title}</h3>
                                     {plan.description && (
-                                        <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                                        <p className="text-xs text-muted-foreground mb-1.5 sm:mb-2 line-clamp-2 break-words">
                                             {plan.description}
                                         </p>
                                     )}
@@ -288,57 +288,59 @@ export default function ClientDietPlansPage() {
                                         </div>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-2 shrink-0 ml-4">
-                                    <div className="text-xs text-muted-foreground">
+                                <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 sm:ml-4">
+                                    <div className="text-xs text-muted-foreground hidden sm:block">
                                         {new Date(plan.created_at).toLocaleDateString("tr-TR")}
                                     </div>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleEditPlan(plan);
-                                        }}
-                                    >
-                                        <Edit className="h-4 w-4" />
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8 text-destructive hover:text-destructive"
-                                        onClick={async (e) => {
-                                            e.stopPropagation();
-                                            if (!confirm("Bu diyet planını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
-                                                return;
-                                            }
-                                            setIsDeletingPlan(plan.id);
-                                            try {
-                                                const response = await fetch(apiUrl(`api/diet-plans/${plan.id}`), {
-                                                    method: "DELETE",
-                                                    credentials: "include",
-                                                });
-                                                const data = await response.json();
-                                                if (!response.ok) {
-                                                    throw new Error(data.message || "Diyet planı silinemedi");
+                                    <div className="flex items-center gap-1 sm:gap-2">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-7 w-7 sm:h-8 sm:w-8"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleEditPlan(plan);
+                                            }}
+                                        >
+                                            <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-7 w-7 sm:h-8 sm:w-8 text-destructive hover:text-destructive"
+                                            onClick={async (e) => {
+                                                e.stopPropagation();
+                                                if (!confirm("Bu diyet planını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
+                                                    return;
                                                 }
-                                                toast.success("Diyet planı başarıyla silindi");
-                                                fetchDietPlans();
-                                            } catch (error) {
-                                                const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
-                                                toast.error(errorMessage);
-                                            } finally {
-                                                setIsDeletingPlan(null);
-                                            }
-                                        }}
-                                        disabled={isDeletingPlan === plan.id}
-                                    >
-                                        {isDeletingPlan === plan.id ? (
-                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                                        ) : (
-                                            <Trash2 className="h-4 w-4" />
-                                        )}
-                                    </Button>
+                                                setIsDeletingPlan(plan.id);
+                                                try {
+                                                    const response = await fetch(apiUrl(`api/diet-plans/${plan.id}`), {
+                                                        method: "DELETE",
+                                                        credentials: "include",
+                                                    });
+                                                    const data = await response.json();
+                                                    if (!response.ok) {
+                                                        throw new Error(data.message || "Diyet planı silinemedi");
+                                                    }
+                                                    toast.success("Diyet planı başarıyla silindi");
+                                                    fetchDietPlans();
+                                                } catch (error) {
+                                                    const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
+                                                    toast.error(errorMessage);
+                                                } finally {
+                                                    setIsDeletingPlan(null);
+                                                }
+                                            }}
+                                            disabled={isDeletingPlan === plan.id}
+                                        >
+                                            {isDeletingPlan === plan.id ? (
+                                                <div className="h-3.5 w-3.5 sm:h-4 sm:w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                            ) : (
+                                                <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                                            )}
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -348,7 +350,7 @@ export default function ClientDietPlansPage() {
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogContent>
+                <DialogContent className="w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Yeni Diyet Planı</DialogTitle>
                         <DialogDescription>
@@ -399,7 +401,7 @@ export default function ClientDietPlansPage() {
 
             {/* Edit Dialog */}
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                <DialogContent>
+                <DialogContent className="w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Planı Düzenle</DialogTitle>
                         <DialogDescription>

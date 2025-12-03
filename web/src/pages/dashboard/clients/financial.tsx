@@ -246,7 +246,7 @@ export default function ClientFinancialPage() {
         <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
-                <BreadcrumbList>
+                <BreadcrumbList className="flex-wrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link to="/clients">Danışanlar</Link>
@@ -255,7 +255,7 @@ export default function ClientFinancialPage() {
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to={`/clients/${id}`}>
+                            <Link to={`/clients/${id}`} className="truncate max-w-[150px] sm:max-w-none">
                                 {client ? `${client.first_name} ${client.last_name}` : "Danışan"}
                             </Link>
                         </BreadcrumbLink>
@@ -268,36 +268,37 @@ export default function ClientFinancialPage() {
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Finansal Kayıtlar</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Finansal Kayıtlar</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
                         {client && `${client.first_name} ${client.last_name} - `}Finansal kayıtları yönetin
                     </p>
                 </div>
-                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
+                <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2 w-full sm:w-auto shrink-0">
                     <Plus className="h-4 w-4" />
-                    Yeni Kayıt
+                    <span className="hidden sm:inline">Yeni Kayıt</span>
+                    <span className="sm:hidden">Yeni</span>
                 </Button>
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div className="border rounded-lg p-3">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+                <div className="border rounded-lg p-2.5 sm:p-3">
                     <p className="text-xs text-muted-foreground mb-1">Toplam</p>
-                    <p className="text-lg font-semibold">{formatCurrency(totalAmount)}</p>
+                    <p className="text-base sm:text-lg font-semibold truncate">{formatCurrency(totalAmount)}</p>
                 </div>
-                <div className="border rounded-lg p-3">
+                <div className="border rounded-lg p-2.5 sm:p-3">
                     <p className="text-xs text-muted-foreground mb-1">Ödenen</p>
-                    <p className="text-lg font-semibold text-green-600">{formatCurrency(paidAmount)}</p>
+                    <p className="text-base sm:text-lg font-semibold text-green-600 truncate">{formatCurrency(paidAmount)}</p>
                 </div>
-                <div className="border rounded-lg p-3">
+                <div className="border rounded-lg p-2.5 sm:p-3">
                     <p className="text-xs text-muted-foreground mb-1">Bekleyen</p>
-                    <p className="text-lg font-semibold text-orange-600">{formatCurrency(pendingAmount)}</p>
+                    <p className="text-base sm:text-lg font-semibold text-orange-600 truncate">{formatCurrency(pendingAmount)}</p>
                 </div>
-                <div className="border rounded-lg p-3">
+                <div className="border rounded-lg p-2.5 sm:p-3">
                     <p className="text-xs text-muted-foreground mb-1">Gecikmiş</p>
-                    <p className="text-lg font-semibold text-red-600">{formatCurrency(overdueAmount)}</p>
+                    <p className="text-base sm:text-lg font-semibold text-red-600 truncate">{formatCurrency(overdueAmount)}</p>
                 </div>
             </div>
 
@@ -312,13 +313,13 @@ export default function ClientFinancialPage() {
                     </Button>
                 </div>
             ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                     {financialRecords.map((record) => (
-                        <div key={record.id} className="border rounded-lg p-3">
-                            <div className="flex items-center justify-between gap-3">
+                        <div key={record.id} className="border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3">
                                 <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                                        <p className="text-base font-semibold">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 flex-wrap">
+                                        <p className="text-sm sm:text-base font-semibold truncate">
                                             {formatCurrency(record.amount, record.currency)}
                                         </p>
                                         <Badge
@@ -329,7 +330,7 @@ export default function ClientFinancialPage() {
                                                     ? "destructive"
                                                     : "secondary"
                                             }
-                                            className="text-xs"
+                                            className="text-xs shrink-0"
                                         >
                                             {record.status === "paid"
                                                 ? "Ödendi"
@@ -339,24 +340,24 @@ export default function ClientFinancialPage() {
                                         </Badge>
                                     </div>
                                     {record.description && (
-                                        <p className="text-xs text-muted-foreground mb-1.5 line-clamp-2">
+                                        <p className="text-xs text-muted-foreground mb-1.5 line-clamp-2 break-words">
                                             {record.description}
                                         </p>
                                     )}
                                     {record.payment_method && (
-                                        <p className="text-xs text-muted-foreground">
+                                        <p className="text-xs text-muted-foreground truncate">
                                             Ödeme: {record.payment_method}
                                         </p>
                                     )}
                                 </div>
-                                <div className="flex items-center gap-3 shrink-0">
-                                    <div className="text-right">
+                                <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 shrink-0">
+                                    <div className="text-left sm:text-right">
                                         {record.payment_date && (
                                             <p className="text-xs text-muted-foreground">
                                                 {new Date(record.payment_date).toLocaleDateString("tr-TR")}
                                             </p>
                                         )}
-                                        <p className="text-xs text-muted-foreground mt-1">
+                                        <p className="text-xs text-muted-foreground mt-0.5 sm:mt-1">
                                             {new Date(record.created_at).toLocaleDateString("tr-TR")}
                                         </p>
                                     </div>
@@ -364,10 +365,10 @@ export default function ClientFinancialPage() {
                                         onClick={() => handleEditClick(record)}
                                         variant="outline"
                                         size="sm"
-                                        className="gap-2"
+                                        className="gap-1.5 sm:gap-2 shrink-0"
                                     >
                                         <Pencil className="h-3 w-3" />
-                                        Düzenle
+                                        <span className="hidden sm:inline">Düzenle</span>
                                     </Button>
                                 </div>
                             </div>
@@ -378,7 +379,7 @@ export default function ClientFinancialPage() {
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogContent>
+                <DialogContent className="w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Yeni Finansal Kayıt</DialogTitle>
                         <DialogDescription>
@@ -386,7 +387,7 @@ export default function ClientFinancialPage() {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleCreateFinancialRecord} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="amount">Tutar *</Label>
                                 <Input
@@ -422,7 +423,7 @@ export default function ClientFinancialPage() {
                                 </select>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="status">Durum</Label>
                                 <select
@@ -492,7 +493,7 @@ export default function ClientFinancialPage() {
 
             {/* Edit Dialog */}
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                <DialogContent>
+                <DialogContent className="w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Finansal Kayıt Düzenle</DialogTitle>
                         <DialogDescription>
@@ -500,7 +501,7 @@ export default function ClientFinancialPage() {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleUpdateFinancialRecord} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit-amount">Tutar *</Label>
                                 <Input
@@ -536,7 +537,7 @@ export default function ClientFinancialPage() {
                                 </select>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit-status">Durum *</Label>
                                 <select

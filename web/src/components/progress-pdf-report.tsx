@@ -471,10 +471,11 @@ export function ProgressPDFReport({
         <Button
             onClick={generatePDF}
             variant="outline"
-            className="gap-2"
+            className="gap-2 w-full sm:w-auto"
         >
-            <Download className="h-4 w-4" />
-            PDF Raporu İndir
+            <Download className="h-4 w-4 shrink-0" />
+            <span className="hidden sm:inline">PDF Raporu İndir</span>
+            <span className="sm:hidden">PDF İndir</span>
         </Button>
     );
 }

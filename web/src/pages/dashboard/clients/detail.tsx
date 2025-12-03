@@ -242,7 +242,7 @@ export default function ClientDetailPage() {
         <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
-                <BreadcrumbList>
+                <BreadcrumbList className="flex-wrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link to="/clients">Danışanlar</Link>
@@ -250,7 +250,7 @@ export default function ClientDetailPage() {
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>
+                        <BreadcrumbPage className="truncate max-w-[200px] sm:max-w-none">
                             {client.first_name} {client.last_name}
                         </BreadcrumbPage>
                     </BreadcrumbItem>
@@ -258,34 +258,34 @@ export default function ClientDetailPage() {
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex items-center gap-4">
-                    <Avatar className="h-12 w-12">
+                    <Avatar className="h-12 w-12 shrink-0">
                         <AvatarFallback className="text-sm font-semibold bg-primary text-primary-foreground">
                             {getInitials(client.first_name, client.last_name)}
                         </AvatarFallback>
                     </Avatar>
-                    <div>
-                        <h1 className="text-2xl font-bold tracking-tight">
+                    <div className="min-w-0 flex-1">
+                        <h1 className="text-xl sm:text-2xl font-bold tracking-tight truncate">
                             {client.first_name} {client.last_name}
                         </h1>
-                        <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-sm text-muted-foreground mt-1">
                             {client.email && (
-                                <div className="flex items-center gap-1.5">
-                                    <Mail className="h-3.5 w-3.5" />
-                                    <span>{client.email}</span>
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                    <Mail className="h-3.5 w-3.5 shrink-0" />
+                                    <span className="truncate">{client.email}</span>
                                 </div>
                             )}
                             {client.phone && (
-                                <div className="flex items-center gap-1.5">
-                                    <Phone className="h-3.5 w-3.5" />
-                                    <span>{client.phone}</span>
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                    <Phone className="h-3.5 w-3.5 shrink-0" />
+                                    <span className="truncate">{client.phone}</span>
                                 </div>
                             )}
                         </div>
                     </div>
                 </div>
-                <Button variant="outline" size="sm" className="gap-2" onClick={() => setIsEditDialogOpen(true)}>
+                <Button variant="outline" size="sm" className="gap-2 shrink-0 w-full sm:w-auto" onClick={() => setIsEditDialogOpen(true)}>
                     <Edit className="h-4 w-4" />
                     Düzenle
                 </Button>
@@ -293,47 +293,47 @@ export default function ClientDetailPage() {
 
             {/* Quick Stats */}
             {(client.height_cm || client.weight_kg || calculateBMI() || (client.birth_date && calculateAge(client.birth_date))) && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
                     {client.height_cm && (
-                        <div className="bg-background border rounded-lg p-3">
-                            <div className="flex items-center gap-2">
-                                <Ruler className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                                <div>
+                        <div className="bg-background border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                                <div className="min-w-0">
                                     <p className="text-xs text-muted-foreground">Boy</p>
-                                    <p className="text-lg font-semibold">{client.height_cm} cm</p>
+                                    <p className="text-base sm:text-lg font-semibold truncate">{client.height_cm} cm</p>
                                 </div>
                             </div>
                         </div>
                     )}
                     {client.weight_kg && (
-                        <div className="bg-background border rounded-lg p-3">
-                            <div className="flex items-center gap-2">
-                                <Weight className="h-4 w-4 text-green-600 dark:text-green-400" />
-                                <div>
+                        <div className="bg-background border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <Weight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-600 dark:text-green-400 shrink-0" />
+                                <div className="min-w-0">
                                     <p className="text-xs text-muted-foreground">Kilo</p>
-                                    <p className="text-lg font-semibold">{client.weight_kg} kg</p>
+                                    <p className="text-base sm:text-lg font-semibold truncate">{client.weight_kg} kg</p>
                                 </div>
                             </div>
                         </div>
                     )}
                     {calculateBMI() && (
-                        <div className="bg-background border rounded-lg p-3">
-                            <div className="flex items-center gap-2">
-                                <TrendingUp className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-                                <div>
+                        <div className="bg-background border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                                <div className="min-w-0">
                                     <p className="text-xs text-muted-foreground">BMI</p>
-                                    <p className="text-lg font-semibold">{calculateBMI()}</p>
+                                    <p className="text-base sm:text-lg font-semibold truncate">{calculateBMI()}</p>
                                 </div>
                             </div>
                         </div>
                     )}
                     {client.birth_date && calculateAge(client.birth_date) && (
-                        <div className="bg-background border rounded-lg p-3">
-                            <div className="flex items-center gap-2">
-                                <Calendar className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                                <div>
+                        <div className="bg-background border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
+                                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-orange-600 dark:text-orange-400 shrink-0" />
+                                <div className="min-w-0">
                                     <p className="text-xs text-muted-foreground">Yaş</p>
-                                    <p className="text-lg font-semibold">{calculateAge(client.birth_date)}</p>
+                                    <p className="text-base sm:text-lg font-semibold truncate">{calculateAge(client.birth_date)}</p>
                                 </div>
                             </div>
                         </div>
@@ -343,15 +343,15 @@ export default function ClientDetailPage() {
 
             {/* İlerleme Özeti - Başlangıç vs Şimdi */}
             {progressLogs.length > 0 && client.weight_kg && (
-                <div className="border rounded-lg p-4">
-                    <div className="flex items-center gap-2 mb-4">
-                        <TrendingUp className="h-5 w-5 text-primary" />
-                        <h2 className="text-lg font-semibold">İlerleme Özeti</h2>
+                <div className="border rounded-lg p-3 sm:p-4">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                        <TrendingUp className="h-5 w-5 text-primary shrink-0" />
+                        <h2 className="text-base sm:text-lg font-semibold">İlerleme Özeti</h2>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                         {/* Kilo Karşılaştırması */}
                         {client.weight_kg && progressLogs[0]?.weight_kg && (
-                            <div className="bg-background border rounded-lg p-4">
+                            <div className="bg-background border rounded-lg p-3 sm:p-4">
                                 <div className="flex items-center gap-2 mb-3">
                                     <Weight className="h-4 w-4 text-primary" />
                                     <p className="text-sm font-semibold">Kilo</p>
@@ -393,7 +393,7 @@ export default function ClientDetailPage() {
 
                         {/* Vücut Yağı Karşılaştırması */}
                         {progressLogs[0]?.body_fat_percent && (
-                            <div className="bg-background border rounded-lg p-4">
+                            <div className="bg-background border rounded-lg p-3 sm:p-4">
                                 <div className="flex items-center gap-2 mb-3">
                                     <Activity className="h-4 w-4 text-primary" />
                                     <p className="text-sm font-semibold">Vücut Yağı</p>
@@ -445,7 +445,7 @@ export default function ClientDetailPage() {
 
                         {/* Kas Kütlesi Karşılaştırması */}
                         {progressLogs[0]?.muscle_mass_kg && (
-                            <div className="bg-background border rounded-lg p-4">
+                            <div className="bg-background border rounded-lg p-3 sm:p-4">
                                 <div className="flex items-center gap-2 mb-3">
                                     <TrendingUp className="h-4 w-4 text-primary" />
                                     <p className="text-sm font-semibold">Kas Kütlesi</p>
@@ -497,7 +497,7 @@ export default function ClientDetailPage() {
 
                         {/* BMI Karşılaştırması */}
                         {client.height_cm && client.weight_kg && progressLogs[0]?.weight_kg && (
-                            <div className="bg-background border rounded-lg p-4">
+                            <div className="bg-background border rounded-lg p-3 sm:p-4">
                                 <div className="flex items-center gap-2 mb-3">
                                     <TrendingUp className="h-4 w-4 text-primary" />
                                     <p className="text-sm font-semibold">BMI</p>
@@ -556,55 +556,55 @@ export default function ClientDetailPage() {
             )}
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
                 <Link to={`/clients/${id}/diet-plans`}>
-                    <div className="group border rounded-lg p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                <FileText className="h-5 w-5 text-primary" />
+                    <div className="group border rounded-lg p-3 sm:p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors shrink-0">
+                                <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div>
-                                <p className="font-semibold text-sm">Diyet Planları</p>
-                                <p className="text-xs text-muted-foreground">Planları görüntüle</p>
+                            <div className="min-w-0">
+                                <p className="font-semibold text-xs sm:text-sm truncate">Diyet Planları</p>
+                                <p className="text-xs text-muted-foreground hidden sm:block">Planları görüntüle</p>
                             </div>
                         </div>
                     </div>
                 </Link>
                 <Link to={`/clients/${id}/notes`}>
-                    <div className="group border rounded-lg p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                <StickyNote className="h-5 w-5 text-primary" />
+                    <div className="group border rounded-lg p-3 sm:p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors shrink-0">
+                                <StickyNote className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div>
-                                <p className="font-semibold text-sm">Notlar</p>
-                                <p className="text-xs text-muted-foreground">Notları görüntüle</p>
+                            <div className="min-w-0">
+                                <p className="font-semibold text-xs sm:text-sm truncate">Notlar</p>
+                                <p className="text-xs text-muted-foreground hidden sm:block">Notları görüntüle</p>
                             </div>
                         </div>
                     </div>
                 </Link>
                 <Link to={`/clients/${id}/financial`}>
-                    <div className="group border rounded-lg p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                <DollarSign className="h-5 w-5 text-primary" />
+                    <div className="group border rounded-lg p-3 sm:p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors shrink-0">
+                                <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div>
-                                <p className="font-semibold text-sm">Finansal</p>
-                                <p className="text-xs text-muted-foreground">Kayıtları görüntüle</p>
+                            <div className="min-w-0">
+                                <p className="font-semibold text-xs sm:text-sm truncate">Finansal</p>
+                                <p className="text-xs text-muted-foreground hidden sm:block">Kayıtları görüntüle</p>
                             </div>
                         </div>
                     </div>
                 </Link>
                 <Link to={`/clients/${id}/progress`}>
-                    <div className="group border rounded-lg p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                                <TrendingUp className="h-5 w-5 text-primary" />
+                    <div className="group border rounded-lg p-3 sm:p-4 hover:bg-primary/5 hover:border-primary/50 transition-all cursor-pointer bg-background">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="p-1.5 sm:p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors shrink-0">
+                                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div>
-                                <p className="font-semibold text-sm">İlerleme</p>
-                                <p className="text-xs text-muted-foreground">Kayıtları görüntüle</p>
+                            <div className="min-w-0">
+                                <p className="font-semibold text-xs sm:text-sm truncate">İlerleme</p>
+                                <p className="text-xs text-muted-foreground hidden sm:block">Kayıtları görüntüle</p>
                             </div>
                         </div>
                     </div>
@@ -612,9 +612,9 @@ export default function ClientDetailPage() {
             </div>
 
             {/* Detailed Information */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                 {/* Personal Info Card */}
-                <div className="bg-background border rounded-lg p-4 space-y-4">
+                <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 pb-3 border-b">
                         <div className="p-1.5 rounded-lg bg-primary/10">
                             <User className="h-4 w-4 text-primary" />
@@ -680,7 +680,7 @@ export default function ClientDetailPage() {
                 </div>
 
                 {/* Health Info Card */}
-                <div className="bg-background border rounded-lg p-4 space-y-4">
+                <div className="bg-background border rounded-lg p-3 sm:p-4 space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 pb-3 border-b">
                         <div className="p-1.5 rounded-lg bg-primary/10">
                             <Heart className="h-4 w-4 text-primary" />
@@ -744,7 +744,7 @@ export default function ClientDetailPage() {
 
             {/* Edit Dialog */}
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Danışan Bilgilerini Düzenle</DialogTitle>
                         <DialogDescription>
@@ -752,7 +752,7 @@ export default function ClientDetailPage() {
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleUpdateClient} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit_first_name">Ad *</Label>
                                 <Input
@@ -776,7 +776,7 @@ export default function ClientDetailPage() {
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit_email">E-posta</Label>
                                 <Input
@@ -800,7 +800,7 @@ export default function ClientDetailPage() {
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit_birth_date">Doğum Tarihi</Label>
                                 <Popover open={isBirthDatePopoverOpen} onOpenChange={setIsBirthDatePopoverOpen}>
@@ -862,7 +862,7 @@ export default function ClientDetailPage() {
                                 </select>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit_height_cm">Boy (cm)</Label>
                                 <Input

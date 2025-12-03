@@ -425,39 +425,39 @@ export default function DietPlanBuilderPage() {
 
     return (
         <TooltipProvider>
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
                 {/* Header */}
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Diyet Planı Oluştur</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Diyet Planı Oluştur</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                         Detaylı parametrelerle plan oluşturun ve PDF olarak indirin
                     </p>
                 </div>
 
                 {/* Progress Steps */}
-                <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2">
                     {[
                         { num: 1, label: "Parametreler", icon: Target },
                         { num: 2, label: "Öğünler", icon: Utensils },
                         { num: 3, label: "PDF İndir", icon: Download }
                     ].map((s) => (
-                        <div key={s.num} className="flex items-center gap-2 shrink-0">
+                        <div key={s.num} className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                             <div className={cn(
-                                "w-9 h-9 rounded-full flex items-center justify-center transition-colors",
+                                "w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-colors shrink-0",
                                 step >= s.num 
                                     ? "bg-primary text-primary-foreground" 
                                     : "bg-muted text-muted-foreground"
                             )}>
-                                {step > s.num ? <Check className="w-4 h-4" /> : <s.icon className="w-4 h-4" />}
+                                {step > s.num ? <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <s.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
                             </div>
                             <span className={cn(
-                                "text-sm font-medium",
+                                "text-xs sm:text-sm font-medium whitespace-nowrap",
                                 step >= s.num ? "text-foreground" : "text-muted-foreground"
                             )}>
                                 {s.label}
                             </span>
                             {s.num < 3 && <div className={cn(
-                                "w-8 h-0.5 mx-1",
+                                "w-6 sm:w-8 h-0.5 mx-0.5 sm:mx-1 shrink-0",
                                 step > s.num ? "bg-primary" : "bg-muted"
                             )} />}
                         </div>
@@ -466,16 +466,16 @@ export default function DietPlanBuilderPage() {
 
                 {/* Step 1: Parameters */}
                 {step === 1 && (
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                         {/* Plan Info */}
-                        <div className="border rounded-xl p-4 space-y-4">
-                            <h3 className="font-semibold flex items-center gap-2">
-                                <FileText className="w-4 h-4" />
+                        <div className="border rounded-xl p-3 sm:p-4 space-y-3 sm:space-y-4">
+                            <h3 className="font-semibold text-sm sm:text-base flex items-center gap-2">
+                                <FileText className="w-4 h-4 shrink-0" />
                                 Plan Bilgileri
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
-                                    <Label>Plan Başlığı *</Label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                                <div className="space-y-2 md:col-span-2">
+                                    <Label className="text-xs sm:text-sm">Plan Başlığı *</Label>
                                     <Input
                                         value={planInfo.title}
                                         onChange={(e) => {
@@ -490,29 +490,31 @@ export default function DietPlanBuilderPage() {
                                             }
                                         }}
                                         placeholder="Örn: 8 Haftalık Kilo Verme Programı"
-                                        className={titleError ? "border-destructive" : ""}
+                                        className={cn("text-sm", titleError ? "border-destructive" : "")}
                                     />
                                     {titleError && (
-                                        <p className="text-sm text-destructive">{titleError}</p>
+                                        <p className="text-xs sm:text-sm text-destructive">{titleError}</p>
                                     )}
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-2 gap-3 sm:gap-4 md:col-span-2">
                                     <div className="space-y-2">
-                                        <Label>Başlangıç Tarihi</Label>
+                                        <Label className="text-xs sm:text-sm">Başlangıç Tarihi</Label>
                                         <Input
                                             type="date"
                                             value={planInfo.startDate}
                                             onChange={(e) => setPlanInfo({ ...planInfo, startDate: e.target.value })}
+                                            className="text-sm"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label>Süre (Hafta)</Label>
+                                        <Label className="text-xs sm:text-sm">Süre (Hafta)</Label>
                                         <Input
                                             type="number"
                                             min={1}
                                             max={52}
                                             value={planInfo.duration}
                                             onChange={(e) => setPlanInfo({ ...planInfo, duration: parseInt(e.target.value) || 1 })}
+                                            className="text-sm"
                                         />
                                     </div>
                                 </div>
@@ -520,10 +522,10 @@ export default function DietPlanBuilderPage() {
                         </div>
 
                         {/* Client Info */}
-                        <div className="border rounded-xl p-4 space-y-4">
-                            <h3 className="font-semibold flex items-center gap-2">
-                                <User className="w-4 h-4" />
-                                Danışan Bilgileri
+                        <div className="border rounded-xl p-3 sm:p-4 space-y-3 sm:space-y-4">
+                            <h3 className="font-semibold text-sm sm:text-base flex items-center gap-2 flex-wrap">
+                                <User className="w-4 h-4 shrink-0" />
+                                <span>Danışan Bilgileri</span>
                                 <Tooltip>
                                     <TooltipTrigger>
                                         <span className="text-xs text-muted-foreground">(Kalori hesaplaması için)</span>
@@ -534,17 +536,18 @@ export default function DietPlanBuilderPage() {
                                 </Tooltip>
                             </h3>
                             
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                                 <div className="space-y-2">
-                                    <Label>Yaş</Label>
+                                    <Label className="text-xs sm:text-sm">Yaş</Label>
                                     <Input
                                         type="number"
                                         value={clientInfo.age}
                                         onChange={(e) => setClientInfo({ ...clientInfo, age: e.target.value })}
+                                        className="text-sm"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Cinsiyet</Label>
+                                    <Label className="text-xs sm:text-sm">Cinsiyet</Label>
                                     <select
                                         value={clientInfo.gender}
                                         onChange={(e) => setClientInfo({ ...clientInfo, gender: e.target.value as "male" | "female" })}
@@ -555,42 +558,44 @@ export default function DietPlanBuilderPage() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Boy (cm)</Label>
+                                    <Label className="text-xs sm:text-sm">Boy (cm)</Label>
                                     <Input
                                         type="number"
                                         value={clientInfo.height}
                                         onChange={(e) => setClientInfo({ ...clientInfo, height: e.target.value })}
+                                        className="text-sm"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Kilo (kg)</Label>
+                                    <Label className="text-xs sm:text-sm">Kilo (kg)</Label>
                                     <Input
                                         type="number"
                                         value={clientInfo.weight}
                                         onChange={(e) => setClientInfo({ ...clientInfo, weight: e.target.value })}
+                                        className="text-sm"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="flex items-center gap-2">
-                                    <Activity className="w-4 h-4" />
+                                <Label className="flex items-center gap-2 text-xs sm:text-sm">
+                                    <Activity className="w-4 h-4 shrink-0" />
                                     Aktivite Seviyesi
                                 </Label>
-                                <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
                                     {activityLevels.map((level) => (
                                         <button
                                             key={level.id}
                                             onClick={() => setClientInfo({ ...clientInfo, activityLevel: level.id })}
                                             className={cn(
-                                                "p-3 rounded-lg border text-left transition-all",
+                                                "p-2.5 sm:p-3 rounded-lg border text-left transition-all",
                                                 clientInfo.activityLevel === level.id
                                                     ? "border-primary bg-primary/5"
                                                     : "border-border hover:border-primary/50"
                                             )}
                                         >
-                                            <div className="font-medium text-sm">{level.name}</div>
-                                            <div className="text-[10px] text-muted-foreground">{level.description}</div>
+                                            <div className="font-medium text-xs sm:text-sm">{level.name}</div>
+                                            <div className="text-[10px] text-muted-foreground mt-0.5">{level.description}</div>
                                         </button>
                                     ))}
                                 </div>
@@ -598,21 +603,21 @@ export default function DietPlanBuilderPage() {
                         </div>
 
                         {/* Calories */}
-                        <div className="border rounded-xl p-4 space-y-4">
-                            <h3 className="font-semibold flex items-center gap-2">
-                                <Flame className="w-4 h-4" />
+                        <div className="border rounded-xl p-3 sm:p-4 space-y-3 sm:space-y-4">
+                            <h3 className="font-semibold text-sm sm:text-base flex items-center gap-2">
+                                <Flame className="w-4 h-4 shrink-0" />
                                 Günlük Kalori Hedefi
                             </h3>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-3">
-                                    <div className="flex items-center justify-between">
-                                        <Label>Hesaplama Yöntemi</Label>
+                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+                                        <Label className="text-xs sm:text-sm">Hesaplama Yöntemi</Label>
                                         <div className="flex items-center gap-2">
                                             <button
                                                 onClick={() => setCalorieSettings({ ...calorieSettings, useAutoCalculation: true })}
                                                 className={cn(
-                                                    "px-3 py-1.5 rounded-lg text-sm transition-colors",
+                                                    "px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors flex-1 sm:flex-none",
                                                     calorieSettings.useAutoCalculation
                                                         ? "bg-primary text-primary-foreground"
                                                         : "bg-muted text-muted-foreground"
@@ -623,7 +628,7 @@ export default function DietPlanBuilderPage() {
                                             <button
                                                 onClick={() => setCalorieSettings({ ...calorieSettings, useAutoCalculation: false })}
                                                 className={cn(
-                                                    "px-3 py-1.5 rounded-lg text-sm transition-colors",
+                                                    "px-3 py-1.5 rounded-lg text-xs sm:text-sm transition-colors flex-1 sm:flex-none",
                                                     !calorieSettings.useAutoCalculation
                                                         ? "bg-primary text-primary-foreground"
                                                         : "bg-muted text-muted-foreground"
@@ -637,18 +642,18 @@ export default function DietPlanBuilderPage() {
                                     {calorieSettings.useAutoCalculation ? (
                                         <div className="space-y-3">
                                             <div className="space-y-2">
-                                                <Label>Kalori Açığı/Fazlası (kcal)</Label>
+                                                <Label className="text-xs sm:text-sm">Kalori Açığı/Fazlası (kcal)</Label>
                                                 <div className="flex items-center gap-2">
                                                     <Input
                                                         type="number"
                                                         value={calorieSettings.calorieDeficit}
                                                         onChange={(e) => setCalorieSettings({ ...calorieSettings, calorieDeficit: e.target.value })}
                                                         placeholder="0"
-                                                        className="flex-1"
+                                                        className="flex-1 text-sm"
                                                     />
                                                     <Tooltip>
                                                         <TooltipTrigger>
-                                                            <Info className="w-4 h-4 text-muted-foreground" />
+                                                            <Info className="w-4 h-4 text-muted-foreground shrink-0" />
                                                         </TooltipTrigger>
                                                         <TooltipContent>
                                                             <p>Negatif: Kilo verme (örn: -500)</p>
@@ -658,10 +663,10 @@ export default function DietPlanBuilderPage() {
                                                     </Tooltip>
                                                 </div>
                                             </div>
-                                            <div className="p-3 bg-muted/50 rounded-lg text-sm">
-                                                <div className="flex justify-between mb-1">
+                                            <div className="p-2.5 sm:p-3 bg-muted/50 rounded-lg text-xs sm:text-sm">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 mb-1">
                                                     <span className="text-muted-foreground">Hesaplanan Kalori:</span>
-                                                    <span className="font-bold text-lg text-primary">{dailyCalories} kcal</span>
+                                                    <span className="font-bold text-base sm:text-lg text-primary">{dailyCalories} kcal</span>
                                                 </div>
                                                 <div className="text-xs text-muted-foreground">
                                                     (Mifflin-St Jeor formülü + Aktivite + Açık/Fazla)
@@ -670,7 +675,7 @@ export default function DietPlanBuilderPage() {
                                         </div>
                                     ) : (
                                         <div className="space-y-2">
-                                            <Label>Manuel Kalori Girişi</Label>
+                                            <Label className="text-xs sm:text-sm">Manuel Kalori Girişi</Label>
                                             <Input
                                                 type="number"
                                                 min={800}
@@ -688,13 +693,14 @@ export default function DietPlanBuilderPage() {
                                                         }
                                                     }
                                                 }}
+                                                className="text-sm"
                                             />
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="space-y-3">
-                                    <Label>Makro Besin Dağılımı (Gram)</Label>
+                                    <Label className="text-xs sm:text-sm">Makro Besin Dağılımı (Gram)</Label>
                                     <div className="space-y-3">
                                         {[
                                             { key: "protein", label: "Protein", color: "bg-blue-500", kcalPerGram: 4 },
@@ -707,23 +713,23 @@ export default function DietPlanBuilderPage() {
                                             
                                             return (
                                                 <div key={key} className="space-y-2">
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-2">
-                                                            <div className={cn("w-3 h-3 rounded-full", color)} />
-                                                            <span className="text-sm font-medium">{label}</span>
+                                                    <div className="flex items-center justify-between gap-2">
+                                                        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                                                            <div className={cn("w-3 h-3 rounded-full shrink-0", color)} />
+                                                            <span className="text-xs sm:text-sm font-medium truncate">{label}</span>
                                                         </div>
-                                                        <div className="flex items-center gap-3">
+                                                        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                                                             <Input
                                                                 type="number"
                                                                 min={0}
                                                                 step={1}
                                                                 value={gram || ""}
                                                                 onChange={(e) => setMacroGrams({ ...macroGrams, [key]: parseInt(e.target.value) || 0 })}
-                                                                className="w-20 h-8 text-center"
+                                                                className="w-16 sm:w-20 h-8 text-center text-xs sm:text-sm"
                                                                 placeholder="0"
                                                             />
-                                                            <span className="text-sm text-muted-foreground">g</span>
-                                                            <span className="text-sm font-bold text-primary w-16 text-right">
+                                                            <span className="text-xs sm:text-sm text-muted-foreground">g</span>
+                                                            <span className="text-xs sm:text-sm font-bold text-primary w-12 sm:w-16 text-right">
                                                                 {percentage}%
                                                             </span>
                                                         </div>
@@ -742,7 +748,7 @@ export default function DietPlanBuilderPage() {
                                             );
                                         })}
                                     </div>
-                                    <div className="p-3 bg-muted/50 rounded-lg space-y-1 text-sm">
+                                    <div className="p-2.5 sm:p-3 bg-muted/50 rounded-lg space-y-1 text-xs sm:text-sm">
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">Toplam Kalori:</span>
                                             <span className="font-bold">{totalMacroCalories} kcal</span>
@@ -765,7 +771,7 @@ export default function DietPlanBuilderPage() {
                                     </div>
                                     {totalPercentage !== 100 && totalMacroCalories > 0 && (
                                         <p className="text-xs text-amber-600 flex items-center gap-1">
-                                            <Calculator className="w-3 h-3" />
+                                            <Calculator className="w-3 h-3 shrink-0" />
                                             Toplam Yüzde: {totalPercentage}% (100% olmalı)
                                         </p>
                                     )}
@@ -775,12 +781,12 @@ export default function DietPlanBuilderPage() {
 
                         {/* Notes */}
                         <div className="space-y-2">
-                            <Label>Ek Notlar ve Öneriler</Label>
+                            <Label className="text-xs sm:text-sm">Ek Notlar ve Öneriler</Label>
                             <textarea
                                 value={planInfo.notes}
                                 onChange={(e) => setPlanInfo({ ...planInfo, notes: e.target.value })}
                                 placeholder="Önemli notlar, uyarılar, su tüketimi, vitamin takviyeleri vb..."
-                                className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-xs sm:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                             />
                         </div>
                     </div>
@@ -820,19 +826,19 @@ export default function DietPlanBuilderPage() {
                     };
 
                     return (
-                        <div className="space-y-4">
-                            <div className="p-4 bg-muted/50 rounded-xl space-y-3">
-                                <div className="flex items-center justify-between">
+                        <div className="space-y-3 sm:space-y-4">
+                            <div className="p-3 sm:p-4 bg-muted/50 rounded-xl space-y-2 sm:space-y-3">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
                                     <div className="flex items-center gap-2">
-                                        <Utensils className="w-4 h-4 text-primary" />
-                                        <span className="text-sm font-medium">{mealPlans.length} Öğün</span>
+                                        <Utensils className="w-4 h-4 text-primary shrink-0" />
+                                        <span className="text-xs sm:text-sm font-medium">{mealPlans.length} Öğün</span>
                                     </div>
-                                    <Button size="sm" variant="outline" onClick={addMeal} className="gap-2">
-                                        <Plus className="w-4 h-4" />
+                                    <Button size="sm" variant="outline" onClick={addMeal} className="gap-2 w-full sm:w-auto">
+                                        <Plus className="w-4 h-4 shrink-0" />
                                         Öğün Ekle
                                     </Button>
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 text-xs sm:text-sm">
                                     <div className="space-y-1">
                                         <div className="text-xs text-muted-foreground">Kalori</div>
                                         <div className="flex items-center gap-2">
@@ -913,7 +919,7 @@ export default function DietPlanBuilderPage() {
                             </div>
 
                         {/* Meal Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                             {mealPlans.map((meal, mealIndex) => {
                                 const mealCalories = meal.foods.reduce((sum, f) => sum + (f.calories || 0), 0);
                                 const mealProtein = meal.foods.reduce((sum, f) => sum + (f.protein || 0), 0);
@@ -924,22 +930,22 @@ export default function DietPlanBuilderPage() {
                                     <button
                                         key={meal.id}
                                         onClick={() => setSelectedMealId(meal.id)}
-                                        className="border rounded-xl p-4 text-left hover:border-primary/50 hover:shadow-md transition-all space-y-3"
+                                        className="border rounded-xl p-3 sm:p-4 text-left hover:border-primary/50 hover:shadow-md transition-all space-y-2 sm:space-y-3"
                                     >
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-sm font-bold text-primary-foreground">
+                                        <div className="flex items-center justify-between gap-2">
+                                            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary flex items-center justify-center text-xs sm:text-sm font-bold text-primary-foreground shrink-0">
                                                     {mealIndex + 1}
                                                 </div>
-                                                <div>
-                                                    <div className="font-semibold text-sm">{meal.name}</div>
+                                                <div className="min-w-0 flex-1">
+                                                    <div className="font-semibold text-xs sm:text-sm truncate">{meal.name}</div>
                                                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                        <Clock className="w-3 h-3" />
-                                                        {meal.time}
+                                                        <Clock className="w-3 h-3 shrink-0" />
+                                                        <span>{meal.time}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-1">
+                                            <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
                                                 <Tooltip>
                                                     <TooltipTrigger asChild>
                                                         <Button 
@@ -1015,45 +1021,45 @@ export default function DietPlanBuilderPage() {
 
                 {/* Step 3: PDF Download */}
                 {step === 3 && (
-                    <div className="space-y-6">
-                        <div className="border rounded-xl p-6 text-center space-y-4">
-                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
-                                <FileText className="w-8 h-8 text-primary" />
+                    <div className="space-y-4 sm:space-y-6">
+                        <div className="border rounded-xl p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+                            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                                <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                             </div>
                             <div>
-                                <h3 className="text-xl font-semibold mb-2">Plan Hazır!</h3>
-                                <p className="text-sm text-muted-foreground">
+                                <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2">Plan Hazır!</h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground">
                                     Diyet planınızı PDF olarak indirebilir veya önizleyebilirsiniz
                                 </p>
                             </div>
 
                             {/* Summary */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                                <div className="p-4 bg-muted/50 rounded-lg">
-                                    <div className="text-2xl font-bold">{mealPlans.length}</div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 mt-4 sm:mt-6">
+                                <div className="p-3 sm:p-4 bg-muted/50 rounded-lg">
+                                    <div className="text-xl sm:text-2xl font-bold">{mealPlans.length}</div>
                                     <div className="text-xs text-muted-foreground mt-1">Öğün</div>
                                 </div>
-                                <div className="p-4 bg-muted/50 rounded-lg">
-                                    <div className="text-2xl font-bold">{mealPlans.reduce((sum, m) => sum + m.foods.length, 0)}</div>
+                                <div className="p-3 sm:p-4 bg-muted/50 rounded-lg">
+                                    <div className="text-xl sm:text-2xl font-bold">{mealPlans.reduce((sum, m) => sum + m.foods.length, 0)}</div>
                                     <div className="text-xs text-muted-foreground mt-1">Besin</div>
                                 </div>
-                                <div className="p-4 bg-muted/50 rounded-lg">
-                                    <div className="text-2xl font-bold">{dailyCalories}</div>
+                                <div className="p-3 sm:p-4 bg-muted/50 rounded-lg">
+                                    <div className="text-xl sm:text-2xl font-bold">{dailyCalories}</div>
                                     <div className="text-xs text-muted-foreground mt-1">Kalori</div>
                                 </div>
-                                <div className="p-4 bg-muted/50 rounded-lg">
-                                    <div className="text-2xl font-bold">{planInfo.duration}</div>
+                                <div className="p-3 sm:p-4 bg-muted/50 rounded-lg">
+                                    <div className="text-xl sm:text-2xl font-bold">{planInfo.duration}</div>
                                     <div className="text-xs text-muted-foreground mt-1">Hafta</div>
                                 </div>
                             </div>
 
-                            <div className="flex gap-3 justify-center pt-4">
-                                <Button variant="outline" onClick={() => setIsPreviewOpen(true)} className="gap-2">
-                                    <Eye className="w-4 h-4" />
+                            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center pt-3 sm:pt-4">
+                                <Button variant="outline" onClick={() => setIsPreviewOpen(true)} className="gap-2 w-full sm:w-auto">
+                                    <Eye className="w-4 h-4 shrink-0" />
                                     Önizle
                                 </Button>
-                                <Button onClick={handleDownloadPDF} className="gap-2">
-                                    <Download className="w-4 h-4" />
+                                <Button onClick={handleDownloadPDF} className="gap-2 w-full sm:w-auto">
+                                    <Download className="w-4 h-4 shrink-0" />
                                     PDF İndir
                                 </Button>
                             </div>
@@ -1062,27 +1068,27 @@ export default function DietPlanBuilderPage() {
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="flex items-center justify-between pt-4 border-t">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 sm:gap-0 pt-4 border-t">
                     <Button
                         variant="outline"
                         onClick={step === 1 ? () => navigate(-1) : handleBack}
-                        className="gap-2"
+                        className="gap-2 w-full sm:w-auto"
                     >
-                        <ArrowLeft className="w-4 h-4" />
+                        <ArrowLeft className="w-4 h-4 shrink-0" />
                         {step === 1 ? "İptal" : "Geri"}
                     </Button>
                     
                     {step < 3 && (
-                        <Button onClick={handleNext} className="gap-2">
+                        <Button onClick={handleNext} className="gap-2 w-full sm:w-auto">
                             İleri
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-4 h-4 shrink-0" />
                         </Button>
                     )}
                 </div>
 
                 {/* Meal Drawer */}
                 <Sheet open={selectedMealId !== null} onOpenChange={(open) => !open && setSelectedMealId(null)}>
-                    <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto px-6">
+                    <SheetContent side="right" className="w-full sm:max-w-2xl overflow-y-auto px-3 sm:px-6">
                         {selectedMealId && (() => {
                             const meal = mealPlans.find(m => m.id === selectedMealId);
                             if (!meal) return null;
@@ -1094,26 +1100,26 @@ export default function DietPlanBuilderPage() {
                             return (
                                 <>
                                     <SheetHeader className="px-0 pb-0">
-                                        <SheetTitle className="text-lg">
+                                        <SheetTitle className="text-base sm:text-lg">
                                             Öğün Düzenle
                                         </SheetTitle>
                                     </SheetHeader>
 
-                                    <div className="mt-6 space-y-6 px-0">
+                                    <div className="mt-4 sm:mt-6 space-y-4 sm:space-y-6 px-0">
                                         {/* Meal Name and Time */}
-                                        <div className="space-y-4">
+                                        <div className="space-y-3 sm:space-y-4">
                                             <div className="space-y-2">
-                                                <Label className="text-sm font-medium">Öğün Adı</Label>
+                                                <Label className="text-xs sm:text-sm font-medium">Öğün Adı</Label>
                                                 <Input
                                                     value={meal.name}
                                                     onChange={(e) => updateMeal(meal.id, { name: e.target.value })}
                                                     placeholder="Örn: Kahvaltı, Öğle Yemeği, Akşam Yemeği"
-                                                    className="h-10 text-base font-medium"
+                                                    className="h-10 text-sm sm:text-base font-medium"
                                                 />
                                             </div>
                                             <div className="space-y-2">
-                                                <Label className="text-sm font-medium flex items-center gap-2">
-                                                    <Clock className="w-4 h-4" />
+                                                <Label className="text-xs sm:text-sm font-medium flex items-center gap-2">
+                                                    <Clock className="w-4 h-4 shrink-0" />
                                                     Saat
                                                 </Label>
                                                 <div className="flex items-center gap-2">
@@ -1127,7 +1133,7 @@ export default function DietPlanBuilderPage() {
                                                             const minute = meal.time && meal.time.includes(':') ? meal.time.split(':')[1] : '00';
                                                             updateMeal(meal.id, { time: `${hourVal}:${minute}` });
                                                         }}
-                                                        className="h-10 w-20 text-center"
+                                                        className="h-10 w-20 text-center text-sm"
                                                         placeholder="00"
                                                     />
                                                     <span className="text-muted-foreground font-medium">:</span>
@@ -1141,110 +1147,110 @@ export default function DietPlanBuilderPage() {
                                                             const hour = meal.time && meal.time.includes(':') ? meal.time.split(':')[0] : '00';
                                                             updateMeal(meal.id, { time: `${hour}:${minuteVal}` });
                                                         }}
-                                                        className="h-10 w-20 text-center"
+                                                        className="h-10 w-20 text-center text-sm"
                                                         placeholder="00"
                                                     />
                                                 </div>
                                             </div>
                                         </div>
                                         {/* Foods Table */}
-                                        <div className="space-y-3">
-                                            <div className="flex items-center justify-between">
-                                                <Label className="text-base font-semibold">Besinler</Label>
+                                        <div className="space-y-2 sm:space-y-3">
+                                            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                                                <Label className="text-sm sm:text-base font-semibold">Besinler</Label>
                                                 <Button
                                                     variant="outline"
                                                     size="sm"
                                                     onClick={() => addFoodToMeal(meal.id)}
-                                                    className="gap-2"
+                                                    className="gap-2 w-full sm:w-auto"
                                                 >
-                                                    <Plus className="w-4 h-4" />
+                                                    <Plus className="w-4 h-4 shrink-0" />
                                                     Besin Ekle
                                                 </Button>
                                             </div>
-                                            <div className="border rounded-lg overflow-hidden">
-                                                <table className="w-full text-sm">
+                                            <div className="border rounded-lg overflow-x-auto">
+                                                <table className="w-full text-xs sm:text-sm min-w-[600px]">
                                                     <thead>
                                                         <tr className="text-xs text-muted-foreground border-b bg-muted/30">
-                                                            <th className="text-left py-3 px-4 font-medium">Besin</th>
-                                                            <th className="text-left py-3 px-4 font-medium">Porsiyon</th>
-                                                            <th className="text-center py-3 font-medium w-20">Kalori</th>
-                                                            <th className="text-center py-3 font-medium w-16">P (g)</th>
-                                                            <th className="text-center py-3 font-medium w-16">K (g)</th>
-                                                            <th className="text-center py-3 font-medium w-16">Y (g)</th>
-                                                            <th className="w-10"></th>
+                                                            <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-medium">Besin</th>
+                                                            <th className="text-left py-2 sm:py-3 px-2 sm:px-4 font-medium">Porsiyon</th>
+                                                            <th className="text-center py-2 sm:py-3 font-medium w-16 sm:w-20">Kalori</th>
+                                                            <th className="text-center py-2 sm:py-3 font-medium w-12 sm:w-16">P (g)</th>
+                                                            <th className="text-center py-2 sm:py-3 font-medium w-12 sm:w-16">K (g)</th>
+                                                            <th className="text-center py-2 sm:py-3 font-medium w-12 sm:w-16">Y (g)</th>
+                                                            <th className="w-8 sm:w-10"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         {meal.foods.length > 0 ? (
                                                             meal.foods.map((food) => (
                                                                 <tr key={food.id} className="border-b border-dashed last:border-0">
-                                                                    <td className="py-3 px-4">
+                                                                    <td className="py-2 sm:py-3 px-2 sm:px-4">
                                                                         <Input
                                                                             value={food.name}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { name: e.target.value })}
                                                                             placeholder="Besin adı"
-                                                                            className="h-9"
+                                                                            className="h-8 sm:h-9 text-xs sm:text-sm"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3 px-4">
+                                                                    <td className="py-2 sm:py-3 px-2 sm:px-4">
                                                                         <Input
                                                                             value={food.portion}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { portion: e.target.value })}
                                                                             placeholder="1 porsiyon"
-                                                                            className="h-9"
+                                                                            className="h-8 sm:h-9 text-xs sm:text-sm"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3">
+                                                                    <td className="py-2 sm:py-3">
                                                                         <Input
                                                                             type="number"
                                                                             value={food.calories || ""}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { calories: parseInt(e.target.value) || 0 })}
-                                                                            className="h-9 w-full text-center"
+                                                                            className="h-8 sm:h-9 w-full text-center text-xs sm:text-sm"
                                                                             placeholder="0"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3">
+                                                                    <td className="py-2 sm:py-3">
                                                                         <Input
                                                                             type="number"
                                                                             value={food.protein || ""}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { protein: parseInt(e.target.value) || 0 })}
-                                                                            className="h-9 w-full text-center"
+                                                                            className="h-8 sm:h-9 w-full text-center text-xs sm:text-sm"
                                                                             placeholder="0"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3">
+                                                                    <td className="py-2 sm:py-3">
                                                                         <Input
                                                                             type="number"
                                                                             value={food.carbs || ""}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { carbs: parseInt(e.target.value) || 0 })}
-                                                                            className="h-9 w-full text-center"
+                                                                            className="h-8 sm:h-9 w-full text-center text-xs sm:text-sm"
                                                                             placeholder="0"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3">
+                                                                    <td className="py-2 sm:py-3">
                                                                         <Input
                                                                             type="number"
                                                                             value={food.fat || ""}
                                                                             onChange={(e) => updateFood(meal.id, food.id, { fat: parseInt(e.target.value) || 0 })}
-                                                                            className="h-9 w-full text-center"
+                                                                            className="h-8 sm:h-9 w-full text-center text-xs sm:text-sm"
                                                                             placeholder="0"
                                                                         />
                                                                     </td>
-                                                                    <td className="py-3">
+                                                                    <td className="py-2 sm:py-3">
                                                                         <Button
                                                                             variant="ghost"
                                                                             size="icon"
                                                                             onClick={() => removeFood(meal.id, food.id)}
-                                                                            className="h-9 w-9 text-muted-foreground hover:text-destructive"
+                                                                            className="h-8 w-8 sm:h-9 sm:w-9 text-muted-foreground hover:text-destructive"
                                                                         >
-                                                                            <X className="w-4 h-4" />
+                                                                            <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                                                         </Button>
                                                                     </td>
                                                                 </tr>
                                                             ))
                                                         ) : (
                                                             <tr>
-                                                                <td colSpan={7} className="py-8 text-center text-muted-foreground text-sm">
+                                                                <td colSpan={7} className="py-6 sm:py-8 text-center text-muted-foreground text-xs sm:text-sm px-4">
                                                                     Henüz besin eklenmemiş. "Besin Ekle" butonuna tıklayarak başlayın.
                                                                 </td>
                                                             </tr>
@@ -1253,13 +1259,13 @@ export default function DietPlanBuilderPage() {
                                                     {meal.foods.length > 0 && (
                                                         <tfoot>
                                                             <tr className="bg-muted/30 font-medium">
-                                                                <td colSpan={2} className="py-3 px-4">
+                                                                <td colSpan={2} className="py-2 sm:py-3 px-2 sm:px-4">
                                                                     <span className="text-xs text-muted-foreground">Toplam</span>
                                                                 </td>
-                                                                <td className="py-3 text-center font-semibold">{mealCalories}</td>
-                                                                <td className="py-3 text-center font-semibold">{mealProtein}</td>
-                                                                <td className="py-3 text-center font-semibold">{mealCarbs}</td>
-                                                                <td className="py-3 text-center font-semibold">{mealFat}</td>
+                                                                <td className="py-2 sm:py-3 text-center font-semibold text-xs sm:text-sm">{mealCalories}</td>
+                                                                <td className="py-2 sm:py-3 text-center font-semibold text-xs sm:text-sm">{mealProtein}</td>
+                                                                <td className="py-2 sm:py-3 text-center font-semibold text-xs sm:text-sm">{mealCarbs}</td>
+                                                                <td className="py-2 sm:py-3 text-center font-semibold text-xs sm:text-sm">{mealFat}</td>
                                                                 <td></td>
                                                             </tr>
                                                         </tfoot>
@@ -1270,12 +1276,12 @@ export default function DietPlanBuilderPage() {
 
                                         {/* Meal Notes */}
                                         <div className="space-y-2">
-                                            <Label className="text-base font-semibold">Öğün Notu</Label>
+                                            <Label className="text-sm sm:text-base font-semibold">Öğün Notu</Label>
                                             <textarea
                                                 value={meal.notes}
                                                 onChange={(e) => updateMeal(meal.id, { notes: e.target.value })}
                                                 placeholder="Bu öğün için notlar..."
-                                                className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                                className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-xs sm:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                                             />
                                         </div>
                                     </div>
@@ -1287,15 +1293,15 @@ export default function DietPlanBuilderPage() {
 
                 {/* Preview Dialog */}
                 <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
-                    <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                    <DialogContent className="max-w-[95vw] sm:max-w-3xl max-h-[90vh] overflow-y-auto px-3 sm:px-6">
                         <DialogHeader>
-                            <DialogTitle className="flex items-center gap-2">
-                                <FileText className="w-5 h-5" />
+                            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+                                <FileText className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
                                 PDF Önizleme
                             </DialogTitle>
                         </DialogHeader>
                         
-                        <div className="space-y-4 p-4 text-sm">
+                        <div className="space-y-3 sm:space-y-4 p-2 sm:p-4 text-xs sm:text-sm">
                             <div className="text-center border-b pb-4">
                                 <h1 className="text-xl font-bold">{planInfo.title}</h1>
                                 <p className="text-muted-foreground text-xs mt-1">
@@ -1337,10 +1343,10 @@ export default function DietPlanBuilderPage() {
                             )}
                         </div>
 
-                        <div className="flex justify-end gap-2 pt-4 border-t">
-                            <Button variant="outline" onClick={() => setIsPreviewOpen(false)}>Kapat</Button>
-                            <Button onClick={handleDownloadPDF} className="gap-2">
-                                <Download className="w-4 h-4" />
+                        <div className="flex flex-col sm:flex-row justify-end gap-2 pt-3 sm:pt-4 border-t">
+                            <Button variant="outline" onClick={() => setIsPreviewOpen(false)} className="w-full sm:w-auto">Kapat</Button>
+                            <Button onClick={handleDownloadPDF} className="gap-2 w-full sm:w-auto">
+                                <Download className="w-4 h-4 shrink-0" />
                                 PDF İndir
                             </Button>
                         </div>

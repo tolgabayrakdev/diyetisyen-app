@@ -193,10 +193,10 @@ export default function FinancialRecordsPage() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-bold tracking-tight">Finansal Kayıtlar</h1>
-                    <p className="text-sm text-muted-foreground">
+            <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="space-y-1 min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">Finansal Kayıtlar</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                         Tüm danışanların finansal kayıtlarını görüntüleyin ve yönetin
                     </p>
                 </div>
@@ -205,79 +205,81 @@ export default function FinancialRecordsPage() {
                         ? clients.find(c => c.id === clientFilter) 
                         : null;
                     return (
-                        <FinancialPDFReport
-                            records={filteredRecords}
-                            totalAmount={totalAmount}
-                            paidAmount={paidAmount}
-                            pendingAmount={pendingAmount}
-                            overdueAmount={overdueAmount}
-                            filters={{
-                                searchTerm,
-                                statusFilter,
-                                clientFilter,
-                                clientName: selectedClient 
-                                    ? `${selectedClient.first_name} ${selectedClient.last_name}`
-                                    : undefined,
-                                timeFilter,
-                            }}
-                        />
+                        <div className="w-full sm:w-auto shrink-0">
+                            <FinancialPDFReport
+                                records={filteredRecords}
+                                totalAmount={totalAmount}
+                                paidAmount={paidAmount}
+                                pendingAmount={pendingAmount}
+                                overdueAmount={overdueAmount}
+                                filters={{
+                                    searchTerm,
+                                    statusFilter,
+                                    clientFilter,
+                                    clientName: selectedClient 
+                                        ? `${selectedClient.first_name} ${selectedClient.last_name}`
+                                        : undefined,
+                                    timeFilter,
+                                }}
+                            />
+                        </div>
                     );
                 })()}
             </div>
 
             {/* Summary Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="border rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground mb-1">Toplam</p>
-                    <p className="text-2xl font-semibold">{formatCurrency(totalAmount)}</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+                <div className="border rounded-lg p-2.5 sm:p-3 md:p-4">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Toplam</p>
+                    <p className="text-base sm:text-xl md:text-2xl font-semibold truncate">{formatCurrency(totalAmount)}</p>
                 </div>
-                <div className="border border-green-500 rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground mb-1">Ödenen</p>
-                    <p className="text-2xl font-semibold text-green-600">{formatCurrency(paidAmount)}</p>
+                <div className="border border-green-500 rounded-lg p-2.5 sm:p-3 md:p-4">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Ödenen</p>
+                    <p className="text-base sm:text-xl md:text-2xl font-semibold text-green-600 truncate">{formatCurrency(paidAmount)}</p>
                 </div>
-                <div className="border border-orange-500 rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground mb-1">Bekleyen</p>
-                    <p className="text-2xl font-semibold text-orange-600">{formatCurrency(pendingAmount)}</p>
+                <div className="border border-orange-500 rounded-lg p-2.5 sm:p-3 md:p-4">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Bekleyen</p>
+                    <p className="text-base sm:text-xl md:text-2xl font-semibold text-orange-600 truncate">{formatCurrency(pendingAmount)}</p>
                 </div>
-                <div className="border border-red-500 rounded-lg p-4">
-                    <p className="text-sm text-muted-foreground mb-1">Gecikmiş</p>
-                    <p className="text-2xl font-semibold text-red-600">{formatCurrency(overdueAmount)}</p>
+                <div className="border border-red-500 rounded-lg p-2.5 sm:p-3 md:p-4">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1">Gecikmiş</p>
+                    <p className="text-base sm:text-xl md:text-2xl font-semibold text-red-600 truncate">{formatCurrency(overdueAmount)}</p>
                 </div>
             </div>
 
             {/* Top Clients Section */}
             {topClientsList.length > 0 && (
-                <div className="border rounded-lg p-6 bg-muted/30">
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="rounded-lg bg-primary/10 p-2">
-                            <Award className="h-5 w-5 text-primary" />
+                <div className="border rounded-lg p-3 sm:p-4 md:p-6 bg-muted/30">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                        <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
+                            <Award className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                         </div>
-                        <div>
-                            <h2 className="text-xl font-semibold">En Fazla Ücret Alınan Danışanlar</h2>
-                            <p className="text-sm text-muted-foreground">
+                        <div className="min-w-0">
+                            <h2 className="text-base sm:text-lg md:text-xl font-semibold">En Fazla Ücret Alınan Danışanlar</h2>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
                                 Ödenen kayıtlara göre sıralama
                             </p>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
                         {topClientsList.map((client, index) => (
                             <Link
                                 key={client.client_id}
                                 to={`/clients/${client.client_id}/financial`}
-                                className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent transition-colors"
+                                className="flex items-center justify-between p-2.5 sm:p-3 border rounded-lg hover:bg-accent transition-colors"
                             >
-                                <div className="flex items-center gap-3">
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-semibold text-sm">
+                                <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                                    <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 text-primary font-semibold text-xs sm:text-sm shrink-0">
                                         {index + 1}
                                     </div>
-                                    <div>
-                                        <p className="font-medium text-sm">{client.name}</p>
-                                        <p className="text-xs text-muted-foreground">
+                                    <div className="min-w-0 flex-1">
+                                        <p className="font-medium text-xs sm:text-sm truncate">{client.name}</p>
+                                        <p className="text-xs text-muted-foreground truncate">
                                             {formatCurrency(client.total)}
                                         </p>
                                     </div>
                                 </div>
-                                <User className="h-4 w-4 text-muted-foreground" />
+                                <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
                             </Link>
                         ))}
                     </div>
@@ -285,14 +287,14 @@ export default function FinancialRecordsPage() {
             )}
 
             {/* Filters Section */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
-                        <Filter className="h-5 w-5 text-primary" />
+            <div className="space-y-3 sm:space-y-6">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
+                        <Filter className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
-                    <div>
-                        <h2 className="text-xl font-semibold">Filtrele ve Ara</h2>
-                        <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0">
+                        <h2 className="text-base sm:text-lg md:text-xl font-semibold">Filtrele ve Ara</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             Finansal kayıtları filtreleyin ve arayın
                         </p>
                     </div>
@@ -300,8 +302,8 @@ export default function FinancialRecordsPage() {
                 
                 <Separator />
                 
-                <div className="flex flex-wrap gap-4">
-                    <div className="relative flex-1 min-w-[200px]">
+                <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 md:gap-4">
+                    <div className="relative flex-1 min-w-full sm:min-w-[200px]">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                             placeholder="Danışan adı, açıklama veya tutar ara..."
@@ -314,7 +316,7 @@ export default function FinancialRecordsPage() {
                         setTimeFilter(value);
                         setPage(1);
                     }}>
-                        <SelectTrigger className="w-[150px]">
+                        <SelectTrigger className="w-full sm:w-[150px]">
                             <SelectValue placeholder="Zaman" />
                         </SelectTrigger>
                         <SelectContent>
@@ -328,7 +330,7 @@ export default function FinancialRecordsPage() {
                         setStatusFilter(value);
                         setPage(1);
                     }}>
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-full sm:w-[180px]">
                             <SelectValue placeholder="Durum" />
                         </SelectTrigger>
                         <SelectContent>
@@ -342,7 +344,7 @@ export default function FinancialRecordsPage() {
                         setClientFilter(value);
                         setPage(1);
                     }}>
-                        <SelectTrigger className="w-[200px]">
+                        <SelectTrigger className="w-full sm:w-[200px]">
                             <SelectValue placeholder="Danışan" />
                         </SelectTrigger>
                         <SelectContent>
@@ -358,14 +360,14 @@ export default function FinancialRecordsPage() {
             </div>
 
             {/* Financial Records Table */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
-                        <DollarSign className="h-5 w-5 text-primary" />
+            <div className="space-y-3 sm:space-y-6">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
+                        <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
-                    <div>
-                        <h2 className="text-xl font-semibold">Kayıtlar</h2>
-                        <p className="text-sm text-muted-foreground">
+                    <div className="min-w-0">
+                        <h2 className="text-base sm:text-lg md:text-xl font-semibold">Kayıtlar</h2>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             {total} kayıt bulundu
                         </p>
                     </div>
@@ -374,9 +376,9 @@ export default function FinancialRecordsPage() {
                 <Separator />
 
                 {filteredRecords.length === 0 ? (
-                    <div className="text-center py-12 border rounded-lg">
-                        <DollarSign className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-                        <p className="text-sm text-muted-foreground">
+                    <div className="text-center py-8 sm:py-12 border rounded-lg">
+                        <DollarSign className="h-8 w-8 sm:h-12 sm:w-12 mx-auto text-muted-foreground mb-3 sm:mb-4" />
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             {searchTerm || statusFilter !== "all" || clientFilter !== "all"
                                 ? "Filtrelere uygun kayıt bulunamadı"
                                 : "Henüz finansal kayıt yok"}
@@ -384,7 +386,8 @@ export default function FinancialRecordsPage() {
                     </div>
                 ) : (
                     <>
-                        <div className="border rounded-lg">
+                        {/* Desktop Table */}
+                        <div className="hidden md:block border rounded-lg overflow-x-auto">
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -451,18 +454,80 @@ export default function FinancialRecordsPage() {
                             </Table>
                         </div>
 
+                        {/* Mobile Cards */}
+                        <div className="md:hidden space-y-2 sm:space-y-3">
+                            {filteredRecords.map((record) => (
+                                <div key={record.id} className="border rounded-lg p-3 space-y-2">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <Link
+                                            to={`/clients/${record.client_id}/financial`}
+                                            className="flex items-center gap-2 text-primary hover:underline min-w-0 flex-1"
+                                        >
+                                            <User className="h-4 w-4 shrink-0" />
+                                            <span className="font-medium text-sm truncate">
+                                                {record.first_name} {record.last_name}
+                                            </span>
+                                        </Link>
+                                        <Badge
+                                            variant={
+                                                record.status === "paid"
+                                                    ? "default"
+                                                    : record.status === "overdue"
+                                                    ? "destructive"
+                                                    : "secondary"
+                                            }
+                                            className="text-xs shrink-0"
+                                        >
+                                            {record.status === "paid"
+                                                ? "Ödendi"
+                                                : record.status === "overdue"
+                                                ? "Gecikmiş"
+                                                : "Beklemede"}
+                                        </Badge>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-xs text-muted-foreground">Tutar</span>
+                                        <span className="font-semibold text-sm">{formatCurrency(record.amount, record.currency)}</span>
+                                    </div>
+                                    {record.payment_date && (
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-xs text-muted-foreground">Ödeme Tarihi</span>
+                                            <span className="text-xs">{new Date(record.payment_date).toLocaleDateString("tr-TR")}</span>
+                                        </div>
+                                    )}
+                                    {record.payment_method && (
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-xs text-muted-foreground">Ödeme Yöntemi</span>
+                                            <span className="text-xs truncate">{record.payment_method}</span>
+                                        </div>
+                                    )}
+                                    {record.description && (
+                                        <div className="pt-2 border-t">
+                                            <p className="text-xs text-muted-foreground mb-1">Açıklama</p>
+                                            <p className="text-xs line-clamp-2 break-words">{record.description}</p>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center justify-between pt-1 border-t">
+                                        <span className="text-xs text-muted-foreground">Oluşturulma</span>
+                                        <span className="text-xs">{new Date(record.created_at).toLocaleDateString("tr-TR")}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
                         {/* Pagination */}
                         {totalPages > 1 && (
-                            <div className="flex items-center justify-between">
-                                <p className="text-sm text-muted-foreground">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
+                                <p className="text-xs sm:text-sm text-muted-foreground">
                                     Sayfa {page} / {totalPages}
                                 </p>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 w-full sm:w-auto">
                                     <Button
                                         variant="outline"
                                         size="sm"
                                         onClick={() => setPage((p) => Math.max(1, p - 1))}
                                         disabled={page === 1}
+                                        className="flex-1 sm:flex-none"
                                     >
                                         Önceki
                                     </Button>
@@ -471,6 +536,7 @@ export default function FinancialRecordsPage() {
                                         size="sm"
                                         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                                         disabled={page === totalPages}
+                                        className="flex-1 sm:flex-none"
                                     >
                                         Sonraki
                                     </Button>

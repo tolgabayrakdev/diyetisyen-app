@@ -365,12 +365,12 @@ export default function FoodSearchPage() {
 
 
     return (
-        <div className="space-y-6">
-            <div className="space-y-2">
+        <div className="space-y-4 sm:space-y-6">
+            <div className="space-y-1 sm:space-y-2">
                 <div className="flex items-center gap-2">
-                    <h1 className="text-3xl font-bold tracking-tight">Besin Veritabanı</h1>
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">Besin Veritabanı</h1>
                 </div>
-                <p className="text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground">
                     Kendi besin veritabanınızı oluşturun ve yönetin
                 </p>
             </div>
@@ -379,25 +379,25 @@ export default function FoodSearchPage() {
             <div className="border rounded-lg bg-muted/30">
                 <button
                     onClick={() => setIsInfoExpanded(!isInfoExpanded)}
-                    className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 transition-colors"
+                    className="w-full flex items-center gap-2 sm:gap-3 p-3 sm:p-4 hover:bg-muted/50 transition-colors"
                 >
-                    <Info className="h-5 w-5 text-primary shrink-0" />
-                    <h3 className="font-semibold flex-1 text-left">Besin Veritabanı Nedir?</h3>
+                    <Info className="h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0" />
+                    <h3 className="font-semibold flex-1 text-left text-sm sm:text-base">Besin Veritabanı Nedir?</h3>
                     {isInfoExpanded ? (
-                        <ChevronUp className="h-5 w-5 text-muted-foreground shrink-0" />
+                        <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground shrink-0" />
                     ) : (
-                        <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />
+                        <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground shrink-0" />
                     )}
                 </button>
                 {isInfoExpanded && (
-                    <div className="px-4 pb-4 space-y-3">
-                        <p className="text-sm text-muted-foreground">
+                    <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                             Besin Veritabanı, diyetisyenlerin kendi besin koleksiyonlarını oluşturup yönetebilecekleri özel bir sistemdir. 
                             Bu veritabanı sayesinde sık kullandığınız besinlerin besin değerlerini kaydedip, diyet planlarınızda hızlıca kullanabilirsiniz.
                         </p>
-                        <div className="space-y-1.5 mt-3">
-                            <h4 className="text-sm font-semibold">Faydaları:</h4>
-                            <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+                        <div className="space-y-1.5 mt-2 sm:mt-3">
+                            <h4 className="text-xs sm:text-sm font-semibold">Faydaları:</h4>
+                            <ul className="text-xs sm:text-sm text-muted-foreground space-y-1 list-disc list-inside">
                                 <li>Kendi besin kütüphanenizi oluşturun ve kategorilere göre organize edin</li>
                                 <li>Her besin için detaylı besin değerlerini (kalori, protein, karbonhidrat, yağ, vitaminler, mineraller) kaydedin</li>
                                 <li>Esnek birim sistemi ile besinleri farklı miktarlarda tanımlayın (100g, 1 adet, 100ml, vb.)</li>
@@ -415,10 +415,10 @@ export default function FoodSearchPage() {
                     <TabsTrigger value="categories">Kategoriler</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="categories" className="space-y-4">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-2xl font-semibold">Kategoriler</h2>
-                        <Button onClick={() => openCategoryDialog()}>
+                <TabsContent value="categories" className="space-y-3 sm:space-y-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
+                        <h2 className="text-xl sm:text-2xl font-semibold">Kategoriler</h2>
+                        <Button onClick={() => openCategoryDialog()} className="w-full sm:w-auto">
                             <Plus className="h-4 w-4 mr-2" />
                             Yeni Kategori
                         </Button>
@@ -433,83 +433,130 @@ export default function FoodSearchPage() {
                             Henüz kategori eklenmemiş. İlk kategorinizi oluşturun.
                         </div>
                     ) : (
-                        <div className="border rounded-lg">
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead className="w-16">Renk</TableHead>
-                                        <TableHead>Kategori Adı</TableHead>
-                                        <TableHead>Açıklama</TableHead>
-                                        <TableHead>Sıralama</TableHead>
-                                        <TableHead>Besin Sayısı</TableHead>
-                                        <TableHead className="text-right">İşlemler</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {categories.map((category) => {
-                                        return (
-                                            <TableRow key={category.id}>
-                                                <TableCell>
-                                                    <div className={`w-4 h-4 rounded-full ${getBackgroundColor(category.color)}`} />
-                                                </TableCell>
-                                                <TableCell className="font-medium">{category.name}</TableCell>
-                                                <TableCell>
-                                                    {category.description ? (
-                                                        <span className="text-sm text-muted-foreground">{category.description}</span>
-                                                    ) : (
-                                                        <span className="text-muted-foreground">-</span>
-                                                    )}
-                                                </TableCell>
-                                                <TableCell>{category.sort_order}</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="outline">{category.food_count}</Badge>
-                                                </TableCell>
-                                                <TableCell className="text-right">
-                                                    <div className="flex justify-end gap-2">
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            onClick={() => openCategoryDialog(category)}
-                                                        >
-                                                            <Edit className="h-4 w-4" />
-                                                        </Button>
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            onClick={() => deleteCategory(category.id)}
-                                                        >
-                                                            <Trash2 className="h-4 w-4 text-destructive" />
-                                                        </Button>
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
-                                            );
-                                        })}
-                                </TableBody>
-                            </Table>
-                        </div>
+                        <>
+                            {/* Desktop Table */}
+                            <div className="hidden md:block border rounded-lg overflow-x-auto">
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-16">Renk</TableHead>
+                                            <TableHead>Kategori Adı</TableHead>
+                                            <TableHead>Açıklama</TableHead>
+                                            <TableHead>Sıralama</TableHead>
+                                            <TableHead>Besin Sayısı</TableHead>
+                                            <TableHead className="text-right">İşlemler</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {categories.map((category) => {
+                                            return (
+                                                <TableRow key={category.id}>
+                                                    <TableCell>
+                                                        <div className={`w-4 h-4 rounded-full ${getBackgroundColor(category.color)}`} />
+                                                    </TableCell>
+                                                    <TableCell className="font-medium">{category.name}</TableCell>
+                                                    <TableCell>
+                                                        {category.description ? (
+                                                            <span className="text-sm text-muted-foreground">{category.description}</span>
+                                                        ) : (
+                                                            <span className="text-muted-foreground">-</span>
+                                                        )}
+                                                    </TableCell>
+                                                    <TableCell>{category.sort_order}</TableCell>
+                                                    <TableCell>
+                                                        <Badge variant="outline">{category.food_count}</Badge>
+                                                    </TableCell>
+                                                    <TableCell className="text-right">
+                                                        <div className="flex justify-end gap-2">
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                onClick={() => openCategoryDialog(category)}
+                                                            >
+                                                                <Edit className="h-4 w-4" />
+                                                            </Button>
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                onClick={() => deleteCategory(category.id)}
+                                                            >
+                                                                <Trash2 className="h-4 w-4 text-destructive" />
+                                                            </Button>
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
+                                                );
+                                            })}
+                                    </TableBody>
+                                </Table>
+                            </div>
+
+                            {/* Mobile Cards */}
+                            <div className="md:hidden space-y-2">
+                                {categories.map((category) => (
+                                    <div key={category.id} className="border rounded-lg p-3 space-y-2">
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                                                <div className={`w-4 h-4 rounded-full shrink-0 ${getBackgroundColor(category.color)}`} />
+                                                <h3 className="font-medium text-sm truncate">{category.name}</h3>
+                                            </div>
+                                            <div className="flex items-center gap-1 shrink-0">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0"
+                                                    onClick={() => openCategoryDialog(category)}
+                                                >
+                                                    <Edit className="h-3.5 w-3.5" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0"
+                                                    onClick={() => deleteCategory(category.id)}
+                                                >
+                                                    <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        {category.description && (
+                                            <p className="text-xs text-muted-foreground break-words">{category.description}</p>
+                                        )}
+                                        <div className="flex items-center justify-between pt-2 border-t">
+                                            <span className="text-xs text-muted-foreground">Sıralama</span>
+                                            <span className="text-xs font-medium">{category.sort_order}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-xs text-muted-foreground">Besin Sayısı</span>
+                                            <Badge variant="outline" className="text-xs">{category.food_count}</Badge>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
                     )}
                 </TabsContent>
 
-                <TabsContent value="foods" className="space-y-4">
-                    <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-                        <h2 className="text-2xl font-semibold">Besinler</h2>
-                        <div className="flex gap-2">
+                <TabsContent value="foods" className="space-y-3 sm:space-y-4">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between items-start sm:items-center">
+                        <h2 className="text-xl sm:text-2xl font-semibold">Besinler</h2>
+                        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                             <Sheet open={isSelectionSheetOpen} onOpenChange={setIsSelectionSheetOpen}>
                                 <SheetTrigger asChild>
-                                    <Button variant="outline">
+                                    <Button variant="outline" className="w-full sm:w-auto">
                                         <Calculator className="h-4 w-4 mr-2" />
-                                        Besin Seç ve Hesapla
+                                        <span className="hidden sm:inline">Besin Seç ve Hesapla</span>
+                                        <span className="sm:hidden">Hesapla</span>
                                     </Button>
                                 </SheetTrigger>
-                                <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
-                                    <SheetHeader>
-                                        <SheetTitle>Besin Seç ve Toplam Hesapla</SheetTitle>
-                                        <SheetDescription>
+                                <SheetContent className="w-full sm:max-w-2xl overflow-y-auto px-3 sm:px-6">
+                                    <SheetHeader className="px-0">
+                                        <SheetTitle className="text-base sm:text-lg">Besin Seç ve Toplam Hesapla</SheetTitle>
+                                        <SheetDescription className="text-xs sm:text-sm">
                                             Besinleri seçip miktarlarını girerek toplam kalori, protein, karbonhidrat ve yağ değerlerini hesaplayın
                                         </SheetDescription>
                                     </SheetHeader>
-                                    <div className="mt-6 space-y-4 px-2 sm:px-4">
+                                    <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4 px-0">
                                         {/* Search in Sheet */}
                                         <div className="relative">
                                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -521,28 +568,29 @@ export default function FoodSearchPage() {
                                         
                                         {/* Selected Foods List */}
                                         {selectedFoods.size > 0 && (
-                                            <div className="space-y-3">
-                                                <div className="flex items-center justify-between">
-                                                    <h3 className="font-semibold">Seçilen Besinler ({selectedFoods.size})</h3>
+                                            <div className="space-y-2 sm:space-y-3">
+                                                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                                                    <h3 className="font-semibold text-sm sm:text-base">Seçilen Besinler ({selectedFoods.size})</h3>
                                                     <Button
                                                         variant="ghost"
                                                         size="sm"
                                                         onClick={() => setSelectedFoods(new Map())}
+                                                        className="w-full sm:w-auto"
                                                     >
                                                         <X className="h-4 w-4 mr-2" />
                                                         Temizle
                                                     </Button>
                                                 </div>
-                                                <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                                                <div className="space-y-2 max-h-[250px] sm:max-h-[300px] overflow-y-auto">
                                                     {Array.from(selectedFoods.entries()).map(([foodId, { food, quantity }]) => (
-                                                        <div key={foodId} className="flex items-center gap-3 p-3 border rounded-lg">
-                                                            <div className="flex-1 min-w-0">
-                                                                <div className="font-medium truncate">{food.name}</div>
+                                                        <div key={foodId} className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 p-2.5 sm:p-3 border rounded-lg">
+                                                            <div className="flex-1 min-w-0 w-full sm:w-auto">
+                                                                <div className="font-medium text-sm truncate">{food.name}</div>
                                                                 <div className="text-xs text-muted-foreground">
                                                                     Birim: {food.unit}
                                                                 </div>
                                                             </div>
-                                                            <div className="flex items-center gap-2 shrink-0">
+                                                            <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
                                                                 <Label htmlFor={`sheet-qty-${foodId}`} className="text-xs whitespace-nowrap">Miktar:</Label>
                                                                 <Input
                                                                     id={`sheet-qty-${foodId}`}
@@ -556,7 +604,7 @@ export default function FoodSearchPage() {
                                                                         newSelected.set(foodId, { food, quantity: newQty });
                                                                         setSelectedFoods(newSelected);
                                                                     }}
-                                                                    className="w-20"
+                                                                    className="w-20 flex-1 sm:flex-none"
                                                                 />
                                                                 <span className="text-xs text-muted-foreground">
                                                                     {food.unit.includes('g') ? 'g' : food.unit.includes('ml') ? 'ml' : 'adet'}
@@ -564,6 +612,7 @@ export default function FoodSearchPage() {
                                                                 <Button
                                                                     variant="ghost"
                                                                     size="sm"
+                                                                    className="h-8 w-8 p-0"
                                                                     onClick={() => {
                                                                         const newSelected = new Map(selectedFoods);
                                                                         newSelected.delete(foodId);
@@ -578,27 +627,27 @@ export default function FoodSearchPage() {
                                                 </div>
                                                 
                                                 {/* Totals in Sheet */}
-                                                <div className="border-t pt-4">
-                                                    <h4 className="font-semibold mb-3">Toplam Besin Değerleri</h4>
-                                                    <div className="grid grid-cols-2 gap-3">
-                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                <div className="border-t pt-3 sm:pt-4">
+                                                    <h4 className="font-semibold text-sm sm:text-base mb-2 sm:mb-3">Toplam Besin Değerleri</h4>
+                                                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                                                        <div className="p-2 sm:p-3 rounded-lg border bg-muted/30">
                                                             <div className="text-xs text-muted-foreground mb-1">Toplam Kalori</div>
-                                                            <div className="text-xl font-bold">{totals.calories.toFixed(1)}</div>
+                                                            <div className="text-lg sm:text-xl font-bold">{totals.calories.toFixed(1)}</div>
                                                             <div className="text-xs text-muted-foreground">kcal</div>
                                                         </div>
-                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                        <div className="p-2 sm:p-3 rounded-lg border bg-muted/30">
                                                             <div className="text-xs text-muted-foreground mb-1">Toplam Protein</div>
-                                                            <div className="text-xl font-bold">{totals.protein.toFixed(1)}</div>
+                                                            <div className="text-lg sm:text-xl font-bold">{totals.protein.toFixed(1)}</div>
                                                             <div className="text-xs text-muted-foreground">g</div>
                                                         </div>
-                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                        <div className="p-2 sm:p-3 rounded-lg border bg-muted/30">
                                                             <div className="text-xs text-muted-foreground mb-1">Toplam Karbonhidrat</div>
-                                                            <div className="text-xl font-bold">{totals.carbs.toFixed(1)}</div>
+                                                            <div className="text-lg sm:text-xl font-bold">{totals.carbs.toFixed(1)}</div>
                                                             <div className="text-xs text-muted-foreground">g</div>
                                                         </div>
-                                                        <div className="p-3 rounded-lg border bg-muted/30">
+                                                        <div className="p-2 sm:p-3 rounded-lg border bg-muted/30">
                                                             <div className="text-xs text-muted-foreground mb-1">Toplam Yağ</div>
-                                                            <div className="text-xl font-bold">{totals.fat.toFixed(1)}</div>
+                                                            <div className="text-lg sm:text-xl font-bold">{totals.fat.toFixed(1)}</div>
                                                             <div className="text-xs text-muted-foreground">g</div>
                                                         </div>
                                                     </div>
@@ -608,14 +657,14 @@ export default function FoodSearchPage() {
                                         
                                         {/* Foods List in Sheet */}
                                         <div className="space-y-2">
-                                            <h3 className="font-semibold">Besinler</h3>
-                                            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+                                            <h3 className="font-semibold text-sm sm:text-base">Besinler</h3>
+                                            <div className="space-y-2 max-h-[300px] sm:max-h-[400px] overflow-y-auto">
                                                 {foods.map((food) => {
                                                     const isSelected = selectedFoods.has(food.id);
                                                     return (
                                                         <div
                                                             key={food.id}
-                                                            className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50 cursor-pointer"
+                                                            className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 border rounded-lg hover:bg-muted/50 cursor-pointer"
                                                             onClick={() => {
                                                                 const newSelected = new Map(selectedFoods);
                                                                 if (isSelected) {
@@ -641,19 +690,20 @@ export default function FoodSearchPage() {
                                                                     }
                                                                     setSelectedFoods(newSelected);
                                                                 }}
+                                                                className="shrink-0"
                                                             />
                                                             <div className="flex-1 min-w-0">
-                                                                <div className="font-medium">{food.name}</div>
-                                                                <div className="text-xs text-muted-foreground">
+                                                                <div className="font-medium text-sm truncate">{food.name}</div>
+                                                                <div className="text-xs text-muted-foreground flex flex-wrap items-center gap-1 mt-0.5">
                                                                     {food.category_name && (
                                                                         <Badge
                                                                             variant="outline"
-                                                                            className={`text-xs mr-2 ${food.category_color ? `${getTextColor(food.category_color)} border-current ${getBackgroundColor(food.category_color)}/10` : ""}`}
+                                                                            className={`text-xs shrink-0 ${food.category_color ? `${getTextColor(food.category_color)} border-current ${getBackgroundColor(food.category_color)}/10` : ""}`}
                                                                         >
                                                                             {food.category_name}
                                                                         </Badge>
                                                                     )}
-                                                                    {food.unit} • {food.nutrients?.energy_kcal ? `${food.nutrients.energy_kcal} kcal` : "-"}
+                                                                    <span className="truncate">{food.unit} • {food.nutrients?.energy_kcal ? `${food.nutrients.energy_kcal} kcal` : "-"}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -664,7 +714,7 @@ export default function FoodSearchPage() {
                                     </div>
                                 </SheetContent>
                             </Sheet>
-                            <Button onClick={() => openFoodDialog()}>
+                            <Button onClick={() => openFoodDialog()} className="w-full sm:w-auto">
                                 <Plus className="h-4 w-4 mr-2" />
                                 Yeni Besin
                             </Button>
@@ -714,7 +764,8 @@ export default function FoodSearchPage() {
                         </div>
                     ) : (
                         <>
-                            <div className="border rounded-lg">
+                            {/* Desktop Table */}
+                            <div className="hidden md:block border rounded-lg overflow-x-auto">
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
@@ -798,18 +849,98 @@ export default function FoodSearchPage() {
                                 </Table>
                             </div>
 
+                            {/* Mobile Cards */}
+                            <div className="md:hidden space-y-2">
+                                {foods.map((food) => (
+                                    <div
+                                        key={food.id}
+                                        className="border rounded-lg p-3 space-y-2 cursor-pointer hover:bg-muted/50 transition-colors"
+                                        onClick={() => {
+                                            setViewingFood(food);
+                                            setIsFoodDetailOpen(true);
+                                        }}
+                                    >
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div className="min-w-0 flex-1">
+                                                <h3 className="font-medium text-sm truncate">{food.name}</h3>
+                                                {food.category_name && (
+                                                    <Badge
+                                                        variant="outline"
+                                                        className={`text-xs mt-1 ${food.category_color ? `${getTextColor(food.category_color)} border-current ${getBackgroundColor(food.category_color)}/10` : ""}`}
+                                                    >
+                                                        {food.category_name}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-1 shrink-0" onClick={(e) => e.stopPropagation()}>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0"
+                                                    onClick={() => {
+                                                        setViewingFood(food);
+                                                        setIsFoodDetailOpen(true);
+                                                    }}
+                                                >
+                                                    <Eye className="h-3.5 w-3.5" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0"
+                                                    onClick={() => openFoodDialog(food)}
+                                                >
+                                                    <Edit className="h-3.5 w-3.5" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="h-7 w-7 p-0"
+                                                    onClick={() => deleteFood(food.id)}
+                                                >
+                                                    <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                                                </Button>
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-2 pt-2 border-t">
+                                            <div>
+                                                <span className="text-xs text-muted-foreground">Birim</span>
+                                                <p className="text-xs font-medium">{food.unit}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-xs text-muted-foreground">Kalori</span>
+                                                <p className="text-xs font-medium">{food.nutrients?.energy_kcal ? `${food.nutrients.energy_kcal} kcal` : "-"}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-xs text-muted-foreground">Protein</span>
+                                                <p className="text-xs font-medium">{food.nutrients?.protein_g ? `${food.nutrients.protein_g}g` : "-"}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-xs text-muted-foreground">Karbonhidrat</span>
+                                                <p className="text-xs font-medium">{food.nutrients?.carbohydrates_g ? `${food.nutrients.carbohydrates_g}g` : "-"}</p>
+                                            </div>
+                                            <div>
+                                                <span className="text-xs text-muted-foreground">Yağ</span>
+                                                <p className="text-xs font-medium">{food.nutrients?.fat_g ? `${food.nutrients.fat_g}g` : "-"}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
                             {/* Pagination */}
                             {foodPagination.totalPages > 1 && (
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm text-muted-foreground">
+                                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
+                                    <div className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
                                         Toplam {foodPagination.total} besin, Sayfa {foodPagination.page} / {foodPagination.totalPages}
                                     </div>
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 w-full sm:w-auto">
                                         <Button
                                             variant="outline"
                                             size="sm"
                                             onClick={() => setFoodPagination({ ...foodPagination, page: foodPagination.page - 1 })}
                                             disabled={foodPagination.page === 1}
+                                            className="flex-1 sm:flex-none"
                                         >
                                             <ChevronLeft className="h-4 w-4" />
                                             Önceki
@@ -819,6 +950,7 @@ export default function FoodSearchPage() {
                                             size="sm"
                                             onClick={() => setFoodPagination({ ...foodPagination, page: foodPagination.page + 1 })}
                                             disabled={foodPagination.page >= foodPagination.totalPages}
+                                            className="flex-1 sm:flex-none"
                                         >
                                             Sonraki
                                             <ChevronRight className="h-4 w-4" />

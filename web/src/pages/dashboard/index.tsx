@@ -144,23 +144,23 @@ export default function DashboardIndex() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
             {/* Header */}
-            <div className="space-y-2" data-tour="welcome">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Hoş Geldiniz</h1>
-                <p className="text-sm sm:text-base text-muted-foreground">
+            <div className="space-y-1 sm:space-y-2" data-tour="welcome">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight">Hoş Geldiniz</h1>
+                <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                     {user.first_name} {user.last_name}, Diyetka sistemine hoş geldiniz.
                 </p>
             </div>
 
             {/* İstatistikler */}
-            <div className="space-y-6" data-tour="dashboard-stats">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-lg bg-primary/10 p-2">
+            <div className="space-y-3 sm:space-y-6" data-tour="dashboard-stats">
+                <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
                         <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                     </div>
-                    <div>
-                        <h2 className="text-lg sm:text-xl font-semibold">İstatistikler</h2>
+                    <div className="min-w-0">
+                        <h2 className="text-base sm:text-lg md:text-xl font-semibold">İstatistikler</h2>
                         <p className="text-xs sm:text-sm text-muted-foreground">
                             Genel bakış ve özet bilgiler
                         </p>
@@ -169,59 +169,59 @@ export default function DashboardIndex() {
                 
                 <Separator />
                 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-muted-foreground shrink-0" />
-                            <Label className="text-xs sm:text-sm font-medium">Toplam Danışan</Label>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+                    <div className="space-y-1.5 sm:space-y-2 p-2 sm:p-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium truncate">Toplam Danışan</Label>
                         </div>
-                        <div className="text-xl sm:text-2xl font-bold">{stats.totalClients}</div>
-                        <p className="text-xs text-muted-foreground">Aktif danışan sayısı</p>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold">{stats.totalClients}</div>
+                        <p className="text-xs text-muted-foreground hidden sm:block">Aktif danışan sayısı</p>
                     </div>
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                            <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
-                            <Label className="text-xs sm:text-sm font-medium">Diyet Planları</Label>
+                    <div className="space-y-1.5 sm:space-y-2 p-2 sm:p-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium truncate">Diyet Planları</Label>
                         </div>
-                        <div className="text-xl sm:text-2xl font-bold">{stats.totalDietPlans}</div>
-                        <p className="text-xs text-muted-foreground">Oluşturulan planlar</p>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold">{stats.totalDietPlans}</div>
+                        <p className="text-xs text-muted-foreground hidden sm:block">Oluşturulan planlar</p>
                     </div>
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                            <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
-                            <Label className="text-xs sm:text-sm font-medium">Notlar</Label>
+                    <div className="space-y-1.5 sm:space-y-2 p-2 sm:p-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium truncate">Notlar</Label>
                         </div>
-                        <div className="text-xl sm:text-2xl font-bold">{stats.totalNotes}</div>
-                        <p className="text-xs text-muted-foreground">Kaydedilen notlar</p>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold">{stats.totalNotes}</div>
+                        <p className="text-xs text-muted-foreground hidden sm:block">Kaydedilen notlar</p>
                     </div>
-                    <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                            <DollarSign className="h-4 w-4 text-muted-foreground shrink-0" />
-                            <Label className="text-xs sm:text-sm font-medium">Finansal Kayıt</Label>
+                    <div className="space-y-1.5 sm:space-y-2 p-2 sm:p-0">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                            <DollarSign className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                            <Label className="text-xs sm:text-sm font-medium truncate">Finansal Kayıt</Label>
                         </div>
-                        <div className="text-xl sm:text-2xl font-bold">{stats.totalFinancial}</div>
-                        <p className="text-xs text-muted-foreground">Toplam kayıt</p>
+                        <div className="text-lg sm:text-xl md:text-2xl font-bold">{stats.totalFinancial}</div>
+                        <p className="text-xs text-muted-foreground hidden sm:block">Toplam kayıt</p>
                     </div>
                 </div>
             </div>
 
             {/* Son Eklenen Danışanlar */}
             {recentClients.length > 0 && (
-                <div className="space-y-4 mt-6 sm:mt-10">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <div className="flex items-center gap-3">
-                            <div className="rounded-lg bg-primary/10 p-2">
+                <div className="space-y-3 sm:space-y-4 mt-4 sm:mt-6 md:mt-10">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
+                        <div className="flex items-center gap-2 sm:gap-3">
+                            <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
                                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div>
-                                <h2 className="text-lg sm:text-xl font-semibold">Son Eklenen Danışanlar</h2>
+                            <div className="min-w-0">
+                                <h2 className="text-base sm:text-lg md:text-xl font-semibold">Son Eklenen Danışanlar</h2>
                             </div>
                         </div>
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={() => navigate("/clients")}
-                            className="w-full sm:w-auto"
+                            className="w-full sm:w-auto shrink-0"
                         >
                             Tümünü Gör
                         </Button>
@@ -229,7 +229,7 @@ export default function DashboardIndex() {
                     
                     <Separator />
                     
-                    <div className="space-y-1.5">
+                    <div className="space-y-1 sm:space-y-1.5">
                         {recentClients.map((client) => {
                             const formatTimeAgo = (dateString: string) => {
                                 const date = new Date(dateString);
@@ -251,26 +251,26 @@ export default function DashboardIndex() {
                                 <button
                                     key={client.id}
                                     onClick={() => navigate(`/clients/${client.id}`)}
-                                    className="group flex items-center justify-between gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm w-full text-left"
+                                    className="group flex items-center justify-between gap-2 sm:gap-3 px-2.5 sm:px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm w-full text-left"
                                 >
-                                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                                            <Users className="h-4 w-4 text-primary" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                                        <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                            <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-medium text-sm truncate">
+                                            <p className="font-medium text-xs sm:text-sm truncate">
                                                 {client.first_name} {client.last_name}
                                             </p>
                                             {client.email && (
-                                                <p className="text-xs text-muted-foreground truncate">
+                                                <p className="text-xs text-muted-foreground truncate hidden sm:block">
                                                     {client.email}
                                                 </p>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2 shrink-0">
-                                        <span className="text-xs text-muted-foreground">{formatTimeAgo(client.created_at)}</span>
-                                        <ArrowRight className="h-3 w-3 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                                        <span className="text-xs text-muted-foreground whitespace-nowrap">{formatTimeAgo(client.created_at)}</span>
+                                        <ArrowRight className="h-3 w-3 text-muted-foreground group-hover:text-primary transition-colors shrink-0" />
                                     </div>
                                 </button>
                             );
@@ -280,21 +280,21 @@ export default function DashboardIndex() {
             )}
 
             {/* Son Aktiviteler */}
-            <div className="space-y-4 mt-6 sm:mt-10">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                        <div className="rounded-lg bg-primary/10 p-2">
-                            <Activity className="h-5 w-5 text-primary" />
+            <div className="space-y-3 sm:space-y-4 mt-4 sm:mt-6 md:mt-10">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="rounded-lg bg-primary/10 p-1.5 sm:p-2 shrink-0">
+                            <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                         </div>
-                        <div>
-                            <h2 className="text-lg sm:text-xl font-semibold">Son Aktiviteler</h2>
+                        <div className="min-w-0">
+                            <h2 className="text-base sm:text-lg md:text-xl font-semibold">Son Aktiviteler</h2>
                         </div>
                     </div>
                     <Button
                         variant="outline"
                         size="sm"
                         onClick={() => navigate("/activity-logs")}
-                        className="w-full sm:w-auto"
+                        className="w-full sm:w-auto shrink-0"
                     >
                         Tümünü Gör
                     </Button>
@@ -303,11 +303,11 @@ export default function DashboardIndex() {
                 <Separator />
                 
                 {recentActivities.length === 0 ? (
-                    <div className="text-center py-6 border rounded-lg">
-                        <p className="text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
+                    <div className="text-center py-4 sm:py-6 border rounded-lg">
+                        <p className="text-xs sm:text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
                     </div>
                 ) : (
-                    <div className="space-y-1.5">
+                    <div className="space-y-1 sm:space-y-1.5">
                         {recentActivities.map((log) => {
                             const getActionTypeBadge = (actionType: string | null) => {
                                 if (!actionType) return null;
@@ -317,7 +317,7 @@ export default function DashboardIndex() {
                                     delete: { label: "Silindi", variant: "destructive" },
                                 };
                                 const action = variants[actionType] || { label: actionType, variant: "outline" as const };
-                                return <Badge variant={action.variant} className="text-xs">{action.label}</Badge>;
+                                return <Badge variant={action.variant} className="text-xs shrink-0">{action.label}</Badge>;
                             };
 
                             const getEntityTypeLabel = (entityType: string | null) => {
@@ -352,11 +352,11 @@ export default function DashboardIndex() {
                             };
 
                             return (
-                                <div key={log.id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
-                                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                                <div key={log.id} className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 md:gap-3 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md hover:bg-muted/50 transition-colors text-sm">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
                                         {getActionTypeBadge(log.action_type)}
                                         {log.entity_type && (
-                                            <span className="text-muted-foreground text-xs hidden sm:inline">
+                                            <span className="text-muted-foreground text-xs hidden sm:inline shrink-0">
                                                 {getEntityTypeLabel(log.entity_type)}
                                             </span>
                                         )}
@@ -371,9 +371,9 @@ export default function DashboardIndex() {
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground shrink-0">
-                                        <Clock className="h-3 w-3" />
-                                        <span>{formatTimeAgo(log.created_at)}</span>
+                                    <div className="flex items-center gap-1 text-xs text-muted-foreground shrink-0">
+                                        <Clock className="h-3 w-3 shrink-0" />
+                                        <span className="whitespace-nowrap">{formatTimeAgo(log.created_at)}</span>
                                     </div>
                                 </div>
                             );

@@ -122,29 +122,31 @@ export default function ActivityLogsPage() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Aktivite Kayıtları</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">Aktivite Kayıtları</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                         Son 100 aktivite kaydı görüntüleniyor
                     </p>
                 </div>
                 <Button
                     onClick={handleExportAll}
                     disabled={exporting}
-                    className="gap-2"
+                    className="gap-2 w-full sm:w-auto shrink-0"
                 >
                     {exporting ? (
                         <>
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            Hazırlanıyor...
+                            <Loader2 className="h-4 w-4 animate-spin shrink-0" />
+                            <span className="hidden sm:inline">Hazırlanıyor...</span>
+                            <span className="sm:hidden">Hazırlanıyor</span>
                         </>
                     ) : (
                         <>
-                            <Download className="h-4 w-4" />
-                            Tüm Kayıtları İndir
+                            <Download className="h-4 w-4 shrink-0" />
+                            <span className="hidden sm:inline">Tüm Kayıtları İndir</span>
+                            <span className="sm:hidden">İndir</span>
                         </>
                     )}
                 </Button>
@@ -152,25 +154,25 @@ export default function ActivityLogsPage() {
 
             {/* Kayıtlar Listesi */}
             {logs.length === 0 ? (
-                <div className="text-center py-8 border rounded-lg">
-                    <Activity className="h-8 w-8 mx-auto text-muted-foreground mb-3" />
-                    <p className="text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
+                <div className="text-center py-6 sm:py-8 border rounded-lg">
+                    <Activity className="h-6 w-6 sm:h-8 sm:w-8 mx-auto text-muted-foreground mb-2 sm:mb-3" />
+                    <p className="text-xs sm:text-sm text-muted-foreground">Henüz aktivite kaydı yok</p>
                 </div>
             ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                     {logs.map((log) => (
-                        <div key={log.id} className="border rounded-lg p-3 hover:bg-muted/50 transition-colors">
-                            <div className="flex items-start justify-between">
-                                <div className="flex-1 space-y-2 min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap">
+                        <div key={log.id} className="border rounded-lg p-2.5 sm:p-3 hover:bg-muted/50 transition-colors">
+                            <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 space-y-1.5 sm:space-y-2 min-w-0">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                                         {getActionTypeBadge(log.action_type)}
                                         {log.entity_type && (
-                                            <Badge variant="outline" className="text-xs">
+                                            <Badge variant="outline" className="text-xs shrink-0">
                                                 {getEntityTypeLabel(log.entity_type)}
                                             </Badge>
                                         )}
                                         {log.client_first_name && log.client_last_name && (
-                                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                            <div className="flex items-center gap-1 text-xs text-muted-foreground min-w-0">
                                                 <User className="h-3 w-3 shrink-0" />
                                                 <span className="truncate">
                                                     {log.client_first_name} {log.client_last_name}
@@ -179,11 +181,11 @@ export default function ActivityLogsPage() {
                                         )}
                                     </div>
                                     {log.description && (
-                                        <p className="text-xs leading-relaxed">{log.description}</p>
+                                        <p className="text-xs leading-relaxed break-words">{log.description}</p>
                                     )}
-                                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                         <Calendar className="h-3 w-3 shrink-0" />
-                                        <span>
+                                        <span className="truncate">
                                             {new Date(log.created_at).toLocaleString("tr-TR", {
                                                 year: "numeric",
                                                 month: "short",

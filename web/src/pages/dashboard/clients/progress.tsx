@@ -385,16 +385,16 @@ export default function ClientProgressPage() {
                   : "text-muted-foreground";
 
         return (
-            <div className="border rounded-lg p-3">
+            <div className="border rounded-lg p-2.5 sm:p-3">
                 <p className="text-xs text-muted-foreground mb-1">{title}</p>
-                <div className="flex items-baseline gap-2">
-                    <span className="text-lg font-semibold">{value}</span>
-                    <span className="text-sm text-muted-foreground">{unit}</span>
+                <div className="flex items-baseline gap-1.5 sm:gap-2">
+                    <span className="text-base sm:text-lg font-semibold">{value}</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground">{unit}</span>
                 </div>
                 {change !== undefined && changePercent && (
                     <div className={`flex items-center gap-1 mt-1 text-xs ${trendColor}`}>
-                        <TrendIcon className="h-3 w-3" />
-                        <span>
+                        <TrendIcon className="h-3 w-3 shrink-0" />
+                        <span className="truncate">
                             {change > 0 ? "+" : ""}
                             {change} ({changePercent}%)
                         </span>
@@ -419,7 +419,7 @@ export default function ClientProgressPage() {
         <div className="space-y-6">
             {/* Breadcrumb */}
             <Breadcrumb>
-                <BreadcrumbList>
+                <BreadcrumbList className="flex-wrap">
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
                             <Link to="/clients">Danışanlar</Link>
@@ -428,27 +428,27 @@ export default function ClientProgressPage() {
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link to={`/clients/${id}`}>
+                            <Link to={`/clients/${id}`} className="truncate max-w-[150px] sm:max-w-none">
                                 {client ? `${client.first_name} ${client.last_name}` : "Danışan"}
                             </Link>
                         </BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
-                        <BreadcrumbPage>İlerleme Kayıtları</BreadcrumbPage>
+                        <BreadcrumbPage className="truncate max-w-[150px] sm:max-w-none">İlerleme Kayıtları</BreadcrumbPage>
                     </BreadcrumbItem>
                 </BreadcrumbList>
             </Breadcrumb>
 
             {/* Header */}
-            <div className="flex items-center justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">İlerleme Kayıtları</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-xl sm:text-2xl font-bold tracking-tight">İlerleme Kayıtları</h1>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 truncate">
                         {client && `${client.first_name} ${client.last_name} - `}İlerleme kayıtlarını görüntüleyin
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                     {progressLogs.length > 0 && client && (
                         <ProgressPDFReport
                             logs={progressLogs}
@@ -456,23 +456,24 @@ export default function ClientProgressPage() {
                             stats={stats}
                         />
                     )}
-                    <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2">
+                    <Button onClick={() => setIsCreateDialogOpen(true)} size="sm" className="gap-2 w-full sm:w-auto">
                         <Plus className="h-4 w-4" />
-                        Yeni Kayıt
+                        <span className="hidden sm:inline">Yeni Kayıt</span>
+                        <span className="sm:hidden">Yeni Kayıt</span>
                     </Button>
                 </div>
             </div>
 
             {/* AI Özetleri */}
             {progressLogs.length >= 2 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
                     {/* Kilo Değişimi Özeti */}
-                    <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-border">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg border border-border">
                         <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+                            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-600 dark:text-blue-400 shrink-0" />
                             <div className="min-w-0">
-                                <h3 className="font-medium text-sm text-gray-900 dark:text-gray-100">Kilo Değişimi Özeti</h3>
-                                <p className="text-xs text-muted-foreground truncate">AI analiz ile özet oluştur</p>
+                                <h3 className="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100">Kilo Değişimi Özeti</h3>
+                                <p className="text-xs text-muted-foreground truncate hidden sm:block">AI analiz ile özet oluştur</p>
                             </div>
                         </div>
                         <Button
@@ -480,7 +481,7 @@ export default function ClientProgressPage() {
                             size="sm"
                             variant="outline"
                             disabled={isLoadingSummary}
-                            className="gap-1.5 h-8 px-3 shrink-0"
+                            className="gap-1.5 h-8 px-3 shrink-0 w-full sm:w-auto"
                         >
                             <Sparkles className="h-3.5 w-3.5" />
                             <span className="text-xs">Oluştur</span>
@@ -488,12 +489,12 @@ export default function ClientProgressPage() {
                     </div>
 
                     {/* Haftalık İlerleme Yorumu */}
-                    <div className="flex items-center justify-between gap-3 p-3 rounded-lg border border-border">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-lg border border-border">
                         <div className="flex items-center gap-2 min-w-0 flex-1">
-                            <Sparkles className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-400 shrink-0" />
                             <div className="min-w-0">
-                                <h3 className="font-medium text-sm text-gray-900 dark:text-gray-100">Haftalık İlerleme</h3>
-                                <p className="text-xs text-muted-foreground truncate">AI ile haftalık yorum</p>
+                                <h3 className="font-medium text-xs sm:text-sm text-gray-900 dark:text-gray-100">Haftalık İlerleme</h3>
+                                <p className="text-xs text-muted-foreground truncate hidden sm:block">AI ile haftalık yorum</p>
                             </div>
                         </div>
                         <Button
@@ -501,7 +502,7 @@ export default function ClientProgressPage() {
                             size="sm"
                             variant="outline"
                             disabled={isLoadingComment}
-                            className="gap-1.5 h-8 px-3 shrink-0"
+                            className="gap-1.5 h-8 px-3 shrink-0 w-full sm:w-auto"
                         >
                             <Sparkles className="h-3.5 w-3.5" />
                             <span className="text-xs">Oluştur</span>
@@ -549,19 +550,19 @@ export default function ClientProgressPage() {
 
             {/* Grafikler Bölümü */}
             {chartData.length > 0 && (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                     <div>
-                        <h2 className="text-lg font-semibold mb-4">Grafikler</h2>
+                        <h2 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Grafikler</h2>
                     </div>
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                         {/* Kilo Grafiği */}
                     {chartData.some((d) => d.weight !== null) && (
-                        <div className="border rounded-lg p-2 md:p-4 overflow-x-auto">
-                            <div className="flex items-center gap-2 mb-3 md:mb-4">
-                                <Weight className="h-4 w-4 text-primary shrink-0" />
-                                <h3 className="font-semibold text-sm md:text-base">Kilo Takibi</h3>
+                        <div className="border rounded-lg p-2 sm:p-3 md:p-4 overflow-x-auto">
+                            <div className="flex items-center gap-2 mb-2 sm:mb-3 md:mb-4">
+                                <Weight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
+                                <h3 className="font-semibold text-xs sm:text-sm md:text-base">Kilo Takibi</h3>
                             </div>
-                            <div className="min-w-[600px] md:min-w-0">
+                            <div className="min-w-[500px] sm:min-w-[600px] md:min-w-0">
                                 <ChartContainer
                                     config={{
                                         weight: {
@@ -608,12 +609,12 @@ export default function ClientProgressPage() {
 
                     {/* Vücut Yağı ve Kas Kütlesi Grafiği */}
                     {(chartData.some((d) => d.bodyFat !== null) || chartData.some((d) => d.muscleMass !== null)) && (
-                        <div className="border rounded-lg p-2 md:p-4 overflow-x-auto">
-                            <div className="flex items-center gap-2 mb-3 md:mb-4">
-                                <BarChart3 className="h-4 w-4 text-primary shrink-0" />
-                                <h3 className="font-semibold text-sm md:text-base">Vücut Kompozisyonu</h3>
+                        <div className="border rounded-lg p-2 sm:p-3 md:p-4 overflow-x-auto">
+                            <div className="flex items-center gap-2 mb-2 sm:mb-3 md:mb-4">
+                                <BarChart3 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
+                                <h3 className="font-semibold text-xs sm:text-sm md:text-base">Vücut Kompozisyonu</h3>
                             </div>
-                            <div className="min-w-[600px] md:min-w-0">
+                            <div className="min-w-[500px] sm:min-w-[600px] md:min-w-0">
                                 <ChartContainer
                                     config={{
                                         bodyFat: {
@@ -679,16 +680,18 @@ export default function ClientProgressPage() {
 
             {/* İlerleme Kayıtları Bölümü */}
             <div>
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold">İlerleme Kayıtları</h2>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 mb-3 sm:mb-4">
+                    <h2 className="text-base sm:text-lg font-semibold">İlerleme Kayıtları</h2>
                     {progressLogs.length > 3 && (
                         <Button
                             variant="outline"
                             size="sm"
                             onClick={() => setIsAllLogsSheetOpen(true)}
-                            className="gap-2"
+                            className="gap-2 w-full sm:w-auto"
                         >
-                            Tümünü Gör ({progressLogs.length})
+                            <span className="hidden sm:inline">Tümünü Gör</span>
+                            <span className="sm:hidden">Tümü</span>
+                            <span>({progressLogs.length})</span>
                             <ChevronRight className="h-4 w-4" />
                         </Button>
                     )}
@@ -734,9 +737,9 @@ export default function ClientProgressPage() {
                             );
 
                             return (
-                        <div key={log.id} className="border rounded-lg p-3">
-                            <div className="flex items-center justify-between mb-3">
-                                <h3 className="font-semibold text-sm">
+                        <div key={log.id} className="border rounded-lg p-2.5 sm:p-3">
+                            <div className="flex items-center justify-between mb-2 sm:mb-3">
+                                <h3 className="font-semibold text-xs sm:text-sm">
                                     {new Date(log.log_date).toLocaleDateString("tr-TR", {
                                         year: "numeric",
                                         month: "short",
@@ -744,14 +747,14 @@ export default function ClientProgressPage() {
                                     })}
                                 </h3>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 sm:mb-3">
                                 {log.weight_kg && (
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                        <Weight className="h-4 w-4 text-primary shrink-0" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                        <Weight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Kilo</p>
-                                                    <div className="flex items-center gap-2">
-                                            <p className="text-sm font-semibold">{log.weight_kg} kg</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                            <p className="text-xs sm:text-sm font-semibold">{log.weight_kg} kg</p>
                                                         {weightComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -769,12 +772,12 @@ export default function ClientProgressPage() {
                                     </div>
                                 )}
                                 {log.body_fat_percent && (
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                        <Activity className="h-4 w-4 text-primary shrink-0" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                        <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Vücut Yağı</p>
-                                                    <div className="flex items-center gap-2">
-                                            <p className="text-sm font-semibold">%{log.body_fat_percent}</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                            <p className="text-xs sm:text-sm font-semibold">%{log.body_fat_percent}</p>
                                                         {bodyFatComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -792,12 +795,12 @@ export default function ClientProgressPage() {
                                     </div>
                                 )}
                                 {log.muscle_mass_kg && (
-                                    <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                        <TrendingUp className="h-4 w-4 text-primary shrink-0" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                        <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                             <p className="text-xs text-muted-foreground">Kas Kütlesi</p>
-                                                    <div className="flex items-center gap-2">
-                                            <p className="text-sm font-semibold">{log.muscle_mass_kg} kg</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                            <p className="text-xs sm:text-sm font-semibold">{log.muscle_mass_kg} kg</p>
                                                         {muscleMassComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -867,9 +870,9 @@ export default function ClientProgressPage() {
                             );
 
                             return (
-                                <div key={log.id} className="border rounded-lg p-3">
-                                    <div className="flex items-center justify-between mb-3">
-                                        <h3 className="font-semibold text-sm">
+                                <div key={log.id} className="border rounded-lg p-2.5 sm:p-3">
+                                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                                        <h3 className="font-semibold text-xs sm:text-sm">
                                             {new Date(log.log_date).toLocaleDateString("tr-TR", {
                                                 year: "numeric",
                                                 month: "short",
@@ -877,14 +880,14 @@ export default function ClientProgressPage() {
                                             })}
                                         </h3>
                                     </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-3">
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2 sm:mb-3">
                                         {log.weight_kg && (
-                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                                <Weight className="h-4 w-4 text-primary shrink-0" />
+                                            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                                <Weight className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                                     <p className="text-xs text-muted-foreground">Kilo</p>
-                                                    <div className="flex items-center gap-2">
-                                                        <p className="text-sm font-semibold">{log.weight_kg} kg</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                                        <p className="text-xs sm:text-sm font-semibold">{log.weight_kg} kg</p>
                                                         {weightComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -902,12 +905,12 @@ export default function ClientProgressPage() {
                                             </div>
                                         )}
                                         {log.body_fat_percent && (
-                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                                <Activity className="h-4 w-4 text-primary shrink-0" />
+                                            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                                <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                                     <p className="text-xs text-muted-foreground">Vücut Yağı</p>
-                                                    <div className="flex items-center gap-2">
-                                                        <p className="text-sm font-semibold">%{log.body_fat_percent}</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                                        <p className="text-xs sm:text-sm font-semibold">%{log.body_fat_percent}</p>
                                                         {bodyFatComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -925,12 +928,12 @@ export default function ClientProgressPage() {
                                             </div>
                                         )}
                                         {log.muscle_mass_kg && (
-                                            <div className="flex items-center gap-2 p-2 bg-muted/50 rounded-lg">
-                                                <TrendingUp className="h-4 w-4 text-primary shrink-0" />
+                                            <div className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-muted/50 rounded-lg">
+                                                <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary shrink-0" />
                                                 <div className="min-w-0 flex-1">
                                                     <p className="text-xs text-muted-foreground">Kas Kütlesi</p>
-                                                    <div className="flex items-center gap-2">
-                                                        <p className="text-sm font-semibold">{log.muscle_mass_kg} kg</p>
+                                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                                        <p className="text-xs sm:text-sm font-semibold">{log.muscle_mass_kg} kg</p>
                                                         {muscleMassComparison && (
                                                             <span
                                                                 className={`text-xs ${
@@ -1065,7 +1068,7 @@ export default function ClientProgressPage() {
                     }
                 }}
             >
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-blue-600 dark:text-blue-400" />
@@ -1183,7 +1186,7 @@ export default function ClientProgressPage() {
                     }
                 }}
             >
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
                             <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
@@ -1291,7 +1294,7 @@ export default function ClientProgressPage() {
 
             {/* Create Dialog */}
             <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full">
                     <DialogHeader>
                         <DialogTitle>Yeni İlerleme Kaydı</DialogTitle>
                         <DialogDescription>
@@ -1344,7 +1347,7 @@ export default function ClientProgressPage() {
                                 }
                             />
                         </div>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="weight_kg">Kilo (kg)</Label>
                                 <Input
