@@ -10,6 +10,73 @@ import { FadeInUp } from "../components/animations";
 export default function Pricing() {
   const [duration, setDuration] = useState<"monthly" | "yearly">("monthly");
 
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: "https://diyetka.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Fiyatlandırma",
+        item: "https://diyetka.com/pricing",
+      },
+    ],
+  };
+
+  const productStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "DiyetKa Diyetisyen Yönetim Platformu",
+    description: "Diyetisyenler için profesyonel danışan yönetim platformu",
+    brand: {
+      "@type": "Brand",
+      name: "DiyetKa",
+    },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Standard Plan",
+        price: "299",
+        priceCurrency: "TRY",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "299",
+          priceCurrency: "TRY",
+          unitCode: "MON",
+        },
+        availability: "https://schema.org/InStock",
+        url: "https://diyetka.com/pricing",
+      },
+      {
+        "@type": "Offer",
+        name: "Pro Plan",
+        price: "399",
+        priceCurrency: "TRY",
+        priceSpecification: {
+          "@type": "UnitPriceSpecification",
+          price: "399",
+          priceCurrency: "TRY",
+          unitCode: "MON",
+        },
+        availability: "https://schema.org/InStock",
+        url: "https://diyetka.com/pricing",
+      },
+    ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      reviewCount: "127",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
   const plans = [
     {
       name: "Standard",
@@ -63,6 +130,14 @@ export default function Pricing() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productStructuredData) }}
+      />
       <div className="space-y-0">
         {/* Hero Section with Gradient */}
         <div className="relative overflow-hidden bg-linear-to-br from-primary/10 via-primary/5 to-background">

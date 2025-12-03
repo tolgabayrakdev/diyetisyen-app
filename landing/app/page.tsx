@@ -18,6 +18,32 @@ export const metadata: Metadata = {
     "beslenme danışmanlığı yazılımı",
     "diyetisyen platformu",
     "ücretsiz deneme",
+    "diyetisyen uygulaması",
+    "beslenme uzmanı yazılımı",
+    "diyetisyen programı",
+    "beslenme danışmanlığı platformu",
+    "diyetisyen ofis yazılımı",
+    "beslenme takip programı",
+    "diyetisyen randevu sistemi",
+    "beslenme planı yazılımı",
+    "diyetisyen hasta takip sistemi",
+    "beslenme uzmanı programı",
+    "diyetisyen kliniği yazılımı",
+    "beslenme danışmanı platformu",
+    "diyetisyen pratik yazılımı",
+    "beslenme takip uygulaması",
+    "diyetisyen online platform",
+    "beslenme uzmanı uygulaması",
+    "diyetisyen yazılımı Türkiye",
+    "beslenme danışmanlığı sistemi",
+    "diyetisyen yönetim programı",
+    "beslenme takip yazılımı",
+    "diyetisyen CRM sistemi",
+    "beslenme uzmanı CRM",
+    "diyetisyen hasta yönetimi",
+    "beslenme danışmanı takip sistemi",
+    "diyetisyen pratik yönetimi",
+    "beslenme uzmanı yönetim sistemi",
   ],
   openGraph: {
     type: "website",
@@ -88,11 +114,56 @@ export default function Home() {
     contactPoint: {
       "@type": "ContactPoint",
       email: "diyetka@gmail.com",
+      telephone: "+905379854487",
       contactType: "Müşteri Hizmetleri",
+      areaServed: "TR",
+      availableLanguage: "Turkish",
+    },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Giresun",
+      addressCountry: "TR",
     },
     sameAs: [
       // Sosyal medya linkleri buraya eklenecek
     ],
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: "https://diyetka.com",
+      },
+    ],
+  };
+
+  const serviceStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Diyetisyen Yönetim Platformu",
+    description: "Diyetisyenler için kapsamlı danışan yönetim platformu. Diyet planları, ilerleme takibi, finansal yönetim ve daha fazlası.",
+    provider: {
+      "@type": "Organization",
+      name: "DiyetKa",
+      url: "https://diyetka.com",
+    },
+    areaServed: {
+      "@type": "Country",
+      name: "Türkiye",
+    },
+    serviceType: "Software as a Service",
+    offers: {
+      "@type": "Offer",
+      price: "299",
+      priceCurrency: "TRY",
+      availability: "https://schema.org/InStock",
+      url: "https://diyetka.com/pricing",
+    },
   };
 
   return (
@@ -104,6 +175,14 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
       />
       <div className="space-y-0">
         {/* Hero Banner Section with Gradient */}
@@ -188,8 +267,11 @@ export default function Home() {
                     <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-primary/10 border border-white/20 bg-white/5 backdrop-blur-sm transition-transform duration-500 hover:scale-[1.01]">
                       <img
                         src="/image_banner.png"
-                        alt="Diyetisyen Uygulaması Arayüzü"
+                        alt="DiyetKa diyetisyen yönetim platformu arayüzü - Danışan yönetimi, diyet planları ve ilerleme takibi ekran görüntüsü"
                         className="w-full h-auto object-cover"
+                        loading="lazy"
+                        width={1200}
+                        height={800}
                       />
                       {/* Glass overlay effect */}
                       <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none"></div>

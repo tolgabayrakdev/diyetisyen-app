@@ -42,6 +42,25 @@ export const metadata: Metadata = {
 };
 
 export default function FAQ() {
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: "https://diyetka.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Sık Sorulan Sorular",
+        item: "https://diyetka.com/faq",
+      },
+    ],
+  };
+
   const faqStructuredData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -147,6 +166,10 @@ export default function FAQ() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}

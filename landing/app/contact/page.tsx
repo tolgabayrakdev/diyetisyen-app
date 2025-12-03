@@ -40,6 +40,25 @@ export const metadata: Metadata = {
 };
 
 export default function Contact() {
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: "https://diyetka.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "İletişim",
+        item: "https://diyetka.com/contact",
+      },
+    ],
+  };
+
   const contactStructuredData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
@@ -57,6 +76,10 @@ export default function Contact() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactStructuredData) }}
@@ -87,21 +110,29 @@ export default function Contact() {
                 <div className="space-y-3 text-sm text-muted-foreground">
                   <div>
                     <p className="font-medium text-foreground mb-1">E-posta</p>
-                    <p>diyetka@gmail.com</p>
+                    <p>
+                      <a href="mailto:diyetka@gmail.com" className="text-primary hover:underline">
+                        diyetka@gmail.com
+                      </a>
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">Telefon</p>
-                    <p>+90 5379854487</p>
+                    <p>
+                      <a href="tel:+905379854487" className="text-primary hover:underline">
+                        +90 5379854487
+                      </a>
+                    </p>
                   </div>
                   <div>
                     <p className="font-medium text-foreground mb-1">Adres</p>
-                    <p className="leading-relaxed">
+                    <address className="leading-relaxed not-italic">
                       Giresun, Türkiye
                       <br />
-                      Çalışma Saatleri: Hafta içi 09:00-17:00
+                      Çalışma Saatleri: Hafta içi <time>09:00</time>-<time>17:00</time>
                       <br />
                       Cumartesi-Pazar kapalı
-                    </p>
+                    </address>
                   </div>
                 </div>
               </div>

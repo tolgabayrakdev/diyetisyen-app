@@ -8,10 +8,11 @@ export default function Header() {
         <Link href="/" className="flex items-center space-x-2">
           <Image 
             src="/logo.png" 
-            alt="DiyetKa Logo" 
+            alt="DiyetKa - Diyetisyen Yönetim Platformu Logo" 
             width={40} 
             height={40} 
             className="rounded-full"
+            priority
           />
           <span className="text-xl font-bold text-primary">DiyetKa</span>
         </Link>

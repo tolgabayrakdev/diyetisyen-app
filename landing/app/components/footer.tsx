@@ -81,8 +81,16 @@ export default function Footer() {
                   Bize Ulaşın
                 </Link>
               </li>
-              <li>Email: diyetka@gmail.com</li>
-              <li>Tel: +90 5379854487</li>
+              <li>
+                <a href="mailto:diyetka@gmail.com" className="hover:text-foreground transition-colors">
+                  Email: diyetka@gmail.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+905379854487" className="hover:text-foreground transition-colors">
+                  Tel: +90 5379854487
+                </a>
+              </li>
             </ul>
           </div>
         </div>

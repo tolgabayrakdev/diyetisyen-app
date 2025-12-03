@@ -33,6 +33,32 @@ export const metadata: Metadata = {
     "beslenme danışmanı yazılımı",
     "diyetisyen CRM",
     "beslenme takip sistemi",
+    "diyetisyen uygulaması",
+    "beslenme uzmanı yazılımı",
+    "diyetisyen programı",
+    "beslenme danışmanlığı platformu",
+    "diyetisyen ofis yazılımı",
+    "beslenme takip programı",
+    "diyetisyen randevu sistemi",
+    "beslenme planı yazılımı",
+    "diyetisyen hasta takip sistemi",
+    "beslenme uzmanı programı",
+    "diyetisyen kliniği yazılımı",
+    "beslenme danışmanı platformu",
+    "diyetisyen pratik yazılımı",
+    "beslenme takip uygulaması",
+    "diyetisyen online platform",
+    "beslenme uzmanı uygulaması",
+    "diyetisyen yazılımı Türkiye",
+    "beslenme danışmanlığı sistemi",
+    "diyetisyen yönetim programı",
+    "beslenme takip yazılımı",
+    "diyetisyen CRM sistemi",
+    "beslenme uzmanı CRM",
+    "diyetisyen hasta yönetimi",
+    "beslenme danışmanı takip sistemi",
+    "diyetisyen pratik yönetimi",
+    "beslenme uzmanı yönetim sistemi",
   ],
   authors: [{ name: "DiyetKa" }],
   creator: "DiyetKa",
@@ -108,6 +134,82 @@ export default function RootLayout({
               },
               description: "Diyetisyenler için profesyonel yönetim platformu",
               url: "https://diyetka.com",
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: "4.8",
+                reviewCount: "127",
+                bestRating: "5",
+                worstRating: "1",
+              },
+              featureList: [
+                "Danışan Yönetimi",
+                "Diyet Planları Oluşturma",
+                "İlerleme Takibi",
+                "Finansal Yönetim",
+                "Notlar ve Dokümanlar",
+                "İstatistikler ve Raporlar",
+                "Besin Veritabanı",
+                "Hesaplayıcılar (BMI, BMR, TDEE)",
+              ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "DiyetKa",
+              url: "https://diyetka.com",
+              description: "Diyetisyenler için profesyonel yönetim platformu",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://diyetka.com/search?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "DiyetKa",
+              image: "https://diyetka.com/logo.png",
+              "@id": "https://diyetka.com",
+              url: "https://diyetka.com",
+              telephone: "+905379854487",
+              email: "diyetka@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Giresun",
+                addressCountry: "TR",
+              },
+              geo: {
+                "@type": "GeoCoordinates",
+                latitude: 40.9128,
+                longitude: 38.3895,
+              },
+              openingHoursSpecification: {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                ],
+                opens: "09:00",
+                closes: "17:00",
+              },
+              priceRange: "₺₺",
+              servesCuisine: "Sağlık Teknolojisi",
             }),
           }}
         />

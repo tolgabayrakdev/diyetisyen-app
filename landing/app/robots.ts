@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/si-gin", "/api/"],
+        disallow: ["/sign-in", "/sign-up", "/api/"],
       },
     ],
     sitemap: "https://diyetka.com/sitemap.xml",

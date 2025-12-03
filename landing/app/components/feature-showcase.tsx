@@ -73,9 +73,11 @@ function LaptopMockup({ image, title }: { image: string; title: string }) {
           <div className="relative mt-3 rounded-lg overflow-hidden bg-white border border-gray-700">
             <img
               src={image}
-              alt={title}
+              alt={`DiyetKa ${title} özelliği ekran görüntüsü - Diyetisyen yönetim platformu`}
               className="w-full h-auto"
               loading="lazy"
+              width={1200}
+              height={800}
             />
             {/* Screen glare effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>

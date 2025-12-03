@@ -38,8 +38,32 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Ana Sayfa",
+        item: "https://diyetka.com",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Hakkımızda",
+        item: "https://diyetka.com/about",
+      },
+    ],
+  };
+
   return (
-    <div className="space-y-0">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="space-y-0">
       {/* Hero Section with Gradient */}
       <div className="relative overflow-hidden bg-linear-to-br from-primary/10 via-primary/5 to-background">
         <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28 lg:py-32">
@@ -123,5 +147,6 @@ export default function About() {
       </div>
       </div>
     </div>
+    </>
   );
 }
