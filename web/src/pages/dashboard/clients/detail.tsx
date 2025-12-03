@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Edit, User, Phone, Mail, Calendar, Ruler, Weight, FileText, DollarSign, TrendingUp, TrendingDown, StickyNote, Heart, Pill, AlertTriangle, Activity, Minus } from "lucide-react";
+import { Edit, User, Phone, Mail, Calendar, Ruler, Weight, FileText, DollarSign, TrendingUp, TrendingDown, StickyNote, Heart, Pill, AlertTriangle, Activity, Minus, CalendarIcon } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -23,6 +23,10 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 
 interface Client {
     id: string;
@@ -70,6 +74,8 @@ export default function ClientDetailPage() {
         allergies: "",
         medications: "",
     });
+    const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
+    const [isBirthDatePopoverOpen, setIsBirthDatePopoverOpen] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -78,6 +84,15 @@ export default function ClientDetailPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
+
+    // Reset birth date when dialog opens
+    useEffect(() => {
+        if (isEditDialogOpen && client) {
+            const birthDateValue = client.birth_date ? client.birth_date.split("T")[0] : "";
+            setBirthDate(birthDateValue ? new Date(birthDateValue) : undefined);
+            setIsBirthDatePopoverOpen(false);
+        }
+    }, [isEditDialogOpen, client]);
 
     const fetchClient = async () => {
         try {
@@ -94,12 +109,13 @@ export default function ClientDetailPage() {
             if (data.success) {
                 setClient(data.client);
                 // Form data'yı doldur
+                const birthDateValue = data.client.birth_date ? data.client.birth_date.split("T")[0] : "";
                 setFormData({
                     first_name: data.client.first_name || "",
                     last_name: data.client.last_name || "",
                     email: data.client.email || "",
                     phone: data.client.phone || "",
-                    birth_date: data.client.birth_date ? data.client.birth_date.split("T")[0] : "",
+                    birth_date: birthDateValue,
                     gender: data.client.gender || "",
                     height_cm: data.client.height_cm?.toString() || "",
                     weight_kg: data.client.weight_kg?.toString() || "",
@@ -107,6 +123,8 @@ export default function ClientDetailPage() {
                     allergies: data.client.allergies || "",
                     medications: data.client.medications || "",
                 });
+                // Calendar için tarih objesi oluştur
+                setBirthDate(birthDateValue ? new Date(birthDateValue) : undefined);
             }
         } catch {
             toast.error("Danışan bilgileri yüklenirken bir hata oluştu");
@@ -782,17 +800,51 @@ export default function ClientDetailPage() {
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="edit_birth_date">Doğum Tarihi</Label>
-                                <Input
-                                    id="edit_birth_date"
-                                    type="date"
-                                    value={formData.birth_date}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, birth_date: e.target.value })
-                                    }
-                                />
+                                <Popover open={isBirthDatePopoverOpen} onOpenChange={setIsBirthDatePopoverOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            id="edit_birth_date"
+                                            variant="outline"
+                                            className={`w-full justify-start text-left font-normal ${
+                                                !birthDate ? "text-muted-foreground" : ""
+                                            }`}
+                                        >
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {birthDate ? (
+                                                format(birthDate, "PPP", { locale: tr })
+                                            ) : (
+                                                <span>Tarih seçin</span>
+                                            )}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                        <CalendarComponent
+                                            mode="single"
+                                            selected={birthDate}
+                                            defaultMonth={birthDate || new Date()}
+                                            onSelect={(date) => {
+                                                setBirthDate(date);
+                                                setFormData({
+                                                    ...formData,
+                                                    birth_date: date ? format(date, "yyyy-MM-dd") : "",
+                                                });
+                                                if (date) {
+                                                    setIsBirthDatePopoverOpen(false);
+                                                }
+                                            }}
+                                            disabled={(date) =>
+                                                date > new Date() || date < new Date("1900-01-01")
+                                            }
+                                            captionLayout="dropdown"
+                                            fromYear={1900}
+                                            toYear={new Date().getFullYear()}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="edit_gender">Cinsiyet</Label>
@@ -802,7 +854,7 @@ export default function ClientDetailPage() {
                                     onChange={(e) =>
                                         setFormData({ ...formData, gender: e.target.value })
                                     }
-                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     <option value="">Seçiniz</option>
                                     <option value="male">Erkek</option>

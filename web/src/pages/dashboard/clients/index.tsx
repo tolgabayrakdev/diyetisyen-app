@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { toast } from "sonner";
-import { Plus, Search, User, Phone, Mail, Trash2, Eye, Loader2 } from "lucide-react";
+import { Plus, Search, User, Phone, Mail, Trash2, Eye, Loader2, CalendarIcon } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -17,6 +17,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
 
 interface Client {
     id: string;
@@ -68,6 +72,8 @@ export default function ClientsPage() {
         allergies: "",
         medications: "",
     });
+    const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
+    const [isBirthDatePopoverOpen, setIsBirthDatePopoverOpen] = useState(false);
 
     // Debounce search term
     useEffect(() => {
@@ -78,6 +84,14 @@ export default function ClientsPage() {
 
         return () => clearTimeout(timer);
     }, [searchTerm]);
+
+    // Reset birth date when dialog opens
+    useEffect(() => {
+        if (isCreateDialogOpen) {
+            setBirthDate(undefined);
+            setIsBirthDatePopoverOpen(false);
+        }
+    }, [isCreateDialogOpen]);
 
     // Fetch clients when page or debounced search term changes
     useEffect(() => {
@@ -198,6 +212,7 @@ export default function ClientsPage() {
                 allergies: "",
                 medications: "",
             });
+            setBirthDate(undefined);
             fetchClients();
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : "Bir hata oluştu";
@@ -516,17 +531,51 @@ export default function ClientsPage() {
                                 />
                             </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="birth_date">Doğum Tarihi</Label>
-                                <Input
-                                    id="birth_date"
-                                    type="date"
-                                    value={formData.birth_date}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, birth_date: e.target.value })
-                                    }
-                                />
+                                <Popover open={isBirthDatePopoverOpen} onOpenChange={setIsBirthDatePopoverOpen}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            id="birth_date"
+                                            variant="outline"
+                                            className={`w-full justify-start text-left font-normal ${
+                                                !birthDate ? "text-muted-foreground" : ""
+                                            }`}
+                                        >
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {birthDate ? (
+                                                format(birthDate, "PPP", { locale: tr })
+                                            ) : (
+                                                <span>Tarih seçin</span>
+                                            )}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            selected={birthDate}
+                                            defaultMonth={birthDate || new Date()}
+                                            onSelect={(date) => {
+                                                setBirthDate(date);
+                                                setFormData({
+                                                    ...formData,
+                                                    birth_date: date ? format(date, "yyyy-MM-dd") : "",
+                                                });
+                                                if (date) {
+                                                    setIsBirthDatePopoverOpen(false);
+                                                }
+                                            }}
+                                            disabled={(date) =>
+                                                date > new Date() || date < new Date("1900-01-01")
+                                            }
+                                            captionLayout="dropdown"
+                                            fromYear={1900}
+                                            toYear={new Date().getFullYear()}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="gender">Cinsiyet</Label>
@@ -536,7 +585,7 @@ export default function ClientsPage() {
                                     onChange={(e) =>
                                         setFormData({ ...formData, gender: e.target.value })
                                     }
-                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     <option value="">Seçiniz</option>
                                     <option value="male">Erkek</option>
