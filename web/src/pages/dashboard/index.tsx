@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Users, TrendingUp, FileText, DollarSign, Activity, Clock } from "lucide-react";
+import { Users, TrendingUp, FileText, DollarSign, Activity, Clock, ArrowRight } from "lucide-react";
 
 interface UserData {
     id: string;
@@ -33,6 +33,15 @@ interface ActivityLog {
     created_at: string;
 }
 
+interface RecentClient {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    created_at: string;
+}
+
 export default function DashboardIndex() {
     const navigate = useNavigate();
     const [user, setUser] = useState<UserData | null>(null);
@@ -44,6 +53,7 @@ export default function DashboardIndex() {
         totalFinancial: 0,
     });
     const [recentActivities, setRecentActivities] = useState<ActivityLog[]>([]);
+    const [recentClients, setRecentClients] = useState<RecentClient[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -89,6 +99,19 @@ export default function DashboardIndex() {
                     const activitiesData = await activitiesResponse.json();
                     if (activitiesData.success) {
                         setRecentActivities(activitiesData.logs || []);
+                    }
+                }
+
+                // Fetch recent clients
+                const clientsResponse = await fetch(apiUrl("api/clients?page=1&limit=5"), {
+                    method: "GET",
+                    credentials: "include",
+                });
+
+                if (clientsResponse.ok) {
+                    const clientsData = await clientsResponse.json();
+                    if (clientsData.success) {
+                        setRecentClients(clientsData.clients || []);
                     }
                 }
             } catch (error) {
@@ -181,6 +204,80 @@ export default function DashboardIndex() {
                     </div>
                 </div>
             </div>
+
+            {/* Son Eklenen Danışanlar */}
+            {recentClients.length > 0 && (
+                <div className="space-y-4 mt-6 sm:mt-10">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                            <div className="rounded-lg bg-primary/10 p-2">
+                                <Users className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg sm:text-xl font-semibold">Son Eklenen Danışanlar</h2>
+                            </div>
+                        </div>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => navigate("/clients")}
+                            className="w-full sm:w-auto"
+                        >
+                            Tümünü Gör
+                        </Button>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className="space-y-1.5">
+                        {recentClients.map((client) => {
+                            const formatTimeAgo = (dateString: string) => {
+                                const date = new Date(dateString);
+                                const now = new Date();
+                                const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+                                
+                                if (diffInSeconds < 60) return "Az önce";
+                                if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} dk önce`;
+                                if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} sa önce`;
+                                if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)} gün önce`;
+                                
+                                return date.toLocaleDateString("tr-TR", {
+                                    day: "numeric",
+                                    month: "short",
+                                });
+                            };
+
+                            return (
+                                <button
+                                    key={client.id}
+                                    onClick={() => navigate(`/clients/${client.id}`)}
+                                    className="group flex items-center justify-between gap-3 px-3 py-2 rounded-md hover:bg-muted/50 transition-colors text-sm w-full text-left"
+                                >
+                                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                                        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                                            <Users className="h-4 w-4 text-primary" />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="font-medium text-sm truncate">
+                                                {client.first_name} {client.last_name}
+                                            </p>
+                                            {client.email && (
+                                                <p className="text-xs text-muted-foreground truncate">
+                                                    {client.email}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        <span className="text-xs text-muted-foreground">{formatTimeAgo(client.created_at)}</span>
+                                        <ArrowRight className="h-3 w-3 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    </div>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            )}
 
             {/* Son Aktiviteler */}
             <div className="space-y-4 mt-6 sm:mt-10">
