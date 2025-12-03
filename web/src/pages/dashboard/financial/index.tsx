@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { apiUrl } from "@/lib/api";
+import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -228,19 +229,19 @@ export default function FinancialRecordsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="border rounded-lg p-4">
                     <p className="text-sm text-muted-foreground mb-1">Toplam</p>
-                    <p className="text-2xl font-semibold">{totalAmount.toFixed(2)} ₺</p>
+                    <p className="text-2xl font-semibold">{formatCurrency(totalAmount)}</p>
                 </div>
                 <div className="border border-green-500 rounded-lg p-4">
                     <p className="text-sm text-muted-foreground mb-1">Ödenen</p>
-                    <p className="text-2xl font-semibold text-green-600">{paidAmount.toFixed(2)} ₺</p>
+                    <p className="text-2xl font-semibold text-green-600">{formatCurrency(paidAmount)}</p>
                 </div>
                 <div className="border border-orange-500 rounded-lg p-4">
                     <p className="text-sm text-muted-foreground mb-1">Bekleyen</p>
-                    <p className="text-2xl font-semibold text-orange-600">{pendingAmount.toFixed(2)} ₺</p>
+                    <p className="text-2xl font-semibold text-orange-600">{formatCurrency(pendingAmount)}</p>
                 </div>
                 <div className="border border-red-500 rounded-lg p-4">
                     <p className="text-sm text-muted-foreground mb-1">Gecikmiş</p>
-                    <p className="text-2xl font-semibold text-red-600">{overdueAmount.toFixed(2)} ₺</p>
+                    <p className="text-2xl font-semibold text-red-600">{formatCurrency(overdueAmount)}</p>
                 </div>
             </div>
 
@@ -272,7 +273,7 @@ export default function FinancialRecordsPage() {
                                     <div>
                                         <p className="font-medium text-sm">{client.name}</p>
                                         <p className="text-xs text-muted-foreground">
-                                            {Number(client.total).toFixed(2)} ₺
+                                            {formatCurrency(client.total)}
                                         </p>
                                     </div>
                                 </div>
@@ -411,7 +412,7 @@ export default function FinancialRecordsPage() {
                                                 </Link>
                                             </TableCell>
                                             <TableCell className="font-semibold">
-                                                {Number(record.amount).toFixed(2)} {record.currency}
+                                                {formatCurrency(record.amount, record.currency)}
                                             </TableCell>
                                             <TableCell>
                                                 <Badge

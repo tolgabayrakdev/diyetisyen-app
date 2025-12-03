@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
 
 interface FinancialRecord {
     id: string;
@@ -358,19 +359,19 @@ export function FinancialPDFReport({
             <div class="summary-cards">
                 <div class="summary-card total">
                     <div class="summary-card-label">Toplam</div>
-                    <div class="summary-card-value">${totalAmount.toFixed(2)} ₺</div>
+                    <div class="summary-card-value">${formatCurrency(totalAmount)}</div>
                 </div>
                 <div class="summary-card paid">
                     <div class="summary-card-label">Ödenen</div>
-                    <div class="summary-card-value">${paidAmount.toFixed(2)} ₺</div>
+                    <div class="summary-card-value">${formatCurrency(paidAmount)}</div>
                 </div>
                 <div class="summary-card pending">
                     <div class="summary-card-label">Bekleyen</div>
-                    <div class="summary-card-value">${pendingAmount.toFixed(2)} ₺</div>
+                    <div class="summary-card-value">${formatCurrency(pendingAmount)}</div>
                 </div>
                 <div class="summary-card overdue">
                     <div class="summary-card-label">Gecikmiş</div>
-                    <div class="summary-card-value">${overdueAmount.toFixed(2)} ₺</div>
+                    <div class="summary-card-value">${formatCurrency(overdueAmount)}</div>
                 </div>
             </div>
         </div>
@@ -407,7 +408,7 @@ export function FinancialPDFReport({
                     ${records.map(record => `
                         <tr>
                             <td>${record.first_name} ${record.last_name}</td>
-                            <td class="amount">${Number(record.amount).toFixed(2)} ${record.currency}</td>
+                            <td class="amount">${formatCurrency(record.amount, record.currency)}</td>
                             <td>
                                 <span class="status-badge status-${record.status}">
                                     ${statusLabels[record.status] || record.status}
@@ -421,7 +422,7 @@ export function FinancialPDFReport({
                     `).join('')}
                     <tr class="total-row">
                         <td colspan="1"><strong>TOPLAM</strong></td>
-                        <td><strong>${totalAmount.toFixed(2)} ₺</strong></td>
+                        <td><strong>${formatCurrency(totalAmount)}</strong></td>
                         <td colspan="5"></td>
                     </tr>
                 </tbody>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { apiUrl } from "@/lib/api";
+import { formatCurrency } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -284,19 +285,19 @@ export default function ClientFinancialPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Toplam</p>
-                    <p className="text-lg font-semibold">{totalAmount.toFixed(2)} ₺</p>
+                    <p className="text-lg font-semibold">{formatCurrency(totalAmount)}</p>
                 </div>
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Ödenen</p>
-                    <p className="text-lg font-semibold text-green-600">{paidAmount.toFixed(2)} ₺</p>
+                    <p className="text-lg font-semibold text-green-600">{formatCurrency(paidAmount)}</p>
                 </div>
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Bekleyen</p>
-                    <p className="text-lg font-semibold text-orange-600">{pendingAmount.toFixed(2)} ₺</p>
+                    <p className="text-lg font-semibold text-orange-600">{formatCurrency(pendingAmount)}</p>
                 </div>
                 <div className="border rounded-lg p-3">
                     <p className="text-xs text-muted-foreground mb-1">Gecikmiş</p>
-                    <p className="text-lg font-semibold text-red-600">{overdueAmount.toFixed(2)} ₺</p>
+                    <p className="text-lg font-semibold text-red-600">{formatCurrency(overdueAmount)}</p>
                 </div>
             </div>
 
@@ -318,7 +319,7 @@ export default function ClientFinancialPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                                         <p className="text-base font-semibold">
-                                            {Number(record.amount).toFixed(2)} {record.currency}
+                                            {formatCurrency(record.amount, record.currency)}
                                         </p>
                                         <Badge
                                             variant={
@@ -399,6 +400,11 @@ export default function ClientFinancialPage() {
                                     required
                                     placeholder="0.00"
                                 />
+                                {formData.amount && !isNaN(parseFloat(formData.amount)) && (
+                                    <p className="text-xs text-muted-foreground">
+                                        Önizleme: <span className="font-semibold">{formatCurrency(parseFloat(formData.amount), formData.currency)}</span>
+                                    </p>
+                                )}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="currency">Para Birimi</Label>
@@ -508,6 +514,11 @@ export default function ClientFinancialPage() {
                                     required
                                     placeholder="0.00"
                                 />
+                                {editFormData.amount && !isNaN(parseFloat(editFormData.amount)) && (
+                                    <p className="text-xs text-muted-foreground">
+                                        Önizleme: <span className="font-semibold">{formatCurrency(parseFloat(editFormData.amount), editFormData.currency)}</span>
+                                    </p>
+                                )}
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="edit-currency">Para Birimi</Label>
