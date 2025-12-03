@@ -676,8 +676,18 @@ export default function DietPlanBuilderPage() {
                                                 min={800}
                                                 max={5000}
                                                 step={50}
-                                                value={calorieSettings.dailyCalories}
-                                                onChange={(e) => setCalorieSettings({ ...calorieSettings, dailyCalories: parseInt(e.target.value) || 2000 })}
+                                                value={calorieSettings.dailyCalories || ""}
+                                                onChange={(e) => {
+                                                    const value = e.target.value;
+                                                    if (value === "" || value === null || value === undefined) {
+                                                        setCalorieSettings({ ...calorieSettings, dailyCalories: 0 });
+                                                    } else {
+                                                        const numValue = parseInt(value);
+                                                        if (!isNaN(numValue)) {
+                                                            setCalorieSettings({ ...calorieSettings, dailyCalories: numValue });
+                                                        }
+                                                    }
+                                                }}
                                             />
                                         </div>
                                     )}
