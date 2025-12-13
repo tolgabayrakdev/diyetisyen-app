@@ -47,14 +47,12 @@ export default function Header() {
           >
             İletişim
           </Link>
-          <a
-            href="https://diyetka.ghost.io/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/blog"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
             Blog
-          </a>
+          </Link>
         </nav>
         <div className="flex items-center gap-3">
           <Link
