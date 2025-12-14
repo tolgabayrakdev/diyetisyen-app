@@ -312,7 +312,7 @@ export default function SubscriptionPage() {
                                             {plan.originalPrice && (
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-lg line-through text-muted-foreground">
-                                                        {plan.originalPrice.toFixed(2)}₺
+                                                        {Math.round(plan.originalPrice).toLocaleString('tr-TR')} TL
                                                     </span>
                                                     <Badge variant="secondary" className="text-xs">
                                                         %20 İndirim
@@ -321,7 +321,7 @@ export default function SubscriptionPage() {
                                             )}
                                             <div className="flex items-baseline gap-1">
                                                 <span className="text-3xl font-bold">
-                                                    {plan.price.toFixed(2)}₺
+                                                    {Math.round(plan.price).toLocaleString('tr-TR')} TL
                                                 </span>
                                                 <span className="text-muted-foreground text-sm">
                                                     /{plan.duration === 'monthly' ? 'ay' : 'yıl'}
@@ -329,7 +329,7 @@ export default function SubscriptionPage() {
                                             </div>
                                             {plan.duration === 'yearly' && (
                                                 <p className="text-xs text-muted-foreground mt-1">
-                                                    Aylık: {(plan.price / 12).toFixed(2)}₺
+                                                    Aylık: {Math.round(plan.price / 12).toLocaleString('tr-TR')} TL
                                                 </p>
                                             )}
                                         </div>

@@ -591,14 +591,14 @@ export default function AccountSettings() {
                         </Label>
                                 <div className="flex items-baseline gap-2">
                                     <p className="text-2xl font-bold">
-                                        {Number(subscription.plan_price).toFixed(2)}₺
+                                        {Math.round(Number(subscription.plan_price)).toLocaleString('tr-TR')} TL
                                     </p>
                                     <p className="text-sm text-muted-foreground">
                                         /{subscription.plan_duration === 'monthly' ? 'ay' : subscription.plan_duration === 'yearly' ? 'yıl' : ''}
                                     </p>
                                     {subscription.plan_duration === 'yearly' && (
                                         <p className="text-xs text-muted-foreground ml-2">
-                                            (Aylık: {(Number(subscription.plan_price) / 12).toFixed(2)}₺)
+                                            (Aylık: {Math.round(Number(subscription.plan_price) / 12).toLocaleString('tr-TR')} TL)
                                         </p>
                                     )}
                                 </div>

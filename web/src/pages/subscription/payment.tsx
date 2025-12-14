@@ -167,7 +167,7 @@ export default function PaymentPage() {
     const planName = plan.name === 'pro' ? 'Pro' : 'Premium';
     const planPrice = Number(plan.price);
     const isYearly = plan.duration === 'yearly';
-    const monthlyPrice = isYearly ? (planPrice / 12).toFixed(2) : planPrice.toFixed(2);
+    const monthlyPrice = isYearly ? (planPrice / 12) : planPrice;
 
     return (
         <div className="space-y-8 p-6 max-w-4xl mx-auto">
@@ -231,18 +231,18 @@ export default function PaymentPage() {
                             </p>
                             {isYearly && plan.original_price && (
                                 <p className="text-xs text-muted-foreground line-through mt-1">
-                                    {Number(plan.original_price).toFixed(2)}₺
+                                    {Math.round(Number(plan.original_price)).toLocaleString('tr-TR')} TL
                                 </p>
                             )}
                         </div>
                         <div className="text-right">
-                            <p className="text-2xl font-bold">{planPrice.toFixed(2)}₺</p>
+                            <p className="text-2xl font-bold">{Math.round(planPrice).toLocaleString('tr-TR')} TL</p>
                             <p className="text-xs text-muted-foreground">
                                 /{isYearly ? 'yıl' : 'ay'}
                             </p>
                             {isYearly && (
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    Aylık: {monthlyPrice}₺
+                                    Aylık: {Math.round(parseFloat(monthlyPrice)).toLocaleString('tr-TR')} TL
                                 </p>
                             )}
                         </div>
