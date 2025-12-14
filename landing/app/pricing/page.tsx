@@ -232,12 +232,12 @@ export default function Pricing() {
                       <div className="space-y-1">
                         {currentPlan.originalPrice && (
                           <p className="text-sm text-muted-foreground line-through">
-                            {currentPlan.originalPrice.toFixed(2)}₺
+                            {Math.round(currentPlan.originalPrice).toLocaleString('tr-TR')} TL
                           </p>
                         )}
                         <div className="flex items-baseline justify-center gap-2">
                           <span className="text-4xl font-bold">
-                            {currentPlan.price.toFixed(2)}₺
+                            {Math.round(currentPlan.price).toLocaleString('tr-TR')} TL
                           </span>
                           <span className="text-sm text-muted-foreground">
                             /{duration === "monthly" ? "ay" : "yıl"}
@@ -245,7 +245,7 @@ export default function Pricing() {
                         </div>
                         {monthlyPrice && (
                           <p className="text-xs text-muted-foreground">
-                            Aylık: {monthlyPrice}₺
+                            Aylık: {Math.round(parseFloat(monthlyPrice)).toLocaleString('tr-TR')} TL
                           </p>
                         )}
                       </div>
