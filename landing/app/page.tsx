@@ -335,19 +335,19 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
               <div className="text-center group">
                 <div className="space-y-2">
-                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">15+</div>
+                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">50+</div>
                   <div className="text-sm md:text-base font-medium text-muted-foreground">Aktif Diyetisyen</div>
                 </div>
               </div>
               <div className="text-center group">
                 <div className="space-y-2">
-                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">150+</div>
+                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">500+</div>
                   <div className="text-sm md:text-base font-medium text-muted-foreground">Yönetilen Danışan</div>
                 </div>
               </div>
               <div className="text-center group">
                 <div className="space-y-2">
-                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">250+</div>
+                  <div className="text-4xl md:text-5xl font-extrabold text-primary group-hover:scale-110 transition-transform duration-300">1000+</div>
                   <div className="text-sm md:text-base font-medium text-muted-foreground">Oluşturulan Plan</div>
                 </div>
               </div>
