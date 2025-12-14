@@ -242,7 +242,7 @@ export default function PaymentPage() {
                             </p>
                             {isYearly && (
                                 <p className="text-xs text-muted-foreground mt-1">
-                                    Aylık: {Math.round(parseFloat(monthlyPrice)).toLocaleString('tr-TR')} TL
+                                    Aylık: {Math.round(monthlyPrice).toLocaleString('tr-TR')} TL
                                 </p>
                             )}
                         </div>
