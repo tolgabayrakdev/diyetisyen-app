@@ -5,6 +5,7 @@ import { AnimatedText } from "./components/animated-text";
 import { HealthLifestyleSection } from "./components/health-lifestyle-section";
 import { LightStarsBackground } from "./components/light-stars-background";
 import { FeatureShowcase } from "./components/feature-showcase";
+import { SuspensionAlert } from "./components/suspension-alert";
 
 export const metadata: Metadata = {
   title: "DiyetKa - Yeni Nesil Danışan Yönetim Platformu",
@@ -168,6 +169,7 @@ export default function Home() {
 
   return (
     <>
+      <SuspensionAlert />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
